@@ -1,8 +1,8 @@
 //Called instantly
 $(function(){
 
-	
-	 window.API = new ApiConnector(window.config['api_path']);
+	window.Helper = new Helper();
+	window.API = new ApiConnector(window.config['api_path']);
 });
 
 //Called after document loads
