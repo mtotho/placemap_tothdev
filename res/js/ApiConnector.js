@@ -44,6 +44,7 @@ function ApiConnector(api_base){
                     CALLBACK(data);
                 },
                 error: function(xhr, errorType, error){
+                    console.log(xhr);
                     // alert("error when trying to initialize connection to the api");
                     switch(xhr.status){
                         case 500:
@@ -105,6 +106,7 @@ function ApiConnector(api_base){
                     }
                 },
                 error: function(xhr, errorType, error){
+                    console.log(xhr);
                     alert("error when trying to initialize connection to the api");
                     switch(xhr.status){
                         case 500:
@@ -135,6 +137,27 @@ function ApiConnector(api_base){
             });
         }
     } // end pullApiData
+
+    // ---- Study Area---
+    ApiConnector.prototype.getStudyArea = function getStudyArea(id, callback){
+        var url="/studyarea?id="+id;
+        window.API.pullApiData(url, "GET", callback)
+    }
+    ApiConnector.prototype.getAllStudyAreas = function getStudyArea(callback){
+        var url="/studyarea";
+        window.API.pullApiData(url, "GET", callback)
+    }
+    ApiConnector.prototype.postStudyArea = function postStudyArea(study_area, callback){
+        var url="/studyarea";
+        var querytype="POST";
+        var json={
+            "study_area":study_area
+        };
+        var jsonString = JSON.stringify(json);
+        window.API.pushApiData(jsonString, url, querytype, callback);
+    }
+
+
 
     // ----- participant ----
     ApiConnector.prototype.postParticipant = function postParticipant(callback){

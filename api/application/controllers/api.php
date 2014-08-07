@@ -12,6 +12,3 @@ class Api extends REST_Controller {
 		$this->response($data);
 	}
 }
-
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
