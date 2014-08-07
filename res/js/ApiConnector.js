@@ -157,6 +157,13 @@ function ApiConnector(api_base){
         window.API.pushApiData(jsonString, url, querytype, callback);
     }
 
+    //  ----- placemarker
+    ApiConnector.prototype.getPlacemarkers = function getPlacemarkers(study_area_id, callback){
+        var url = "/placemarker?study_area_id=" + study_area_id;
+        window.API.pullApiData(url, "GET", callback)
+    }
+
+
 
 
     // ----- participant ----

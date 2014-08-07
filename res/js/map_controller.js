@@ -14,10 +14,10 @@ $(document).ready(function(){
 		window.gmap.toggleDraggable();
 
 		
-		window.API.getAllStudyAreas(function(response){
+		/*window.API.getAllStudyAreas(function(response){
 			console.log(response);
 		});
-
+		*/
 		/*
 		var study_area = {
 			"name":"test area 2",
@@ -30,6 +30,10 @@ $(document).ready(function(){
 			console.log(response);
 		})
 		*/
+
+		window.API.getPlacemarkers(1, function(response){
+			console.log(response);
+		});
 	});
 
 });
