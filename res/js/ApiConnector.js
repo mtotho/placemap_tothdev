@@ -158,11 +158,19 @@ function ApiConnector(api_base){
     }
 
     //  ----- placemarker
-    ApiConnector.prototype.getPlacemarkers = function getPlacemarkers(study_area_id, callback){
-        var url = "/placemarker?study_area_id=" + study_area_id;
+    ApiConnector.prototype.getPlacemarkers = function getPlacemarkers(study_area_id, participant_id,callback){
+        var url = "/placemarker?study_area_id=" + study_area_id+"&participant_id="+participant_id;
         window.API.pullApiData(url, "GET", callback)
     }
-
+    ApiConnector.prototype.postPlacemarker = function postPlacemarkers(marker, callback){
+        var url="placemarker";
+        var querytype="POST";
+        var json={
+            "placemarker":marker
+        };
+        var jsonString = JSON.stringify(json);
+        window.API.pushApiData(jsonString, url, querytype, callback);
+    }
 
 
 

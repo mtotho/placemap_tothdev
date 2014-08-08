@@ -23,6 +23,15 @@ class Studyarea_model extends CI_Model{
 		return $results->result_array();
 	}
 
+	function areMarkersVisible($study_area_id){
+		$query = "select display_placemarkers from study_area where id=".$this->db->escape($study_area_id);
+		$result = $this->db->query($query);
+		$result = $result->row();
+
+		return $result->display_placemarkers;
+	}
+
+
 	function postStudyArea($studyarea){
 
 		$query = "insert into study_area set 
