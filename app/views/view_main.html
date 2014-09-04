@@ -1,0 +1,31 @@
+
+<div id="page_main" class="row">
+	<div class="col-md-9 col-left">
+	<div id="ui_handle"></div>
+
+	<google-map id="map_canvas" 
+		center='map.center' 
+	    zoom='map.zoom'
+	    draggable='map.draggable'
+	    dragging='map.dragging'
+	    refresh='map.refresh'
+	    options='map.options'
+	    events='map.events'
+	    bounds='map.bounds'
+	    pan='map.pan'>
+	    
+	    <!-- other directives here -->
+	    
+	</google-map>  
+	</div>
+	<div class="col-md-3 col-right">
+		<input type="text" data-ng-model="zoom" ng-change="zoomChange()"/>
+		<div id="ui_panel"></div>
+
+	</div>
+
+
+
+</div>
+<button id="btnDebug" type="button" class="btn btn-default">Debug</button>
+

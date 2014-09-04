@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html data-ng-app="placemapApp">
+	<head>
+		<title>Placemap | Michael Toth</title>
+
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"><!-- Optional theme -->
+
+		<!--Custom CSS-->
+		<link rel="stylesheet" href="res/css/reset.css" />
+		<link rel="stylesheet" href="res/css/placemap.css" />
+
+
+	 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	    <![endif]-->
+
+
+
+	</head>
+
+
+	<body>	
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-11">
+					<header>
+							<h1>Placemap</h1> 
+					</header>
+					
+
+					<div ng-view></div>
+				</div><!--end left column-->
+
+				<div class="col-md-1"></div><!--end right col-->
+				
+			</div><!--end row-->
+		</div><!--end contaier-->
+
+
+
+		<!--Vendor Libs -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+	    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	    <script src="https://maps.google.com/maps/api/js?key=AIzaSyAHDR09KWWgVoyFCoavaoHm2cCAHX5VL2g&sensor=false&libraries=places,visualization">
+	    		</script>
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+	    <script src="app/lib/angular-google-maps.js"></script>
+
+	    <!-- UI Libs -->
+	    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+	    <!-- App libs-->
+	   
+	    <script src="app/app.js"></script>
+	    <script src="app/controllers/MapController.js"></script>
+		
+
+	</body>
+
+</html>

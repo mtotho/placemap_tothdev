@@ -18,9 +18,6 @@ class Studyarea extends REST_Controller {
 		$this->response($response);
 	}
 
-	public function areMarkersVisible($study_area_id){
-		$query
-	}
 
 	public function index_post(){
 		$this->load->model("studyarea_model");

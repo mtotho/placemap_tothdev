@@ -12,7 +12,7 @@ $(document).ready(function(){
 	$("#btnDebug").click(function(){
 
 		window.gmap.toggleDraggable();
-
+			
 		
 		/*window.API.getAllStudyAreas(function(response){
 			console.log(response);
@@ -56,10 +56,10 @@ $(document).ready(function(){
 
 
 		}
-		/*window.API.postPlacemarker(marker_post, function(response){
-			console.log(response);
-		});
-		*/
+		//window.API.postPlacemarker(marker_post, function(response){
+			//console.log(response);
+		//});
+		
 		window.API.getPlacemarkers(1,1, function(response){
 			console.log(response);
 		});
