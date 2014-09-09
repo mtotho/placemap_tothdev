@@ -8,6 +8,11 @@ app.config(function ($routeProvider) {
 		        controller: 'MapController',
 		        templateUrl: 'app/views/view_main.html'
 		    })
+	    .when('/studyarea/:studyarea_id',
+	    	{
+	    		controller:'StudyAreaController',
+	    		templateUrl:'app/views/view_main.html'
+	    	})
 	    .when('/about',
 		    {
 		      	controller: 'MapController',

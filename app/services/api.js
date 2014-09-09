@@ -50,7 +50,7 @@ app.service('api', function($http){
 	}
 
 	function handleSuccess(response){
-		console.log(response.data);
+		return(response.data);
 	}
 
 
