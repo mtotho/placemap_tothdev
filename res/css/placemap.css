@@ -8,3 +8,8 @@ body{
 #page_main .col-right{
 	background-color:red;
 }
+
+header{
+	height:4em;
+	background:green;
+}

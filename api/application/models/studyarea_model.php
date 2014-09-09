@@ -41,7 +41,7 @@ class Studyarea_model extends CI_Model{
 					timestamp = NOW(),
 					fk_user_id = ?";
 		
-		$this->db->query($query, array($studyarea['name'],$studyarea['lat'],$studyarea['lng'],$studyarea['user_id']));
+		$this->db->query($query, array($studyarea['name'],$studyarea['lat'],$studyarea['lng']));
 		error_log("[POST][Study_area]: ".$this->db->last_query());
 		return $this->db->insert_id();
 

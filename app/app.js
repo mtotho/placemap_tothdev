@@ -1,4 +1,4 @@
-var app = angular.module('placemapApp', ['ngRoute','google-maps']);
+var app = angular.module('placemapApp', ['ngRoute','ngCookies','google-maps']);
 
 app.config(function ($routeProvider) {
 
@@ -12,6 +12,11 @@ app.config(function ($routeProvider) {
 		    {
 		      	controller: 'MapController',
 		        templateUrl: 'app/views/customers.html'
+		    })
+		.when('/login',
+		    {
+		      	controller: 'loginController',
+		        templateUrl: 'app/views/view_login.html'
 		    }
     	);
 
