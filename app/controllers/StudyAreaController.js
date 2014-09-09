@@ -1,14 +1,25 @@
 
 
-app.controller('StudyAreaController', function($scope, api){
+app.controller('StudyAreaController', function($scope, api,gmap,$location, $routeParams){
 	//$scope.array = [];
-	$scope.template.url="partials/part_createStudyArea.html";
+	//$scope.template.url="partials/part_createStudyArea.html";
 	//init (optional)
-	function init(){
-		$scope.studyareas = api.getStudyareas();
+	var studyarea_id=null;
 
-		$scope.map = {center: {latitude: 51.219053, longitude: 4.404418 }, zoom: 12, draggable:1 };
-        $scope.options = {scrollwheel: true};
+	function init(){
+		studyarea_id = $routeParams.studyarea_id;
+
+		//get the study area
+		$scope.studyareas = api.getStudyareas(studyarea_id).then(function(response){
+			
+			//console.log(response.study_areas[0]);
+			gmap.setStudyArea(response.study_areas[0]);
+			gmap.init("map_canvas");
+
+			//console.log(response);
+		});
+
+
 	}
 	
 	init();

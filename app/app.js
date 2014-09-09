@@ -11,7 +11,7 @@ app.config(function ($routeProvider) {
 	    .when('/studyarea/:studyarea_id',
 	    	{
 	    		controller:'StudyAreaController',
-	    		templateUrl:'app/views/view_main.html'
+	    		templateUrl:'app/views/view_studyarea.html'
 	    	})
 	    .when('/about',
 		    {

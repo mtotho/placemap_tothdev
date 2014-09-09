@@ -7,7 +7,7 @@ class Studyarea_model extends CI_Model{
 	function __construct(){
 		parent::__construct();
 
-		$this->sa_query="select id, name, lat, lng, fk_user_id as user_id from study_area sa";
+		$this->sa_query="select id, name, lat, lng, zoom, fk_user_id as user_id from study_area sa";
 	}
 
 	function getStudyArea($id=null){

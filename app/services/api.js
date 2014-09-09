@@ -4,9 +4,9 @@ app.service('api', function($http, $q){
 	var url="api/";
 	var studyareas = new Array();
 
-	this.getStudyareas = function(){
+	this.getStudyareas = function(id){
 
-		var studyareaGet = $http.get(url+"studyarea");
+		var studyareaGet = $http.get(url+"studyarea?id="+id);
 
 
 		return studyareaGet.then(handleSuccess, handleError);
