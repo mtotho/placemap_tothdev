@@ -13,3 +13,7 @@ header{
 	height:4em;
 	background:green;
 }
+
+#map_canvas{
+	height:500px;
+}

@@ -23,7 +23,7 @@ class Studyarea extends REST_Controller {
 		$this->load->model("studyarea_model");
 
 		$study_area = $this->post('study_area');
-
+		error_log(print_r($_POST, true));
 		$study_area_id = $this->studyarea_model->postStudyArea($study_area);
 
 		$study_area['id']=$study_area_id;

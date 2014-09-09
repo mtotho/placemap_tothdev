@@ -38,10 +38,11 @@ class Studyarea_model extends CI_Model{
 					name = ?,
 					lat  = ?,
 					lng  = ?,
+					zoom = ?,
 					timestamp = NOW(),
 					fk_user_id = ?";
 		
-		$this->db->query($query, array($studyarea['name'],$studyarea['lat'],$studyarea['lng']));
+		$this->db->query($query, array($studyarea['name'],$studyarea['lat'],$studyarea['lng'],$studyarea['zoom'],0));
 		error_log("[POST][Study_area]: ".$this->db->last_query());
 		return $this->db->insert_id();
 

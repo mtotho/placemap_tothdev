@@ -1,4 +1,4 @@
-app.service('api', function($http){
+app.service('api', function($http, $q){
 	//var user = userService.getUser();
 
 	var url="api/";
@@ -22,23 +22,18 @@ app.service('api', function($http){
 
 		studyareas.push(study_area);
 
-		var postData = new Array();
-		postData.study_area=study_area;
-
-
-		var studyareaPost = $http.post(url+"studyarea", place);
-		studyareaPost.success(function(data,status,headers,config){
-			console.log(data);
-		});
-		studyareaPost.error(function(data,status,headers,config){
-			console.log(status);
-			console.log(headers);
-		});
-		//post place with user
+		var postData = {
+			"study_area":study_area
+		}
+		
+		var studyareaPost = $http.post(url+"studyarea", postData);
+		return studyareaPost.then(handleSuccess, handleError);
+	
 	}
 
 
 	function handleError(response){
+		console.log(response);
 		if(
 			!angular.isObject(response.data) || 
 			!response.data.message

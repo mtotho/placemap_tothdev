@@ -1,7 +1,17 @@
-<select id="ddEditUserType" class='form-control'>
-	<option data-ng-repeat="sa in studyareas">{{sa.name}}</option>
-</select>
-
-<br />
-
 <p>Create New</p>
+
+<form style="margin:5em 0 5em 0;" role="form">
+
+	<div class="form-group">
+		<label for="txtSaName">Study Area Name</label>
+		<input id="txtSaName" class="form-control" data-ng-model="StudyAreaName" type="text" placeholder="Enter Study Area">
+	 </div>
+
+	<div class="form-group">
+		<label>Zoom Level </label>
+		{{ mapzoom }}
+
+	</div>
+	
+	<input type="button" value="Create" data-ng-click="btnCreateStudyArea()" />
+</form>
