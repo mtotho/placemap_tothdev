@@ -26,6 +26,8 @@ app.service('gmap', function(){
 					    	position:this.mapOptions.center,
 					    	draggable:true
 		    });
+
+		    autosize();
 	}
 
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center

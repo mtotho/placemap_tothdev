@@ -42,3 +42,22 @@ app.factory('simpleFactory', function(){
 	return factory;
 });
 
+$(document).ready(function(){
+	
+});
+$(window).resize(function(){
+	autosize();
+});
+
+function autosize(){
+	var headerheight=$("header").outerHeight();
+	var windowheight=$(window).outerHeight();
+
+
+	console.log(windowheight);
+	console.log(headerheight);
+	var targetheight = windowheight - headerheight;
+	console.log(targetheight);
+
+	$("#map_canvas").height(targetheight);
+}
