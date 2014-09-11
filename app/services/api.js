@@ -31,6 +31,14 @@ app.service('api', function($http, $q){
 	
 	}
 
+	this.postMarker = function(marker){
+		var postData={
+			"placemarker":marker
+		}
+		var markerPost = $http.post(url+"placemarker", postData);
+		return markerPost.then(handleSuccess, handleError);
+	}
+
 
 	function handleError(response){
 		console.log(response);

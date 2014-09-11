@@ -32,12 +32,17 @@
 				<!--<div class="col-md-11">-->
 					
 					<header >
+						<div class="col-md-4">
 							<h1>Placemap</h1> 
+						</div>
 
-							<div class="user_bar">
-								<div login-bar></div>
+						<div class="col-md-8 header_right">
+
+
+							<div class="nav_bar" ng-controller="navController">
+								<div class="login_bar"><a data-ng-click="loginorout()" href="#">{{ userstatus }}</a></div>
 							</div>
-
+						</div>
 					</header>
 					
 
@@ -63,6 +68,9 @@
 
 	    <!-- UI Libs -->
 	    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/transition.min.js"></script>
+	    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/collapse.min.js"></script>
+
 
 
 	    <!-- App libs-->
@@ -71,6 +79,7 @@
 	    <script src="app/controllers/MapController.js"></script>
 	    <script src="app/controllers/StudyAreaController.js"></script>
 	    <script src="app/controllers/loginController.js"></script>
+	    <script src="app/controllers/navController.js"></script>
 	    <script src="app/services/api.js"></script>
 		<script src="app/services/auth.js"></script>
 		<script src="app/services/gmap.js"></script>

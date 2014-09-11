@@ -15,6 +15,14 @@ app.service('gmap', function(){
 	this.mapOptions.disableDoubleClickZoom=false;
 	this.mapOptions.scaleControl=true;
 
+	this.placemarkers = new Array();
+
+	this.icons={
+			"red":"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+			"yellow":"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+			"green":"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+		}
+
 	this.init = function(mapdiv){
 			
 			//The map variable
@@ -31,17 +39,39 @@ app.service('gmap', function(){
 	}
 
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
-	this.toggleDraggable=function(){
-		
+	this.toggleDraggable=function(iconColor){
+		if(iconColor==null){
+			iconColor="red";
+		}
+
 		//Marker is not on a map
-		if(window.Helper.isNull(this.draggableMarker.getMap())){
+		if(this.draggableMarker.getMap()==null){
 			this.draggableMarker.setMap(this.map);
 			this.draggableMarker.setPosition(this.mapOptions.center);
+			this.draggableMarker.setIcon(this.icons[iconColor]);
 
 		//Marker already on a map
 		}else{
 			this.draggableMarker.setMap(null);
 		}
+	}
+	this.loadMarkers = function(markers){
+
+		for(var i =0; i<markers.length; i++){
+			this.loadMarker(markers[i]);
+		}
+	}
+	this.loadMarker = function(marker){
+		var marker = new google.maps.Marker({
+					    	map: this.map,
+					    	position:new google.maps.LatLng(marker.lat, marker.lng),
+					    	draggable:false,
+					    	icon:this.icons[marker.icon]
+	    });
+	}
+
+	this.getDraggableMarker = function (){
+		return this.draggableMarker;
 	}
 
 	this.setStudyArea = function(studyarea){

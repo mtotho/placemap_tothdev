@@ -53,11 +53,14 @@ function autosize(){
 	var headerheight=$("header").outerHeight();
 	var windowheight=$(window).outerHeight();
 
-
-	console.log(windowheight);
-	console.log(headerheight);
 	var targetheight = windowheight - headerheight;
-	console.log(targetheight);
+
+
+	var namewidth = $(".name_panel h3").width();
+	//console.log(namewidth);
+
+	//$(".name_panel").width(namewidth);
+
 
 	$("#map_canvas").height(targetheight);
 }

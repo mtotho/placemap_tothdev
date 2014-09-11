@@ -4,10 +4,76 @@
 	<!--	<div id="ui_handle"></div>-->
 
 		<div id="map_canvas" class="map_div" ></div>
+	   
+		<div class="name_panel map_ui_panel">
+			<h3> {{ studyarea.name }}</h3>
+		</div>
+
 	    <div class="map_ui_panel">
+	    	<h3>Select a Marker</h3>
+
+	    	<div class="row">
+	    		<div class="col-md-4">
+	    			<div class="radio">
+		    			<label>
+
+		    				<img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" />
+		    				<input type="radio" name="markerType" id="optionsRadios1" value="red">
+		    			</label>
+		    		</div>
+		    	</div>
 
 
+		    	<div class="col-md-4">
+	    			<div class="radio">
+		    			<label>
+		    				<img src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" />
+		    				<input type="radio" name="markerType" id="optionsRadios2" value="yellow" checked>
+		    			</label>
+		    		</div>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<div class="radio">
+		    			<label>
+		    				<img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" />
+		    				<input type="radio" name="markerType" id="optionsRadios3" value="green">
+    					</label>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	<br />
+	    	<button id="btnSelectMarkerLocation" type="button" data-ng-click="btnSelectMarkerLocation()" class="btn">Set Marker</button>
 
+	    	
+	    	<div id="collapsible_content" class="panel-collapse collapse">
+		    	<hr />
+		      	<button type="button" data-ng-click="btnPlaceMarker()" class="btn">Confirm Location</button>
+		      	<button type="button" data-ng-click="btnCancelMarkerPlacement()" class="btn">Cancel</button>
+		    
+		    </div>
+		</div>
+
+
+		<div class="modal fade" id="mdlAddMarker" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Location Details</h4>
+		      </div>
+		      <div class="modal-body">
+		        
+		      	<p>Please briefly describe why you chose to give this locations its rating</p>
+
+		      	<textarea class="form-control" rows="3" ng-model="markerDescription"></textarea>
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary" ng-click="modalSubmitMarker()">Submit Marker</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 	    <!-- other directives here -->
 	    

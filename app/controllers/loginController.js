@@ -37,13 +37,7 @@ app.controller('loginController', function($scope, api, auth, $cookieStore, $loc
 		}
 
 		//debug register user
-		var newuser = {
-			"user":{
-				"email":"mtotho@gmail.com",
-				"password":"bernie",
-				"user_type":"super_admin"
-			}
-		}
+	
 		//auth.register(newuser);
 	
 	}//end: init();
@@ -69,6 +63,7 @@ app.controller('loginController', function($scope, api, auth, $cookieStore, $loc
 					$cookieStore.put("placemap-token", response.user.token);
 
 					$location.path("/");
+					location.reload();
 				}
 		);
 

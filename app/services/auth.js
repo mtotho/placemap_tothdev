@@ -22,6 +22,13 @@ app.service('auth', function($http, $q, $cookieStore){
 		//Cookie is set, lets see if token is still valid
 		}else{
 
+			var data={
+				"email":emailCookie,
+				"token":$cookieStore.get('placemap-token')
+			}
+
+			user=data;
+
 			return true;
 		}//end: else
 
@@ -41,6 +48,12 @@ app.service('auth', function($http, $q, $cookieStore){
 		}*/
 	}//end:isLoggedIn
 
+	this.getEmail = function getEmail(){
+		if(this.isLoggedIn()){
+			return user.email;
+		}
+	}
+
 	this.login = function login(user){
 		var loginPost = $http.post(url+"login", user);
 
@@ -59,6 +72,10 @@ app.service('auth', function($http, $q, $cookieStore){
 		return(authPost.then(handleSuccess, handleError));	
 	}
 
+	this.destroySession=function destroySession(){
+		$cookieStore.remove("placemap-email");
+		$cookieStore.remove("placemap-token");
+	}
 
 
 	function handleError(response){

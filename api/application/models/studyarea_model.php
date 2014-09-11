@@ -12,6 +12,7 @@ class Studyarea_model extends CI_Model{
 
 	function getStudyArea($id=null){
 
+		$this->load->model("placemarker_model");
 		if($id!=null){
 			$query = $this->sa_query." where id=".$this->db->escape($id);
 		}else{
@@ -19,8 +20,16 @@ class Studyarea_model extends CI_Model{
 		}
 		error_log("[GET][Study_area]: ".$query);
 		$results = $this->db->query($query);
+		$results = $results->result_array();
 
-		return $results->result_array();
+		$i=0;
+		foreach($results as $sa){
+			$sa_id = $sa['id'];
+
+			$results[$i]["placemarkers"] = $this->placemarker_model->getPlacemarkers($sa_id);
+			$i++;
+		}
+		return $results;
 	}
 
 	function areMarkersVisible($study_area_id){

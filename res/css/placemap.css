@@ -36,6 +36,15 @@ header h1{
 	font-size:2.5em;
 	line-height:1.5em;
 }
+.nav_bar{
+	position:relative;
+
+}
+.login_bar{
+	position:absolute;
+	right:0%;
+	margin-top:0.5em;
+}
 
 .map_outter_div{
 	position:relative;
@@ -52,10 +61,38 @@ header h1{
 	right:5%;
 	z-index:99;
 	width:20%;
-	height:60%;
+	min-width:250px;
 	background-color:white;
 	opacity: 0.9;
-	
 	border-radius: 2px;
 	box-shadow: 0px 2px 5px #C4C4C4;
+	padding:10px 10px 10px 10px;
+	font-family:Helvetica;
+}
+.map_ui_panel input[type="text"]{
+	width:100%;
+}
+.map_ui_panel h3{
+	font-size:1.25em;
+}
+.map_ui_panel .radio label{
+	width:100%;
+	padding-left:0;
+}
+.map_ui_panel .radio input{
+	display:block;
+	position:relative;
+	margin:0 auto 0 auto;
+}
+.map_ui_panel .radio img{
+	display:block;
+	margin:0 auto 5px auto;
+}
+.name_panel{
+	top:5%;
+	left:5%;
+	width:15%;
+	min-width:13em;
+	height:2em;
+	opacity:0.8;
 }
