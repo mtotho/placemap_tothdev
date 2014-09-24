@@ -94,5 +94,25 @@ header h1{
 	width:15%;
 	min-width:13em;
 	height:2em;
+	line-height:0.75em;
 	opacity:0.8;
+}
+.markers_remain_panel{
+	left:5%;
+	top:10%;
+	height:42px;
+	min-width:2em;
+	width:4.25em;
+	padding: 3px 3px 3px 3px;
+}
+.markers_remain_panel img{
+	
+	float:left;
+	display:block;
+
+}
+.markers_remain_panel p{
+	font-size:1em;
+	line-height: 2.25em;
+	float:left;
 }

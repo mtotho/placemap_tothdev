@@ -7,9 +7,20 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 	var studyarea_id=null;
 	$scope.studyarea;
 	var setMarkerIsClicked = false;
+	$scope.participant;
+	//$scope.markerType = 'yellow';
 
 	function init(){
 		studyarea_id = $routeParams.studyarea_id;
+
+		//debug fake participant info
+		$scope.participant = {
+			"id":"3",
+			"markers_placed":"0"
+		};
+
+
+
 
 		//get the study area
 		api.getStudyareas(studyarea_id).then(function(response){
@@ -23,6 +34,20 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 
 			applyStudyArea(studyarea);
 
+			gmap.toggleDraggable("grey");
+
+	     	google.maps.event.addListener(gmap.getDraggableMarker(), 'mouseover', function() {
+		     
+	     		gmap.getDraggableMarker().setAnimation(null);
+	 		});
+
+ 	     	google.maps.event.addListener(gmap.getDraggableMarker(), 'mouseout', function() {
+		     	
+		     	if(!setMarkerIsClicked){
+	     			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
+			 	}
+			 });
+
 			//console.log(response);
 		});
 
@@ -33,6 +58,8 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 		$('#mdlAddMarker').modal({
 		  show: false
 		})
+
+	
 	}
 	
 	init();
@@ -45,18 +72,24 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 	$scope.zoomChange = function(){
 		$scope.map.zoom=parseInt($scope.zoom);
 
+		
 		console.log($scope.map);
 	}
 
 
-	$scope.btnSelectMarkerLocation = function(){
+	$scope.btnSetRating = function(){
 
 		if(!setMarkerIsClicked){
 			setMarkerIsClicked = true;
 		
-			$scope.markerType= $("input[name='markerType']:checked").val();
+			//$scope.markerType= $("input[name='markerType']:checked").val();
 			
-			gmap.toggleDraggable($scope.markerType);
+			//gmap.toggleDraggable($scope.markerType);
+			gmap.lockDraggableMarker(true);
+
+		//	gmap.setDraggableIcon($scope.markerType);
+			//gmap.getDraggableMarker().setMap(gmap.getMap());
+		//	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 
 			$("#btnSelectMarkerLocation").addClass("active");
 
@@ -66,7 +99,8 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 	}
 	$scope.btnCancelMarkerPlacement = function(){
 		setMarkerIsClicked=false;
-		gmap.toggleDraggable();
+		//gmap.toggleDraggable();
+		gmap.lockDraggableMarker(false);
 		$("#collapsible_content").collapse('hide');
 		$("#btnSelectMarkerLocation").removeClass("active");
 	}
@@ -79,6 +113,15 @@ app.controller('StudyAreaController', function($scope, api,gmap,$location, $rout
 	
 
 	}
+	$scope.rdoColorChange = function(markerType){
+
+		gmap.setDraggableIcon("light-"+$scope.markerType);
+		gmap.getDraggableMarker().setMap(gmap.getMap());
+		gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
+	}
+
+
+	
 	$scope.modalSubmitMarker = function(){
 
 		var pos =  gmap.getDraggableMarker().getPosition();

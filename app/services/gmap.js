@@ -18,9 +18,13 @@ app.service('gmap', function(){
 	this.placemarkers = new Array();
 
 	this.icons={
-			"red":"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-			"yellow":"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-			"green":"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+			"red": "res/images/marker_icon/icon_red.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+			"yellow":"res/images/marker_icon/icon_yellow.png", //"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+			"green":"res/images/marker_icon/icon_green.png",//"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+			"grey":"res/images/marker_icon/icon_grey.png",
+			"light-red": "res/images/marker_icon/icon_red_light.png", 
+			"light-yellow":"res/images/marker_icon/icon_yellow_light.png", 
+			"light-green":"res/images/marker_icon/icon_green_light.png"
 		}
 
 	this.init = function(mapdiv){
@@ -32,11 +36,26 @@ app.service('gmap', function(){
 			this.draggableMarker = new google.maps.Marker({
 					    	map: null,
 					    	position:this.mapOptions.center,
-					    	draggable:true
+					    	draggable:true,
+					    	animation:google.maps.Animation.BOUNCE
 		    });
+
+			/*
+		     google.maps.event.addListener(this.draggableMarker, 'mouseover', function() {
+		     
+		     	instance.draggableMarker.setAnimation(null);
+ 			 });
+
+	 	     google.maps.event.addListener(this.draggableMarker, 'mouseout', function() {
+		     	
+		     	instance.draggableMarker.setAnimation(google.maps.Animation.BOUNCE);
+			 
+ 			 });
+*/
 
 		    autosize();
 	}
+
 
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
 	this.toggleDraggable=function(iconColor){
@@ -48,11 +67,24 @@ app.service('gmap', function(){
 		if(this.draggableMarker.getMap()==null){
 			this.draggableMarker.setMap(this.map);
 			this.draggableMarker.setPosition(this.mapOptions.center);
+		
 			this.draggableMarker.setIcon(this.icons[iconColor]);
 
 		//Marker already on a map
 		}else{
 			this.draggableMarker.setMap(null);
+		}
+	}
+	this.setDraggableIcon = function(iconColor){
+		this.draggableMarker.setIcon(this.icons[iconColor]);
+	}
+	this.lockDraggableMarker = function(bool){
+		this.draggableMarker.setDraggable(!bool);
+
+		if(bool){
+			this.draggableMarker.setAnimation(null)
+		}else{
+			this.draggableMarker.setAnimation(google.maps.Animation.BOUNCE);
 		}
 	}
 	this.loadMarkers = function(markers){
