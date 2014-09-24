@@ -51,7 +51,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			gmap.setStudyArea(studyarea);
 			gmap.init("map_canvas");
 			gmap.loadMarkers(placemarkers);
-
+			gmap.checkResize();
 			applyStudyArea(studyarea);
 
 			gmap.toggleDraggable("grey");

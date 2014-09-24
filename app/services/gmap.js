@@ -59,7 +59,9 @@ app.service('gmap', function($cookieStore){
 		    autosize();
 	}
 
-
+	this.checkResize = function(){
+		google.maps.event.trigger(this.map, 'resize');
+	}
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
 	this.toggleDraggable=function(iconColor){
 		if(iconColor==null){
