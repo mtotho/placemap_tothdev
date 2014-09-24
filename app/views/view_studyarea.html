@@ -11,48 +11,115 @@
 
 		<div class="markers_remain_panel map_ui_panel">
 			<img src="res/images/marker_icon/icon_grey.png" />
-			<p> x{{ 15 - studyarea.participant.markers_placed }}</p>
+			<p> x{{ 15 - participant.markers_placed }}</p>
 		</div>
 
 	    <div class="map_ui_panel">
-	    	<h3>Select a Marker</h3>
+	    	<h3>Select a Rating</h3>
 
 	    	<div class="row">
 	    		<div class="col-md-4">
-	    			<div class="radio">
+	    			<div class="rdoRate radio">
 		    			<label>
 
 		    				<img src="res/images/marker_icon/icon_red.png" />
 		    				<input ng-change='rdoColorChange(markerType)' type="radio" name="markerType" ng-model="markerType" id="optionsRadios1" value="red">
 		    			</label>
+
+		    			<p>Detracts from community</p>
 		    		</div>
 		    	</div>
 
 
 		    	<div class="col-md-4">
-	    			<div class="radio">
+	    			<div class="rdoRate radio">
 		    			<label>
 		    				<img src="res/images/marker_icon/icon_yellow.png" />
-		    				<input ng-change='rdoColorChange(markerType)' type="radio" name="markerType" ng-model="markerType" id="optionsRadios2" value="yellow" checked>
+		    				<input ng-change='rdoColorChange(markerType)' type="radio" name="markerType" ng-model="markerType" id="optionsRadios2" value="yellow">
 		    			</label>
+		    			<p>Important opportunity that needs work</p>
 		    		</div>
 		    	</div>
 		    	<div class="col-md-4">
-		    		<div class="radio">
+		    		<div class="rdoRate radio">
 		    			<label>
 		    				<img src="res/images/marker_icon/icon_green.png" />
 		    				<input ng-change='rdoColorChange(markerType)' type="radio" name="markerType" ng-model="markerType" id="optionsRadios3" value="green">
     					</label>
+    					<p>A cool place that adds value</p>
 		    		</div>
 		    	</div>
 	    	</div>
-	    	<br />
-	    	<button id="btnSelectMarkerLocation" type="button" data-ng-click="btnSetRating()" class="btn">Select Rating</button>
-
+	    	<hr />
+	    	<button id="btnSelectMarkerLocation" type="button" data-ng-click="btnSetRating()"  class="btn">Rate Location</button>
+	    	<button type="button" data-ng-click="btnDebug()"  class="btn">Clear Participation (debug)</button>
 	    	
 	    	<div id="collapsible_content" class="panel-collapse collapse">
 		    	<hr />
-		      	<button type="button" data-ng-click="btnPlaceMarker()" class="btn">Confirm Location</button>
+
+		    	<h4>What kind of place?</h4>
+
+		    	<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="street">
+	    				Street
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="intersection">
+	    				Intersection
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="park">
+	    				Park
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="plaza">
+	    				Plaza
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="public institution">
+	    				Public institution(library, school, post office)
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="shops">
+	    				Cluster of shops, stores
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="scenic">
+	    				Scenic area
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="health care">
+	    				Health care
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="tourist">
+	    				Tourist attraction
+	    			</label>
+	    		</div>
+    			<div class="radio">
+	    			<label>
+	    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="historic">
+	    				Historic site
+	    			</label>
+	    		</div>
+		      	<button type="button" id="btnConfirmLocation" data-ng-click="btnPlaceMarker()" class="btn">Confirm Location</button>
 		      	<button type="button" data-ng-click="btnCancelMarkerPlacement()" class="btn">Cancel</button>
 		    
 		    </div>

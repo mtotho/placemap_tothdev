@@ -1,4 +1,4 @@
-app.service('gmap', function(){
+app.service('gmap', function($cookieStore){
 	var instance = this;
 	this.map; //the google map object
 
@@ -24,7 +24,10 @@ app.service('gmap', function(){
 			"grey":"res/images/marker_icon/icon_grey.png",
 			"light-red": "res/images/marker_icon/icon_red_light.png", 
 			"light-yellow":"res/images/marker_icon/icon_yellow_light.png", 
-			"light-green":"res/images/marker_icon/icon_green_light.png"
+			"light-green":"res/images/marker_icon/icon_green_light.png",
+			"red-delete": "res/images/marker_icon/icon_red_delete.png", 
+			"yellow-delete":"res/images/marker_icon/icon_yellow_delete.png", 
+			"green-delete":"res/images/marker_icon/icon_green_delete.png"
 		}
 
 	this.init = function(mapdiv){
@@ -60,7 +63,7 @@ app.service('gmap', function(){
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
 	this.toggleDraggable=function(iconColor){
 		if(iconColor==null){
-			iconColor="red";
+			iconColor="grey";
 		}
 
 		//Marker is not on a map
@@ -93,13 +96,29 @@ app.service('gmap', function(){
 			this.loadMarker(markers[i]);
 		}
 	}
-	this.loadMarker = function(marker){
+	this.loadMarker = function(markerdata){
 		var marker = new google.maps.Marker({
 					    	map: this.map,
-					    	position:new google.maps.LatLng(marker.lat, marker.lng),
+					    	position:new google.maps.LatLng(markerdata.lat, markerdata.lng),
 					    	draggable:false,
-					    	icon:this.icons[marker.icon]
+					    	icon:this.icons[markerdata.icon],
+					    	title:markerdata.location_type,
+
 	    });
+	   
+
+	    if(markerdata.participant_id==$cookieStore.get("placemap-participant_id")){
+
+	    	marker.setClickable(true);
+	    	marker.setIcon(this.icons[markerdata.icon+"-delete"]);
+    		google.maps.event.addListener(marker, 'click', function() {
+		     	
+
+	     	//gmap.getDraggableMarker().setAnimation(null);
+ 			});
+	    }
+
+     
 	}
 
 	this.getDraggableMarker = function (){

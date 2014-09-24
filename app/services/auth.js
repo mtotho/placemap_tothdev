@@ -77,6 +77,20 @@ app.service('auth', function($http, $q, $cookieStore){
 		$cookieStore.remove("placemap-token");
 	}
 
+	this.getParticipant = function getParticipant(){
+		//check cookie for existing participant
+		if(angular.isUndefined($cookieStore.get('placemap-participant_id'))){
+			var newParticipant = $http.post(url+"participant");
+			return newParticipant.then(handleSuccess,handleError);
+		}else{
+			var participantGet = $http.get(url+"participant?id="+$cookieStore.get('placemap-participant_id'));
+
+			return participantGet.then(handleSuccess,handleError);
+		}
+
+	}
+
+
 
 	function handleError(response){
 		console.log(response);

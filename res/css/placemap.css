@@ -74,17 +74,29 @@ header h1{
 }
 .map_ui_panel h3{
 	font-size:1.25em;
+	font-style:italic;
+	font-weight:800;
 }
-.map_ui_panel .radio label{
+.map_ui_panel h4{
+	font-style:italic;
+	font-weight:800;
+}
+.map_ui_panel .rdoRate label{
 	width:100%;
 	padding-left:0;
+	margin-bottom:0.5em;
 }
-.map_ui_panel .radio input{
+.map_ui_panel .rdoRate input{
 	display:block;
 	position:relative;
 	margin:0 auto 0 auto;
 }
-.map_ui_panel .radio img{
+.map_ui_panel .rdoRate p{
+	font-style:italic;
+	font-size:0.8em;
+	text-align:center;
+}
+.map_ui_panel .rdoRate img{
 	display:block;
 	margin:0 auto 5px auto;
 }
