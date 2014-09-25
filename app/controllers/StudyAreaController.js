@@ -122,7 +122,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}
 
 	$scope.$watch('participant.markers_placed', function(value){
-		if(value==4){
+		if(value==15){
 			//console.log(value);
 			///gmap.toggleDraggable();
 			$("input[name='markerType']").addClass("disabled");
@@ -166,7 +166,12 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		//reflag the button as not clicked
 		setMarkerIsClicked=false;
 
-	
+		question_page_index=1;
+		$scope.question_1="";
+		$scope.question_2="";
+		$scope.question_3="";
+		$scope.question_4="";
+		$scope.question_5="";
 		
 		//unlock draggable marker and continue bounce
 		gmap.lockDraggableMarker(false);
@@ -190,7 +195,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 
 		//hide collapsible content
-		$("#collapsible_content").collapse('hide');
+		$(".collapse").collapse('hide');
 	}
 
 	//confirm location - post data
@@ -208,11 +213,11 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				"participant_id":$scope.participant.id,
 				"icon":$scope.markerType,
 				"location_type":$scope.locationType,
-				"question_1":$scope.question_1,
-				"question_2":$scope.question_2,
-				"question_3":$scope.question_3,
-				"question_4":$scope.question_4,
-				"question_5":$scope.question_5
+				"question_1":$scope.question_1 + " ",
+				"question_2":$scope.question_2 + " ",
+				"question_3":$scope.question_3+ " ",
+				"question_4":$scope.question_4+ " ",
+				"question_5":$scope.question_5+ " "
 			}
 
 
