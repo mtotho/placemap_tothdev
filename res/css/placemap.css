@@ -128,3 +128,13 @@ header h1{
 	line-height: 2.25em;
 	float:left;
 }
+#question_panel .collapse p{
+	
+	margin-bottom:1em;
+}
+#question_panel h4{
+	margin-bottom:0.5em;
+}
+#question_panel .collapse textarea{
+	margin-bottom: 1em;
+}

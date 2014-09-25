@@ -14,7 +14,7 @@ app.service('gmap', function($cookieStore){
 	this.mapOptions.zoomControl=true;
 	this.mapOptions.disableDoubleClickZoom=false;
 	this.mapOptions.scaleControl=true;
-
+	this.studyarea;
 	this.placemarkers = new Array();
 
 	this.icons={
@@ -61,6 +61,7 @@ app.service('gmap', function($cookieStore){
 
 	this.checkResize = function(){
 		google.maps.event.trigger(this.map, 'resize');
+		this.map.setCenter(this.mapOptions.center);
 	}
 	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
 	this.toggleDraggable=function(iconColor){
@@ -129,6 +130,7 @@ app.service('gmap', function($cookieStore){
 
 	this.setStudyArea = function(studyarea){
 		console.log(studyarea);
+		this.studyarea=studyarea;
 		this.mapOptions.center = new google.maps.LatLng(studyarea.lat, studyarea.lng);
 		this.mapOptions.zoom = parseInt(studyarea.zoom);
 	}

@@ -10,6 +10,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.participant;
 	$scope.participant_marker_count;
 	//$scope.markerType = 'yellow';
+	var question_page_index = 1;
+	var question_page_div = new Array();
 
 	function init(){
 		//make the rate select button disabled
@@ -46,7 +48,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			
 			var studyarea = response.study_areas[0]
 			var placemarkers = studyarea.placemarkers;
-			console.log(placemarkers);
+			//console.log(response);
 			//console.log(response.study_areas[0]);
 			gmap.setStudyArea(studyarea);
 			gmap.init("map_canvas");
@@ -72,12 +74,15 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		});
 
 
-		$('#collapsible_content').collapse({
+		$('.collapse').collapse({
 		  toggle: false
-		})
+		});
+		
 		$('#mdlAddMarker').modal({
 		  show: false
-		})
+		});
+
+
 
 	
 	}
@@ -94,6 +99,26 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 		
 		console.log($scope.map);
+	}
+	$scope.btnNextPage = function(){
+		question_page_index++;
+
+		$("#question_panel .collapse:nth-child("+(question_page_index-1)+")").collapse('hide');
+		$("#question_panel .collapse:nth-child("+question_page_index+")").collapse('show');
+
+		//$("#collapsible_content").collapse('hide');
+			//expand collapsible content
+		//$("#collapsible_content2").collapse('show');
+	}
+	$scope.btnLastPage = function(){
+		question_page_index--;
+
+		$("#question_panel .collapse:nth-child("+(question_page_index+1)+")").collapse('hide');
+		$("#question_panel .collapse:nth-child("+question_page_index+")").collapse('show');
+
+		//$("#collapsible_content").collapse('hide');
+			//expand collapsible content
+		//$("#collapsible_content2").collapse('show');
 	}
 
 	$scope.$watch('participant.markers_placed', function(value){
@@ -128,9 +153,12 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 	}
 	$scope.btnDebug = function(){
-		$cookieStore.remove("placemap-participant_id");
-		$cookieStore.remove("placemap-participant_marker_count");
-		location.reload();
+		//$cookieStore.remove("placemap-participant_id");
+		//$cookieStore.remove("placemap-participant_marker_count");
+		//location.reload();
+
+		//expand collapsible content
+			
 	}
 
 	//Cancel the the marker rating and location lock
@@ -169,6 +197,9 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.btnPlaceMarker = function(){
 		
 		if($scope.locationType!="undefined"){
+			
+
+
 			var pos =  gmap.getDraggableMarker().getPosition();
 			var marker={
 				"lat":pos.lat(),
@@ -176,8 +207,16 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				"study_area_id":studyarea_id,
 				"participant_id":$scope.participant.id,
 				"icon":$scope.markerType,
-				"location_type":$scope.locationType
+				"location_type":$scope.locationType,
+				"question_1":$scope.question_1,
+				"question_2":$scope.question_2,
+				"question_3":$scope.question_3,
+				"question_4":$scope.question_4,
+				"question_5":$scope.question_5
 			}
+
+
+
 			//var markerDescription = $scope.markerDescription;
 			console.log(marker);
 			//post marker
@@ -214,6 +253,22 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			//set the animation to bounce to the user can see where it is placed.
 			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 
+
+
+			switch($scope.markerType){
+				case "red":{
+					$scope.rating_description = "a detriment";
+					break;
+				}
+				case "yellow":{
+					$scope.rating_description = "an opportunity";
+					break;
+				}
+				case "green":{
+					$scope.rating_description = "an asset";
+					break;
+				}
+			}
 
 			$("#btnSelectMarkerLocation").removeClass("disabled");
 		}
