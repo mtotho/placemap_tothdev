@@ -1,6 +1,6 @@
 
 
-app.controller('MapController', function($scope, api,auth,gmap, $location){
+app.controller('MapCreateController', function($scope, api,auth,gmap, $location){
 	//$scope.array = [];
 	//$scope.panel_partial="app/partials/part_createStudyArea.html";
 

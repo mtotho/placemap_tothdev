@@ -5,9 +5,19 @@ app.config(function ($routeProvider) {
     $routeProvider
 	    .when('/', 
 		    {
-		        controller: 'MapController',
-		        templateUrl: 'app/views/view_main.html'
+		        controller: 'HomeController',
+		        templateUrl: 'app/views/view_home.html'
 		    })
+	    .when('/admin',
+	    	{
+	    		controller:'AdminController',
+	    		templateUrl:'app/views/view_admin.html'
+	    	})
+	    .when('/studyarea/create',
+	    	{
+	    		controller:'MapCreateController',
+	    		templateUrl:'app/views/view_mapcreate.html'
+	    	})
 	    .when('/studyarea/:studyarea_id',
 	    	{
 	    		controller:'StudyAreaController',

@@ -1,0 +1,22 @@
+<div id="page_admin" class="row view_content">
+
+	<div class="col-md-2">
+		
+
+		<ul class="nav nav-pills nav-stacked">
+ 			<li class="active"><a ng-click="page='studyarea'">Study Areas</a></li>
+  			<li><a href="#">Users</a></li>
+  			<li><a href="#">Messages</a></li>
+
+ 		</ul>
+
+
+	</div>
+
+
+	<div class="col-md-9">
+		<ng-include src="pages[page]"></ng-include>
+	</div>
+
+	<div class="col-md-1"></div>
+</div>
