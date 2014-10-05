@@ -73,6 +73,7 @@ app.controller('MapCreateController', function($scope, api,auth,gmap, $location)
 		api.insertStudyarea($scope.StudyAreaName,gmap.getCenter().lat(),gmap.getCenter().lng(), gmap.getZoom()).then(
 						function(response){
 							console.log(response);
+							$location.path("admin");
 						}
 					);;
 		

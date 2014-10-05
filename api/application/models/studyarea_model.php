@@ -7,7 +7,11 @@ class Studyarea_model extends CI_Model{
 	function __construct(){
 		parent::__construct();
 
-		$this->sa_query="select id, name, lat, lng, zoom, fk_user_id as user_id from study_area sa";
+		$this->sa_query="select 
+							sa.id, sa.name, sa.lat, sa.lng, sa.zoom, sa.fk_user_id as user_id, 
+							at.name as question_set, at.description as question_set_description 
+						from study_area sa 
+							inner join audit_type at on at.id=sa.default_audit_type  ";
 	}
 
 	function getStudyArea($id=null){

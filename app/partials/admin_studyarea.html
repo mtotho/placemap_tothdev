@@ -1,4 +1,33 @@
 <div ng-controller="AdminSAController">
+	<div class="panel panel-primary">
+	   	<div class="panel-heading">
+	    	<h3 class="panel-title">Study Areas</h3>
+	  	</div>
 
-derp
+			<table id="tblStudyAreas" class="table table-striped">
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Marker Count</th>
+					<th>Question Set</th>
+					<th>Link</th>
+				</tr>
+
+				<tr ng-repeat="sa in studyareas">
+					<td>{{ sa.id }}</td>
+					<td>{{ sa.name }}</td>
+					<td>{{ sa.placemarkers.length }}</td>
+					<td>
+						{{ sa.question_set }}
+						<!--
+						<select ng-model="selQS" ng-options="qs.name for qs in question_sets">
+								
+						</select>-->
+
+					</td>
+					<td><a href="{{ sa_url_part + sa.id }}">Link</a></td>
+				</tr>
+			</table>
+		</div>
+		<button type="button" ng-click="btnNewStudyArea()"class="btn btn-success">New Study Area</button>
 </div>

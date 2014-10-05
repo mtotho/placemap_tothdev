@@ -6,7 +6,12 @@ app.service('api', function($http, $q){
 
 	this.getStudyareas = function(id){
 
-		var studyareaGet = $http.get(url+"studyarea?id="+id);
+		if(angular.isUndefined(id)){
+			var studyareaGet = $http.get(url+"studyarea");
+		}else{
+			var studyareaGet = $http.get(url+"studyarea?id="+id);
+		}
+		
 
 
 		return studyareaGet.then(handleSuccess, handleError);
@@ -29,6 +34,11 @@ app.service('api', function($http, $q){
 		var studyareaPost = $http.post(url+"studyarea", postData);
 		return studyareaPost.then(handleSuccess, handleError);
 	
+	}
+
+	this.getQuestionSets = function(){
+		var get = $http.get(url+"audit_type");
+		return get.then(handleSuccess, handleError);
 	}
 
 	this.postMarker = function(marker){
