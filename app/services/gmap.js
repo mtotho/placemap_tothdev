@@ -6,6 +6,7 @@ app.service('gmap', function($cookieStore){
 
 	this.studyarea_id=0;
 	//default map options
+	this.defaultCenter = new google.maps.LatLng(44.337689, -72.75613709999999);
 	this.mapOptions=new Array();
 	this.mapOptions.center = new google.maps.LatLng(44.337689, -72.75613709999999);
 	this.mapOptions.zoom = 10;
@@ -34,7 +35,7 @@ app.service('gmap', function($cookieStore){
 			
 			//The map variable
 			this.map = new google.maps.Map(document.getElementById(mapdiv), this.mapOptions);
-
+			//this.map.setCenter();
 			
 			this.draggableMarker = new google.maps.Marker({
 					    	map: null,
@@ -122,6 +123,9 @@ app.service('gmap', function($cookieStore){
 	    }
 
      
+	}
+	this.createStudyArea =  function(){
+		this.map.setCenter(this.defaultCenter);
 	}
 
 	this.getDraggableMarker = function (){

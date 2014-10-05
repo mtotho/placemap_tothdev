@@ -23,6 +23,8 @@ app.controller('MapCreateController', function($scope, api,auth,gmap, $location)
 		};
 */
 		gmap.init("map_canvas")
+		//gmap.createStudyArea();
+		gmap.checkResize();
       //  $scope.options = {scrollwheel: false};
 
         
