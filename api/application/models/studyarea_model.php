@@ -18,7 +18,7 @@ class Studyarea_model extends CI_Model{
 
 		$this->load->model("placemarker_model");
 		if($id!=null){
-			$query = $this->sa_query." where id=".$this->db->escape($id);
+			$query = $this->sa_query." where sa.id=".$this->db->escape($id);
 		}else{
 			$query = $this->sa_query;
 		}

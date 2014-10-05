@@ -1,4 +1,4 @@
-app.service('api', function($http, $q){
+app.service('api', function($http, $q, auth){
 	//var user = userService.getUser();
 
 	var url="api/";
@@ -39,6 +39,12 @@ app.service('api', function($http, $q){
 	this.getQuestionSets = function(){
 		var get = $http.get(url+"audit_type");
 		return get.then(handleSuccess, handleError);
+	}
+	this.getUsers = function(){
+		var user = auth.getUser();
+
+		var get = $http.get(url+"user?auth_email="+user.email+"&auth_token="+user.token);
+		return get.then(handleSuccess, handleError);	
 	}
 
 	this.postMarker = function(marker){

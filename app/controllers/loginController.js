@@ -10,23 +10,19 @@ app.controller('loginController', function($scope, api, auth, $cookieStore, $loc
 
 		//Check cookie
 		if(auth.isLoggedIn()){
-
+			console.log("true");
 			//cookie set, authenticate user before displaying login
-			var user={
-				"user":{
-					"email":$cookieStore.get('placemap-email'),
-					"token":$cookieStore.get('placemap-token')
-				}
-			};
+			
 
 			//Check to see if cookie credentials are still valid
-			auth.authenticate(user)
+			auth.authenticate(auth.getUser())
 				.then(
 						function(response){
+							
 							auth.setUser(response.user);
 							//credentials still good, redirect away from login page
 							if(response.user.valid==1){
-								$location.path("/");
+								$location.path("/admin");
 							}
 						}
 					);

@@ -9,6 +9,11 @@ app.service('auth', function($http, $q, $cookieStore){
 		this.user=user;
 	}
 
+	this.getUser = function getUser(){
+
+		return this.user;
+	}
+
 	this.isLoggedIn = function isLoggedIn(){
 		
 		//Attempt to check cookie
@@ -27,7 +32,7 @@ app.service('auth', function($http, $q, $cookieStore){
 				"token":$cookieStore.get('placemap-token')
 			}
 
-			user=data;
+			this.user=data;
 
 			return true;
 		}//end: else
@@ -50,7 +55,7 @@ app.service('auth', function($http, $q, $cookieStore){
 
 	this.getEmail = function getEmail(){
 		if(this.isLoggedIn()){
-			return user.email;
+			return this.user.email;
 		}
 	}
 
@@ -68,13 +73,16 @@ app.service('auth', function($http, $q, $cookieStore){
 
 	//checks if email&token are still good
 	this.authenticate = function authenticate(user){
-		var authPost = $http.post(url+"authenticate",user);
+		data = {"user":user};
+		console.log(data);
+		var authPost = $http.post(url+"authenticate",data);
 		return(authPost.then(handleSuccess, handleError));	
 	}
 
 	this.destroySession=function destroySession(){
 		$cookieStore.remove("placemap-email");
 		$cookieStore.remove("placemap-token");
+		this.user==null;
 	}
 
 	this.getParticipant = function getParticipant(){

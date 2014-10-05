@@ -12,7 +12,7 @@ app.controller('navController', function($scope, api,auth,$location){
 			$scope.userstatus="logout | " + auth.getEmail();	
 
 		}else{
-
+			$scope.userstatus="login";
 		}
 
 	
@@ -23,15 +23,15 @@ app.controller('navController', function($scope, api,auth,$location){
 	init();
 
 	$scope.loginorout = function(){
-		if(auth.isLoggedIn()){
+		if(!angular.isUndefined(auth.getUser())){
 
 			auth.destroySession();
 			$scope.userstatus="login";
-			$location.path("login");
+			$location.path("/login");
 
 		}else{
-			//console.log("logged");
-			$location.path("login");
+			
+			$location.path("/login");
 		}
 		
 		

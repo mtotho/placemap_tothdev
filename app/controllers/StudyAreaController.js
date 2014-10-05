@@ -122,18 +122,18 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}
 
 	$scope.$watch('participant.markers_placed', function(value){
-		if(value==15){
+		if(value==1000){
 			//console.log(value);
 			///gmap.toggleDraggable();
-			$("input[name='markerType']").addClass("disabled");
+			//$("input[name='markerType']").addClass("disabled");
 		}
 	})
 	//Confirm rating/Temporation location
 	$scope.btnSetRating = function(){
-		if($scope.participant.markers_placed==15){
-			alert("You have already placed 15 markers");
-			return;
-		}
+		//if($scope.participant.markers_placed==15){
+		//	alert("You have already placed 15 markers");
+			//return;
+		//}
 
 		//Don't allow button click if it's already clicked or no maarker rating is defined
 		if(!setMarkerIsClicked && $scope.markerType!="undefined"){
