@@ -10,6 +10,39 @@
 											
 				</select>
 			</label>
+
+			<br />
+
+			<div id="adminQuestionPanel" class="panel-collapse collapse">
+
+
+				<!--<ul id="question_list" class="list-group">
+					<li class="list-group-item" data-qid="{{ q.question_id }}" ng-repeat="q in questions">
+						 
+						  {{ q.question_text }}	
+					</li>
+
+				</ul>-->
+
+				<table id="tblQuestionSet" class="table table-striped">
+					<tr>
+						<th>Question Text</th>
+						<th>Question Type</th>
+						<th>Order</th>
+					</tr>
+
+					<tbody id="question_list">
+						<tr data-qid="{{ q.question_id }}" ng-repeat="q in questions">
+							<td>{{ q.question_text }}</td>
+							<td>{{ q.question_type }}</td>
+							<td>{{ q.order }}</td>
+						
+						</tr>
+					</tbody>
+				</table>
+
+				<button type="button" ng-click="btnSaveQuestions()"class="btn btn-success">Save Changes</button>
+			</div>
 		</div>
 	</div><!--end panel-->
 </div>

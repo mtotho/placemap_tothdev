@@ -92,7 +92,7 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 });
 
 app.controller('AdminUserController', function($scope, api, auth,$location, $cookieStore, $routeParams){
-	
+
 	function init(){
 		$("#admin_nav li:nth-child(1)").removeClass("active");
 		$("#admin_nav li:nth-child(2)").addClass("active");
@@ -154,32 +154,81 @@ app.controller('AdminUserController', function($scope, api, auth,$location, $coo
 });
 
 app.controller('AdminQuestionController', function($scope, api, auth,$location, $cookieStore, $routeParams){
+	var question_set = new Array();
 	
-	$scope.question_sets = new Array();
-	
+	$scope.questions = new Array();
+
 	function init(){
 		$("#admin_nav li:nth-child(1)").removeClass("active");
 		$("#admin_nav li:nth-child(2)").removeClass("active");
 		$("#admin_nav li:nth-child(3)").addClass("active");
 
 		loadRemoteData();
-		console.log("admin questions");
+		//console.log("admin questions");
 
+		$("#question_list").sortable({
+
+			update: function(event,ui){
+					var ids = $("#question_list").sortable("toArray",{attribute:"data-qid"})
+		  			console.log(ids);
+					
+					for(var i=0; i<(ids.length); i++){
+						
+						
+						question_set.questions[ids[i]].order = i+1;
+						//$scope.question_set.questions[order-1].order=order
+						//console.log("order " + order);
+						//console.log("question_id " + ids[order-1]);
+					}
+					console.log($scope.questions);
+		  			console.log(question_set);
+			}
+		});
+
+		$('.collapse').collapse({
+		  toggle: false
+		});
 		
 	}
 	
-	init();
 
+	init();
+	
 	function loadRemoteData(){
 		
 		api.getQuestionSets().then(function(response){
 			$scope.question_sets = response.question_sets;
+			
+
 			console.log(response);
 
 
 			});
 
 	}
+
+	$scope.$watch('selQS', function(value){
+		
+		if(!angular.isUndefined(value)){
+			question_set = value;
+			$scope.questions = question_set.questions;
+		
+			question_set.questions = new Array();
+
+			for(var i=0; i<$scope.questions.length; i++){
+				question_set.questions[$scope.questions[i].question_id]=$scope.questions[i];
+			}
+			//question_set.questions.length=i;
+			console.log($scope.questions);
+			//$scope.questions = question_set.questions;
+
+		
+			//$scope.$apply();
+			$('.collapse').collapse('show');
+
+		}
+		
+	});
 	function applyStudyArea(studyarea){
 		
 	}

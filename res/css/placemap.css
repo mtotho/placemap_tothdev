@@ -9,7 +9,24 @@ body{
 	background-color:white;
 
 }
+ody.dragging, body.dragging * {
+  cursor: move !important;
+}
 
+.dragged {
+  position: absolute;
+  opacity: 0.5;
+  z-index: 2000;
+}
+
+ol.example li.placeholder {
+  position: relative;
+  /** More li styles **/
+}
+ol.example li.placeholder:before {
+  position: absolute;
+  /** Define arrowhead **/
+}
 
 .angular-google-map-container { height: 400px; }
 
@@ -159,4 +176,13 @@ header h1{
 
 table th{
 	font-weight:bold;
+}
+
+/*admin*/
+#question_list li{
+
+
+}
+#adminQuestionPanel{
+	margin-top:1em;
 }

@@ -30,7 +30,7 @@ class Audit_model extends CI_Model{
 	function getQuestions($audit_type_id){
 		
 		$query = "select 
-						q.id as question_id, q.question_text, aqt.type as question_type
+						q.id as question_id, q.question_text, aqt.type as question_type, atTOq.order
 				  from audit_question q  
 					inner join audit_question_type aqt on aqt.id=q.fk_question_type_id
 					inner join audit_type_TO_question atTOq on atTOq.fk_question_id=q.id
