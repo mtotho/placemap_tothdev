@@ -3,7 +3,8 @@
 app.controller('AdminController', function($scope, api, auth,$location, $cookieStore, $routeParams){
 	$scope.pages = 
 		{ study_areas: 'app/partials/admin_studyarea.html?v=4',
-		  users: 'app/partials/admin_users.html'};
+		  users: 'app/partials/admin_users.html',
+		  questions:'app/partials/admin_questions.html'};
 
 
 	function init(){
@@ -145,6 +146,39 @@ app.controller('AdminUserController', function($scope, api, auth,$location, $coo
 
 
 			});
+	}
+	function applyStudyArea(studyarea){
+		
+	}
+
+});
+
+app.controller('AdminQuestionController', function($scope, api, auth,$location, $cookieStore, $routeParams){
+	
+	$scope.question_sets = new Array();
+	
+	function init(){
+		$("#admin_nav li:nth-child(1)").removeClass("active");
+		$("#admin_nav li:nth-child(2)").removeClass("active");
+		$("#admin_nav li:nth-child(3)").addClass("active");
+
+		loadRemoteData();
+		console.log("admin questions");
+
+		
+	}
+	
+	init();
+
+	function loadRemoteData(){
+		
+		api.getQuestionSets().then(function(response){
+			$scope.question_sets = response.question_sets;
+			console.log(response);
+
+
+			});
+
 	}
 	function applyStudyArea(studyarea){
 		

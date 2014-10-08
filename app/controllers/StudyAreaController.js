@@ -12,6 +12,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	//$scope.markerType = 'yellow';
 	var question_page_index = 1;
 	var question_page_div = new Array();
+	var placemarkers = new Array();
 
 	function init(){
 		//make the rate select button disabled
@@ -48,6 +49,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			
 			var studyarea = response.study_areas[0]
 			var placemarkers = studyarea.placemarkers;
+			console.log(placemarkers);
 			//console.log(response);
 			//console.log(response.study_areas[0]);
 			gmap.setStudyArea(studyarea);
@@ -70,6 +72,26 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			 	}
 			 });
 
+
+ 	     	var mapmarkers = gmap.getMapMarkers();
+ 	     	placemarkers = gmap.getPlaceMarkers();
+
+ 	     	for(var i=0; i<mapmarkers.length; i++){
+ 	     		var marker = mapmarkers[i];
+
+	 			google.maps.event.addListener(marker, 'click', function() {
+				     $(".response_panel").collapse("hide");
+				     var marker_id=marker.marker_id;
+
+				     var dbmarker = placemarkers[marker_id];
+				     console.log(dbmarker);
+				   	  applyResponsePanel(dbmarker);
+				     
+				      $(".response_panel").collapse("show");
+
+			     	//gmap.getDraggableMarker().setAnimation(null);
+				});
+ 	     	}
 			//console.log(response);
 		});
 
@@ -88,11 +110,10 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}
 	
 	init();
-
-	$scope.markers = [
-		{id:1},
-		{id:2}
-	];
+	function applyResponsePanel(marker){
+		$scope.response_marker = marker;
+		$scope.$apply();
+	}
 
 	$scope.zoomChange = function(){
 		$scope.map.zoom=parseInt($scope.zoom);

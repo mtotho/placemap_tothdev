@@ -1,0 +1,15 @@
+<div ng-controller="AdminQuestionController">
+	<div class="panel panel-primary">
+	   	<div class="panel-heading">
+	    	<h3 class="panel-title">Question Sets</h3>
+	  	</div>
+
+	  	<div class="panel-body">
+	  		<label>Select Question Set <br />
+				<select ng-model="selQS" ng-options="qs.name for qs in question_sets">
+											
+				</select>
+			</label>
+		</div>
+	</div><!--end panel-->
+</div>

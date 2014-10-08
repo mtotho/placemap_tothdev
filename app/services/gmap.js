@@ -17,6 +17,7 @@ app.service('gmap', function($cookieStore){
 	this.mapOptions.scaleControl=true;
 	this.studyarea;
 	this.placemarkers = new Array();
+	this.mapmarkers = new Array();
 
 	this.icons={
 			"red": "res/images/marker_icon/icon_red.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
@@ -41,7 +42,8 @@ app.service('gmap', function($cookieStore){
 					    	map: null,
 					    	position:this.mapOptions.center,
 					    	draggable:true,
-					    	animation:google.maps.Animation.BOUNCE
+					    	animation:google.maps.Animation.BOUNCE,
+					    	
 		    });
 
 			/*
@@ -95,9 +97,11 @@ app.service('gmap', function($cookieStore){
 		}
 	}
 	this.loadMarkers = function(markers){
-
+		this.placemarkers = new Array();
+		this.mapmarkers = new Array();
 		for(var i =0; i<markers.length; i++){
 			this.loadMarker(markers[i]);
+			this.placemarkers[markers[i].id]=markers[i];
 		}
 	}
 	this.loadMarker = function(markerdata){
@@ -107,22 +111,25 @@ app.service('gmap', function($cookieStore){
 					    	draggable:false,
 					    	icon:this.icons[markerdata.icon],
 					    	title:markerdata.location_type,
+					    	marker_id:markerdata.id
 
 	    });
 	   
-
+	   	marker.setClickable(true);
+	   	this.mapmarkers.push(marker);
+		
 	    if(markerdata.participant_id==$cookieStore.get("placemap-participant_id")){
 
-	    	marker.setClickable(true);
+	    	
 	    	marker.setIcon(this.icons[markerdata.icon+"-delete"]);
-    		google.maps.event.addListener(marker, 'click', function() {
-		     	
-
-	     	//gmap.getDraggableMarker().setAnimation(null);
- 			});
+    		
 	    }
-
-     
+	}
+	this.getMapMarkers = function(){
+		return this.mapmarkers;
+	}
+	this.getPlaceMarkers = function(){
+		return this.placemarkers;
 	}
 	this.createStudyArea =  function(){
 		this.map.setCenter(this.defaultCenter);
