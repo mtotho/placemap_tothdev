@@ -43,6 +43,25 @@ class Audit_model extends CI_Model{
 
 		//$query = "select "
 	}
+
+	function newQuestion($question){
+
+		$query = "insert into audit_question set 
+					question_text = ?, fk_question_type_id= (select qt.id from audit_question_type qt where type=?)";
+		$this->db->query($query, array($question['question_text'], $question['question_type']));
+
+		$question_id = $this->db->insert_id();
+
+		$query2= "insert into audit_type_TO_question set 
+					fk_question_id = ?, fk_audit_type_id=?, `order` = ?";
+		$this->db->query($query2, array($question_id, $question['question_set_id'], $question['order']));
+
+		unset($question['question_set_id']);
+		$question['question_id']=$question_id;
+
+		return $question;
+
+	}
 	
 
 }

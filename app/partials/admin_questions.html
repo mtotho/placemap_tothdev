@@ -10,11 +10,15 @@
 											
 				</select>
 			</label>
+		</div>
+	</div><!--end panel primary-->
+			
 
-			<br />
-
-			<div id="adminQuestionPanel" class="panel-collapse collapse">
-
+	<div id="adminQuestionPanel" class="panel-collapse collapse">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+		    	<h3 class="panel-title"> {{ question_set.name }} </h3>
+		  	</div>
 
 				<!--<ul id="question_list" class="list-group">
 					<li class="list-group-item" data-qid="{{ q.question_id }}" ng-repeat="q in questions">
@@ -24,25 +28,53 @@
 
 				</ul>-->
 
-				<table id="tblQuestionSet" class="table table-striped">
-					<tr>
-						<th>Question Text</th>
-						<th>Question Type</th>
-						<th>Order</th>
+			<table id="tblQuestionSet" class="table table-striped">
+				<tr>
+					<th>Question Text</th>
+					<th>Question Type</th>
+					<th>Order</th>
+				</tr>
+
+				<tbody id="question_list">
+					<tr data-qid="{{ q.question_id }}" ng-repeat="q in question_set.questions">
+						<td>{{ q.question_text }}</td>
+						<td>{{ q.question_type }}</td>
+						<td>{{ q.order }}</td>
+					
 					</tr>
+				</tbody>
+			</table>
+		</div><!--end panel primary-->
 
-					<tbody id="question_list">
-						<tr data-qid="{{ q.question_id }}" ng-repeat="q in questions">
-							<td>{{ q.question_text }}</td>
-							<td>{{ q.question_type }}</td>
-							<td>{{ q.order }}</td>
-						
-						</tr>
-					</tbody>
-				</table>
+		<button type="button" ng-click="btnAddQuestion()" class="btn btn-primary">Add Question</button>
+		<button type="button" ng-click="btnSaveQuestions()" class="btn btn-success pull-right">Save Changes</button>
+	</div><!--end admin panel collapse-->
 
-				<button type="button" ng-click="btnSaveQuestions()"class="btn btn-success">Save Changes</button>
-			</div>
-		</div>
-	</div><!--end panel-->
+
+	<div class="modal fade" id="mdlAddQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        <h4 class="modal-title" id="myModalLabel">New Question</h4>
+		      </div>
+		      <div class="modal-body">
+		        
+		      	<div class="form-group">
+					<label for="txtQuestionText">Question Text </label>
+					<textarea id="txtQuestionText" ng-model="tempQuestion.text"  class="form-control" rows="3"></textarea>
+					
+				 </div>
+
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary" ng-click="modalAddQuestion()">Add Question</button>
+		      </div>
+		    </div>
+		  </div>
+		</div><!--end modal-->
+
+
 </div>

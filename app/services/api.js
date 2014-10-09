@@ -40,6 +40,11 @@ app.service('api', function($http, $q, auth){
 		var get = $http.get(url+"audit_type");
 		return get.then(handleSuccess, handleError);
 	}
+	this.postQuestion = function(data){
+		data.user=auth.getUser();
+		var post = $http.post(url+"question", data);
+		return post.then(handleSuccess, handleError);
+	}
 	this.getUsers = function(){
 		var user = auth.getUser();
 
