@@ -4,7 +4,7 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 	$scope.pages = 
 		{ study_areas: 'app/partials/admin_studyarea.html?v=4',
 		  users: 'app/partials/admin_users.html',
-		  questions:'app/partials/admin_questions.html?v=4'};
+		  questions:'app/partials/admin_questions.html?v=3'};
 
 
 	function init(){
@@ -153,21 +153,24 @@ app.controller('AdminUserController', function($scope, api, auth,$location, $coo
 
 });
 
-app.controller('AdminQuestionController', function($scope, api, auth,$location, $cookieStore, $routeParams){
+app.controller('AdminQuestionController', function($scope, api, auth,$location, $http, $cookieStore, $routeParams, $compile, $templateCache, $sce){
 	var question_set = new Array();
 	
 	$scope.questions = new Array();
+	var qt_partials = {
+		shortanswer:"app/partials/admin_question_shortanswer.html",
+		radio:"app/partials/admin_question_radio.html?v=1"
+	}
 
 	function init(){
 		$("#admin_nav li:nth-child(1)").removeClass("active");
 		$("#admin_nav li:nth-child(2)").removeClass("active");
 		$("#admin_nav li:nth-child(3)").addClass("active");
 
+
 		loadRemoteData();
 		//console.log("admin questions");
-		$('#mdlAddQuestion').modal({
-		  show: false
-		});
+	
 
 		$("#question_list").sortable({
 
@@ -210,16 +213,18 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 
 	}
 	$scope.btnAddQuestion = function(){
-		$("#mdlAddQuestion").modal('show');
+		$("ng-question-add .modal").modal('show');
 	}
 	$scope.modalAddQuestion = function(){
 
 		var tempQuestion = $scope.tempQuestion;
 
+
+
 		var data ={
 			"question":{
 				"question_text":tempQuestion.text,
-				"question_type":"shortanswer",
+				"question_type":selQT,
 				"order":countProperties($scope.question_set.questions) + 1,
 				"question_set_id":$scope.question_set.id
 			}
@@ -232,7 +237,7 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 
 		});
 		
-		$("#mdlAddQuestion").modal('hide');
+		$("ng-question-add .modal").modal('hide');
 		
 		$scope.tempQuestion = null;
 	}
@@ -244,10 +249,12 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 			$scope.question_set = value;
 
 			$scope.question_set.questions = new Object();
+			//$scope.question_set.order = new Array();
 			
 			//question_set.questions = new Array();
 
 			for(var i=0; i<temp_questions.length; i++){
+				//$scope.question_set.order[]
 				$scope.question_set.questions[temp_questions[i].question_id]=temp_questions[i];
 			}
 			//question_set.questions.length=i;
@@ -256,11 +263,39 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 
 		
 			//$scope.$apply();
-			$('.collapse').collapse('show');
+			$('#adminQuestionPanel').collapse('show');
 
 		}
 		
 	});
+
+	/*
+	$scope.$watch('selQT', function(value){
+		if(!angular.isUndefined(value)){
+			
+			/*$http.get(qt_partials[value], {cache: $templateCache}).success(function(html) {
+          
+                
+
+                
+            });
+			*/
+
+//			$("#mdlAddQuestion .collapse").collapse('show');
+//		}	
+//	});*/
+
+	$scope.btnAddRdoOption = function(){
+		var radioOption = $scope.newRdoOption;
+		$scope.newRdoOption = "";
+
+		var radio = {
+			"radio_rext":radioOption
+		}
+
+		$scope.tempQuestions.radios.push(radio)
+	}
+
 	function applyStudyArea(studyarea){
 		
 	}
@@ -269,3 +304,4 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 	}
 
 });
+

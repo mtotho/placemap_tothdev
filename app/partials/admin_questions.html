@@ -6,7 +6,7 @@
 
 	  	<div class="panel-body">
 	  		<label>Select Question Set <br />
-				<select ng-model="selQS" ng-options="qs.name for qs in question_sets">
+				<select ng-model="selQS" class="form-control" ng-options="qs.name for qs in question_sets">
 											
 				</select>
 			</label>
@@ -51,30 +51,13 @@
 	</div><!--end admin panel collapse-->
 
 
-	<div class="modal fade" id="mdlAddQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		        <h4 class="modal-title" id="myModalLabel">New Question</h4>
-		      </div>
-		      <div class="modal-body">
+	
 		        
-		      	<div class="form-group">
-					<label for="txtQuestionText">Question Text </label>
-					<textarea id="txtQuestionText" ng-model="tempQuestion.text"  class="form-control" rows="3"></textarea>
-					
-				 </div>
+	<ng-question-add qs="question_set" ></ng-question-add>
+				 	
+				
 
 
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		        <button type="button" class="btn btn-primary" ng-click="modalAddQuestion()">Add Question</button>
-		      </div>
-		    </div>
-		  </div>
-		</div><!--end modal-->
 
 
 </div>

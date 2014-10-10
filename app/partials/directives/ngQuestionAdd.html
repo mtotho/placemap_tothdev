@@ -1,0 +1,67 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">New Question - {{ question_set.name }}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+
+					<label>Select Question Type <br />
+						<select class="form-control" ng-model="selQT">
+							<option value="shortanswer">Short Answer</option>
+							<option value="radio">Radio</option>
+							<option value="likert">Likert</option>							
+						</select>
+					</label>
+
+				</div>
+
+				<div class="panel-collapse collapse">
+						<hr />
+					<div ng-show="types.shortanswer">
+						
+						<label for='txtQuestionText'>Question Text </label>
+						<textarea id='txtQuestionText' ng-model='tempQuestion.question_text'  class='form-control' rows='3'></textarea>
+
+					</div><!--end shortanswer-->
+
+					<div ng-show="types.radio">
+						<label for='txtQuestionText'>Question Text (Radio Prompt)</label>
+						<textarea id='txtQuestionText' ng-model='tempQuestion.question_text'  class='form-control' rows='1'></textarea>
+						
+						<hr />
+
+						<label>
+								Type an Option <br />
+								<input type="text" ng-model="newRdoOption" placeholder="radio option" />
+								
+						</label>
+
+						<button type="button" class="btn btn-primary" ng-click="btnAddRdoOption()">Add Option</button>
+
+						<table style="margin-top:0.5em" class="table">
+							<tr>
+								<th>Option Text</th>
+								<th>Order</th>
+							</tr>
+
+							<tr ng-repeat="r in tempQuestion.radios">
+								<td>{{ r.radio_text }}</td>
+								<td>{{ r.order }}</td>
+							</tr>
+						</table>
+
+
+					</div><!--end radios-->
+				</div><!--end collapse -->
+
+      		</div><!--end modal-body-->
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        	<button type="button" class="btn btn-primary" ng-click="btnSubmit()">Add Question</button>
+	      	</div>
+		</div>
+  	</div>
+</div><!--end modal-->
