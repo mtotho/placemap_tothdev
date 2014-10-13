@@ -4,7 +4,7 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 	$scope.pages = 
 		{ study_areas: 'app/partials/admin_studyarea.html?v=2ssassass4',
 		  users: 'app/partials/admin_users.html',
-		  questions:'app/partials/admin_questions.html?v=3s'};
+		  questions:'app/partials/admin_questions.html?v=3ss'};
 
 
 	function init(){
@@ -236,6 +236,31 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 			});
 
 	}
+	$scope.btnNewQuestionSet = function(){
+		if($scope.newQS!=""){
+			var qsname = $scope.newQS;
+
+			var qs = {
+				"question_set":{
+					"name":qsname
+				}
+			}
+
+			api.postQuestionSet(qs).then(function(response){
+
+				response.question_set.questions = new Array();
+				$scope.question_sets.push(response.question_set);
+				loadQuestionSet(response.question_set);
+				//console.log(response);
+			});
+
+			$scope.newQS="";
+
+		}else{
+			alert("Must enter a question set name");
+		}
+		
+	}
 	$scope.btnAddQuestion = function(){
 		$("ng-question-add .modal").modal('show');
 	}
@@ -265,29 +290,33 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		
 		$scope.tempQuestion = null;
 	}
+	function loadQuestionSet(value){
+		temp_questions = value.questions;
+		$scope.question_set = value;
+
+		$scope.question_set.questions = new Object();
+		//$scope.question_set.order = new Array();
+		
+		//question_set.questions = new Array();
+
+		for(var i=0; i<temp_questions.length; i++){
+			//$scope.question_set.order[]
+			$scope.question_set.questions[temp_questions[i].question_id]=temp_questions[i];
+		}
+		//question_set.questions.length=i;
+		console.log($scope.question_set);
+		$('#adminQuestionPanel').collapse('show');
+	}
 
 	$scope.$watch('selQS', function(value){
 		
 		if(!angular.isUndefined(value)){
-			temp_questions = value.questions;
-			$scope.question_set = value;
-
-			$scope.question_set.questions = new Object();
-			//$scope.question_set.order = new Array();
-			
-			//question_set.questions = new Array();
-
-			for(var i=0; i<temp_questions.length; i++){
-				//$scope.question_set.order[]
-				$scope.question_set.questions[temp_questions[i].question_id]=temp_questions[i];
-			}
-			//question_set.questions.length=i;
-			console.log($scope.question_set);
+			loadQuestionSet(value);
 			//$scope.questions = question_set.questions;
 
 		
 			//$scope.$apply();
-			$('#adminQuestionPanel').collapse('show');
+			
 
 		}
 		

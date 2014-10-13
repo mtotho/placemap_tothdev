@@ -105,6 +105,16 @@ class Audit_model extends CI_Model{
 		return $results;
 
 	}
+	function postAuditType($audit_type, $user){
+		$this->load->model('user_model');
+		$query = "insert into audit_type set 
+					name = ?,
+					description = 'derp',
+					fk_user_id=? ";
+		$this->db->query($query, array($audit_type['name'], $this->user_model->getUser($user['email'])->id));
+		$audit_type['id']=$this->db->insert_id();
+		return $audit_type;
+	}
 
 	function postResponse($response){
 

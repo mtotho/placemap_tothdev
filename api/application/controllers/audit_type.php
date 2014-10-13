@@ -16,14 +16,14 @@ class Audit_type extends REST_Controller {
 
 
 	public function index_post(){
-		$this->load->model("studyarea_model");
+		$this->load->model("audit_model");
 
-		$study_area = $this->post('study_area');
-		error_log(print_r($_POST, true));
-		$study_area_id = $this->studyarea_model->postStudyArea($study_area);
+		$audit_type = $this->post('question_set');
+		$user = $this->post('user');
+		$audit_type = $this->audit_model->postAuditType($audit_type,$user);
 
-		$study_area['id']=$study_area_id;
+		$response['question_set']=$audit_type;
 
-		$this->response($study_area);
+		$this->response($response);
 	}
 }
