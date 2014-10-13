@@ -110,7 +110,7 @@ app.service('gmap', function($cookieStore){
 					    	position:new google.maps.LatLng(markerdata.lat, markerdata.lng),
 					    	draggable:false,
 					    	icon:this.icons[markerdata.icon],
-					    	title:markerdata.location_type,
+					    	//title:markerdata.location_type,
 					    	marker_id:markerdata.id
 
 	    });

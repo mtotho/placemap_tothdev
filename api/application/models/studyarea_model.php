@@ -8,8 +8,8 @@ class Studyarea_model extends CI_Model{
 		parent::__construct();
 
 		$this->sa_query="select 
-							sa.id, sa.name, sa.lat, sa.lng, sa.zoom, sa.fk_user_id as user_id, 
-							at.name as question_set, at.description as question_set_description 
+							sa.id, sa.name, sa.lat, sa.lng, sa.zoom, at.id as audit_type_id, sa.fk_user_id as user_id 
+							
 						from study_area sa 
 							inner join audit_type at on at.id=sa.default_audit_type  ";
 	}
@@ -17,6 +17,7 @@ class Studyarea_model extends CI_Model{
 	function getStudyArea($id=null){
 
 		$this->load->model("placemarker_model");
+		$this->load->model("audit_model");
 		if($id!=null){
 			$query = $this->sa_query." where sa.id=".$this->db->escape($id);
 		}else{
@@ -26,9 +27,19 @@ class Studyarea_model extends CI_Model{
 		$results = $this->db->query($query);
 		$results = $results->result_array();
 
+
+
+		//rror_log(print_r($question_set[0],true));
 		$i=0;
 		foreach($results as $sa){
 			$sa_id = $sa['id'];
+
+
+			$audit_type_id=$sa['audit_type_id'];
+			$question_set =$this->audit_model->getAuditTypes($audit_type_id);
+
+			$results[$i]['question_set'] = $question_set[0];
+
 
 			$results[$i]["placemarkers"] = $this->placemarker_model->getPlacemarkers($sa_id);
 			$i++;

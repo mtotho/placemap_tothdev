@@ -12,6 +12,7 @@
 						<select class="form-control" ng-model="selQT">
 							<option value="shortanswer">Short Answer</option>
 							<option value="radio">Radio</option>
+							<option value="check">Check Box</option>
 							<option value="likert">Likert</option>							
 						</select>
 					</label>
@@ -27,15 +28,15 @@
 
 					</div><!--end shortanswer-->
 
-					<div ng-show="types.radio">
-						<label for='txtQuestionText'>Question Text (Radio Prompt)</label>
+					<div ng-show="types.radio || types.check">
+						<label for='txtQuestionText'>Question Text/Prompt <em>e.g. "What type of location is this?"</em></label>
 						<textarea id='txtQuestionText' ng-model='tempQuestion.question_text'  class='form-control' rows='1'></textarea>
 						
 						<hr />
 
 						<label>
 								Type an Option <br />
-								<input type="text" ng-model="newRdoOption" placeholder="radio option" />
+								<input type="text" ng-model="newRdoOption" placeholder="option text, e.g. Intersection" />
 								
 						</label>
 
@@ -47,9 +48,9 @@
 								<th>Order</th>
 							</tr>
 
-							<tr ng-repeat="r in tempQuestion.radios">
-								<td>{{ r.radio_text }}</td>
-								<td>{{ r.order }}</td>
+							<tr ng-repeat="option in tempQuestion.opts">
+								<td>{{ option.option_text }}</td>
+								<td>{{ option.order }}</td>
 							</tr>
 						</table>
 

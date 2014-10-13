@@ -52,11 +52,11 @@ app.service('api', function($http, $q, auth){
 		return get.then(handleSuccess, handleError);	
 	}
 
-	this.postMarker = function(marker){
-		var postData={
-			"placemarker":marker
-		}
-		var markerPost = $http.post(url+"placemarker", postData);
+	this.postMarker = function(data){
+		//var postData={
+			//"placemarker":marker
+		//}
+		var markerPost = $http.post(url+"placemarker", data);
 		return markerPost.then(handleSuccess, handleError);
 	}
 

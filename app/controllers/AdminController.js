@@ -269,32 +269,6 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		
 	});
 
-	/*
-	$scope.$watch('selQT', function(value){
-		if(!angular.isUndefined(value)){
-			
-			/*$http.get(qt_partials[value], {cache: $templateCache}).success(function(html) {
-          
-                
-
-                
-            });
-			*/
-
-//			$("#mdlAddQuestion .collapse").collapse('show');
-//		}	
-//	});*/
-
-	$scope.btnAddRdoOption = function(){
-		var radioOption = $scope.newRdoOption;
-		$scope.newRdoOption = "";
-
-		var radio = {
-			"radio_rext":radioOption
-		}
-
-		$scope.tempQuestions.radios.push(radio)
-	}
 
 	function applyStudyArea(studyarea){
 		

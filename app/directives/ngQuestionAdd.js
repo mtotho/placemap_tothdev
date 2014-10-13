@@ -15,7 +15,8 @@ app.directive('ngQuestionAdd', function(api) {
     		$scope.types={
 	    		shortanswer:false,
 	    		radio:false,
-	    		likert:false
+	    		likert:false,
+                check:false
 			}
 	    	$scope.tempQuestion = new Object();
     		
@@ -30,17 +31,17 @@ app.directive('ngQuestionAdd', function(api) {
 
     	$scope.btnAddRdoOption = function(){
 
-    		if(angular.isUndefined($scope.tempQuestion.radios)){
-    			$scope.tempQuestion.radios = new Array();
+    		if(angular.isUndefined($scope.tempQuestion.opts)){
+    			$scope.tempQuestion.opts = new Array();
     		}
     		if($scope.newRdoOption!=""){
 	    		
-	    		var radio = {
-	    			"radio_text":$scope.newRdoOption,
-	    			"order":$scope.tempQuestion.radios.length + 1
+	    		var radioOrCheck = {
+	    			"option_text":$scope.newRdoOption,
+	    			"order":$scope.tempQuestion.opts.length + 1
 	    		}
 	    		$scope.newRdoOption="";
-	    		$scope.tempQuestion.radios.push(radio);
+	    		$scope.tempQuestion.opts.push(radioOrCheck);
 	    	
     		}else{
     			alert("Must enter a name for the radio option");
@@ -63,7 +64,7 @@ app.directive('ngQuestionAdd', function(api) {
 			}
 
 			if($scope.selQT="radio"){
-				data.question.radios=tempQuestion.radios;
+				data.question.opts=tempQuestion.opts;
 			}
 
 			console.log(data);

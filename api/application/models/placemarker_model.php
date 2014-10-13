@@ -12,13 +12,7 @@ class Placemarker_model extends CI_Model{
 									pm.lng, 
 									pm.fk_study_area_id as study_area_id,  
 									pm.fk_participant_id as participant_id,
-									pm.icon,
-									pm.location_type,
-									pm.question_1,
-									pm.question_2,
-									pm.question_3,
-									pm.question_4,
-									pm.question_5
+									pm.icon
 								from placemarker pm";
 	}
 
@@ -51,16 +45,9 @@ class Placemarker_model extends CI_Model{
 					lng  = ?,
 					fk_study_area_id = ?,
 					fk_participant_id = ?,
-					icon=?,
-					location_type=?,
-					question_1=?,
-					question_2=?,
-					question_3=?,
-					question_4=?,
-					question_5=?";
+					icon=?";
 		
-		$this->db->query($query, array($placemarker['lat'],$placemarker['lng'],$placemarker['study_area_id'],$placemarker['participant_id'], $placemarker['icon'], $placemarker['location_type'],
-			$placemarker['question_1'], $placemarker['question_2'], $placemarker['question_3'], $placemarker['question_4'], $placemarker['question_5']));
+		$this->db->query($query, array($placemarker['lat'],$placemarker['lng'],$placemarker['study_area_id'],$placemarker['participant_id'], $placemarker['icon']));
 		error_log("[POST][Placemarker]: ".$this->db->last_query());
 		return $this->db->insert_id();
 	

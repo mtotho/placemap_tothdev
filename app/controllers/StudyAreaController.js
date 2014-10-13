@@ -13,8 +13,12 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	var question_page_index = 1;
 	var question_page_div = new Array();
 	var placemarkers = new Array();
+	var initState = true;
+	$scope.marker;
 
 	function init(){
+		$scope.qvopen=false;
+		//$scope.initial_state=true;
 		//make the rate select button disabled
 		$("#btnSelectMarkerLocation").addClass("disabled");
 		$("#btnConfirmLocation").addClass("disabled");
@@ -168,11 +172,33 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			gmap.lockDraggableMarker(true);
 
 			//expand collapsible content
-			$("#collapsible_content").collapse('show');
-		
+			//$("ng-questions-view .collapse:nth-child(1)").collapse('show');
+			//$("ng-questions-view .modal").modal('show');
+			initState=false;
+			
+			
+			var pos =  gmap.getDraggableMarker().getPosition();
+			$scope.marker={
+				"lat":pos.lat(),
+				"lng":pos.lng(),
+				"study_area_id":studyarea_id,
+				"participant_id":$scope.participant.id,
+				"icon":$scope.markerType
+			}
+
+			$scope.qvopen=true;
+
 		}
 
 	}
+	 $scope.$watch('qvopen', function(enabled){
+	 		
+	 		
+        if(!enabled && !initState){
+        	$scope.btnCancelMarkerPlacement();
+        }
+    });
+
 	$scope.btnDebug = function(){
 		//$cookieStore.remove("placemap-participant_id");
 		//$cookieStore.remove("placemap-participant_marker_count");
@@ -226,37 +252,13 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			
 
 
-			var pos =  gmap.getDraggableMarker().getPosition();
-			var marker={
-				"lat":pos.lat(),
-				"lng":pos.lng(),
-				"study_area_id":studyarea_id,
-				"participant_id":$scope.participant.id,
-				"icon":$scope.markerType,
-				"location_type":$scope.locationType,
-				"question_1":$scope.question_1 + " ",
-				"question_2":$scope.question_2 + " ",
-				"question_3":$scope.question_3+ " ",
-				"question_4":$scope.question_4+ " ",
-				"question_5":$scope.question_5+ " "
-			}
-
+		
 
 
 			//var markerDescription = $scope.markerDescription;
 			console.log(marker);
 			//post marker
-			api.postMarker(marker).then(function(response){
-				//$("#mdlAddMarker").modal('hide');
-				console.log(response);
-				$scope.btnCancelMarkerPlacement();
-				gmap.loadMarker(response.placemarker);
-
-				$scope.participant.markers_placed++;
-
-				$cookieStore.put("placemap-participant_marker_count", $scope.participant.markers_placed);
-			});
-
+			
 		}
 		
 
@@ -332,6 +334,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}
 	function applyStudyArea(studyarea){
 		$scope.studyarea=studyarea;
+
 	}
 
 });

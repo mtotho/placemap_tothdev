@@ -21,11 +21,15 @@ class Placemarker extends REST_Controller {
 
 	public function index_post(){
 		$this->load->model("placemarker_model");
+		$this->load->model("audit_model");
 
-		$placemarker = $this->post("placemarker");
-		$placemarker["id"] = $this->placemarker_model->postPlacemarker($placemarker);
+		$response = $this->post("response");
 
-		$response["placemarker"]=$placemarker;
+		error_log(print_r($response,true));
+		$response["marker"]["id"] = $this->placemarker_model->postPlacemarker($response["marker"]);
+
+		$response = $this->audit_model->postResponse($response);
+		//$response["placemarker"]=$placemarker;
 		$this->response($response);
 	}
 }

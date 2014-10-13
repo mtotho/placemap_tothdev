@@ -15,6 +15,7 @@ class Studyarea extends REST_Controller {
 		$study_areas = $this->studyarea_model->getStudyArea($studyarea_id);
 
 		$response['study_areas']=$study_areas;
+		
 		$this->response($response);
 	}
 

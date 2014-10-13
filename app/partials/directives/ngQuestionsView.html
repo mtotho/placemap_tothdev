@@ -1,0 +1,192 @@
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Please Answer the following</h4>
+			</div>
+			<div class="modal-body">
+			
+
+				<div class="progress">
+				  <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+				    {{ progress*100 }}%
+				  </div>
+				</div>
+
+
+				<div ng-show="curQuestion.question_type=='check'">
+					<h4>{{ curQuestion.question_text }}</h4>
+
+
+					<div class="check" ng-repeat="o in curQuestion.jsonOpts">
+		    			<label>
+		    				<input  type="checkbox" name="locationType" ng-model="responses[curQuestion.question_id].opts[o.option_text]" value="street">
+		    				{{ o.option_text }}
+		    			</label>
+		    		</div>
+				
+				</div>
+				<div ng-show="curQuestion.question_type=='shortanswer'">
+					
+					<p>{{ curQuestion.question_text }} </p>
+			    	<textarea class="form-control" ng-model="responses[curQuestion.question_id].text" rows="5"></textarea>
+				</div>
+
+				<div ng-show="completion">
+					<p>Thank you for taking time to answer the questions.</p>
+
+				<button type="button" class="btn btn-success btn-lg btn-block qsubmit" ng-click="btnSubmit()">Submit Marker</button>
+				</div>
+
+				<br />
+
+
+      		</div><!--end modal-body-->
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default qcancel" ng-click="btnMdlCancel()" data-dismiss="modal">Cancel</button>
+
+				<button type="button" class="btn btn-primary qback" ng-click="btnBack()">Back</button>
+				<button type="button" class="btn btn-primary qnext" ng-click="btnNext()">Next</button>
+	        	
+	      	</div>
+		</div>
+  	</div>
+</div><!--end modal-->
+<!--
+<div id="question_panel">
+			    	<div id="collapsible_content" class="panel-collapse collapse">
+				    	
+				    	<h4>What kind of place?</h4>
+
+				    	<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="street">
+			    				Street
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="intersection">
+			    				Intersection
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="park">
+			    				Park
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="plaza">
+			    				Plaza
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="public institution">
+			    				Public institution(library, school, post office)
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="shops">
+			    				Cluster of shops, stores
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="scenic">
+			    				Scenic area
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="health care">
+			    				Health care
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="tourist">
+			    				Tourist attraction
+			    			</label>
+			    		</div>
+		    			<div class="radio">
+			    			<label>
+			    				<input ng-change='rdoLocationTypeChange(locationType)' type="radio" name="locationType" ng-model="locationType" value="historic">
+			    				Historic site
+			    			</label>
+			    		</div>
+
+			    		<button type="button" data-ng-click="btnCancelMarkerPlacement()" class="btn">Cancel</button>
+			    		<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+				    
+				      
+				    
+				    </div><!--end collapsible -->
+<!--
+				    <div id="collapsible_content2" class="panel-collapse collapse">
+				   		
+				    	<p style="font-style:italic">You marked this place as {{ rating_description }}: can you tell us why?</p>
+				    	<textarea class="form-control" ng-model="question_1" rows="5"></textarea>
+
+				    	<button type="button" id="btnNext" data-ng-click="btnLastPage()" class="btn">Back</button>
+				    	<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+
+				    </div>
+
+					<div id="collapsible_content3" class="panel-collapse collapse">
+				   		<h4>Uses &amp; Activities</h4>
+
+				    	<p>What additional uses and activities could be clustered ('triangulated') with this destination to improve it?</p>
+				    	<textarea class="form-control" ng-model="question_2" rows="5"></textarea>
+
+				    	<button type="button" id="btnNext" data-ng-click="btnLastPage()" class="btn">Back</button>
+				    	<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+
+				    </div>    
+					<div  class="panel-collapse collapse">
+				   		<h4>Sociability</h4>
+
+				    	<p>What group activities could be supported here? e.g space for childrens activities, programs, cultural events, education, hobbies, etc.</p>
+				    	<textarea class="form-control" ng-model="question_3" rows="5"></textarea>
+
+				    	<button type="button" id="btnNext" data-ng-click="btnLastPage()" class="btn">Back</button>
+				    	<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+
+				    </div>    
+					<div  class="panel-collapse collapse">
+				   		<h4>Comfort &amp; Image</h4>
+
+				    	<p>What enhancements would make it more comfortable, more inviting, or give it stronger identity?</p>
+				    	<textarea class="form-control" ng-model="question_4" rows="5"></textarea>
+
+				    	<button type="button" id="btnNext" data-ng-click="btnLastPage()" class="btn">Back</button>
+				    	<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+
+				    </div>
+					<div  class="panel-collapse collapse">
+				   		<h4>Access &amp; Linkages</h4>
+
+				    	<p>Are there any ways to increase regional importance by improving physical and programmatic connections to other attractions nearby?</p>
+				    	<textarea class="form-control" ng-model="question_5" rows="5"></textarea>
+
+				    	<button type="button" id="btnNext" data-ng-click="btnLastPage()" class="btn">Back</button>
+				    	<button type="button" id="btnNext" data-ng-click="btnNextPage()" class="btn btn-success">Next</button>
+
+				    </div>   
+
+					<div  class="panel-collapse collapse">
+				   		
+
+				    	<p>Thank you for taking time to answer the questions.</p>
+				    	
+
+				    	<button type="button" data-ng-click="btnLastPage()" class="btn">Back</button>
+			    	  	<button type="button" id="btnConfirmLocation" data-ng-click="btnPlaceMarker()" class="btn btn-primary">Complete</button>
+
+				    </div>       
+				</div>-->
