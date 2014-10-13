@@ -10,6 +10,9 @@ app.directive('ngQuestionsView', function(api,gmap) {
         $('ng-questions-view .modal').on('hidden.bs.modal', function (e) {
             console.log("hidden");
             scope.qvopen=false;
+            scope.qindex=0;
+            
+            scope.progress=0;
             scope.$apply();
             // do something...
         })
@@ -47,8 +50,8 @@ app.directive('ngQuestionsView', function(api,gmap) {
 
         $scope.$watch('qindex', function(qindex){
             if(!angular.isUndefined($scope.study_area)){
-                console.log(qindex);
-                console.log($scope.qcount);
+                //console.log(qindex);
+                //console.log($scope.qcount);
                 if(qindex==0){
                     $("ng-questions-view .qback").addClass("disabled");
                 }
@@ -59,9 +62,11 @@ app.directive('ngQuestionsView', function(api,gmap) {
                      $("ng-questions-view .qnext").addClass("disabled");
                 }
                 if(qindex<$scope.qcount){
+                    setQuestion(qindex);
                     $("ng-questions-view .qnext").removeClass("disabled");
                 }
 
+                
 
 
             }
@@ -103,7 +108,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
 
 
                 $scope.qindex++;
-                setQuestion($scope.qindex);
+                //setQuestion($scope.qindex);
             }else{
                 $scope.qindex++;
                 $scope.progress=1;
@@ -117,7 +122,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
         $scope.btnBack = function(){
             if($scope.qindex>0){
                 $scope.qindex--;
-                setQuestion($scope.qindex);
+                //setQuestion($scope.qindex);
                 $scope.completion=false;
             }
         }
@@ -149,6 +154,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
             console.log(data);
         }
         function setQuestion(qindex){
+            console.log(qindex);
             $scope.progress = (qindex) / $scope.study_area.question_set.questions.length;
             $("ng-questions-view .progress-bar").css('width', $scope.progress*100 + "%" );
           

@@ -35,6 +35,14 @@ app.service('api', function($http, $q, auth){
 		return studyareaPost.then(handleSuccess, handleError);
 	
 	}
+	this.updateStudyareas = function(studyareas){
+		var postData = {
+			"study_areas":studyareas
+		}
+		var put = $http.put(url+"studyarea", postData);
+		return put.then(handleSuccess, handleError);
+	}
+
 
 	this.getQuestionSets = function(){
 		var get = $http.get(url+"audit_type");

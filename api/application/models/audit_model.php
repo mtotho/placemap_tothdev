@@ -83,7 +83,28 @@ class Audit_model extends CI_Model{
 		return $question;
 
 	}
+	function getResponse($marker_id){
+		$query = "select r.id as response_id, r.timestamp, atq.fk_audit_question_id as question_id, atq.response_text, at.type as question_type, atq.response_json
+					from audit_response r
+				  inner join audit_response_TO_question atq on atq.fk_audit_response_id=r.id
+				  inner join audit_question q on q.id=atq.fk_audit_question_id
+				  inner join audit_question_type at on at.id=q.fk_question_type_id
+				   where r.fk_placemarker_id=?";
+		$results = $this->db->query($query, array($marker_id));
+		$results = $results->result_array();
 
+		$i=0;
+		foreach($results as $response){
+			if($response['question_type']!="shortanswer"){
+
+				$results[$i]['response_json']=json_decode($results[$i]['response_json']);
+			}
+			$i++;
+		}
+
+		return $results;
+
+	}
 
 	function postResponse($response){
 

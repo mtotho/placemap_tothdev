@@ -50,7 +50,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 		//get the study area
 		api.getStudyareas(studyarea_id).then(function(response){
-			
+			console.log(response);
 			var studyarea = response.study_areas[0]
 			var placemarkers = studyarea.placemarkers;
 			console.log(placemarkers);

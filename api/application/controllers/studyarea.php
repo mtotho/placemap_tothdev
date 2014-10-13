@@ -15,6 +15,8 @@ class Studyarea extends REST_Controller {
 		$study_areas = $this->studyarea_model->getStudyArea($studyarea_id);
 
 		$response['study_areas']=$study_areas;
+
+		//error_log(print_r($response,true));
 		
 		$this->response($response);
 	}
@@ -30,5 +32,18 @@ class Studyarea extends REST_Controller {
 		$study_area['id']=$study_area_id;
 
 		$this->response($study_area);
+	}
+
+	public function index_put(){
+		$this->load->model("studyarea_model");
+
+		$study_areas = $this->put('study_areas');
+
+		foreach($study_areas as $sa){
+			$this->studyarea_model->updateStudyArea($sa);
+		}
+		$response['study_areas']=$study_areas;
+		$this->response($response);
+		
 	}
 }

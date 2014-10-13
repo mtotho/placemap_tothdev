@@ -23,7 +23,7 @@ class Studyarea_model extends CI_Model{
 		}else{
 			$query = $this->sa_query;
 		}
-		error_log("[GET][Study_area]: ".$query);
+		//error_log("[GET][Study_area]: ".$query);
 		$results = $this->db->query($query);
 		$results = $results->result_array();
 
@@ -40,7 +40,6 @@ class Studyarea_model extends CI_Model{
 
 			$results[$i]['question_set'] = $question_set[0];
 
-
 			$results[$i]["placemarkers"] = $this->placemarker_model->getPlacemarkers($sa_id);
 			$i++;
 		}
@@ -55,6 +54,15 @@ class Studyarea_model extends CI_Model{
 		return $result->display_placemarkers;
 	}
 
+	function updateStudyArea($sa){
+		$query = "update study_area set 
+					name =?,
+					default_audit_type=?
+					where id=?
+					";
+		//error_log(print_r($sa['question_set'], true));
+		$this->db->query($query, array($sa['name'], $sa['question_set']['id'], $sa['id']));		
+	}
 
 	function postStudyArea($studyarea){
 

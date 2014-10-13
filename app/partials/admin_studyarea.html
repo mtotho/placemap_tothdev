@@ -18,11 +18,10 @@
 					<td>{{ sa.name }}</td>
 					<td>{{ sa.placemarkers.length }}</td>
 					<td>
-						{{ sa.question_set.name}}
-						<!--
-						<select ng-model="selQS" ng-options="qs.name for qs in question_sets">
+						
+						<select ng-change="qsChange(sa.id, selected_qs)" ng-model="selected_qs"  ng-options="qs.name for qs in question_sets">
 								
-						</select>-->
+						</select>
 
 					</td>
 					<td><a href="{{ sa_url_part + sa.id }}">Link</a></td>
@@ -30,4 +29,5 @@
 			</table>
 		</div>
 		<button type="button" ng-click="btnNewStudyArea()"class="btn btn-success">New Study Area</button>
+		<button type="button" ng-click="btnSaveStudyareas()" class="btn btn-success pull-right">Save Changes</button>
 </div>

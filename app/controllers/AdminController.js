@@ -2,9 +2,9 @@
 
 app.controller('AdminController', function($scope, api, auth,$location, $cookieStore, $routeParams){
 	$scope.pages = 
-		{ study_areas: 'app/partials/admin_studyarea.html?v=4',
+		{ study_areas: 'app/partials/admin_studyarea.html?v=2ssassass4',
 		  users: 'app/partials/admin_users.html',
-		  questions:'app/partials/admin_questions.html?v=3'};
+		  questions:'app/partials/admin_questions.html?v=3s'};
 
 
 	function init(){
@@ -49,13 +49,15 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 
 app.controller('AdminSAController', function($scope, api, auth,$location, $cookieStore, $routeParams){
 	
+	$scope.updates = new Object();	
 	function init(){
 		$("#admin_nav li:nth-child(1)").addClass("active");
 		$("#admin_nav li:nth-child(2)").removeClass("active");
 		$("#admin_nav li:nth-child(3)").removeClass("active");
 		
 
-		$scope.studyareas = new Array();
+		$scope.studyareas = new Object();
+
 		$scope.sa_url_part = "http://localhost/placemap_tothdev/main.html#/studyarea/";
 
 		loadRemoteData();
@@ -68,13 +70,34 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 	}
 
+	$scope.qsChange = function(sa_id, qs){
+	
+		$scope.studyareas[sa_id].question_set=qs;
+
+	}
+	$scope.btnSaveStudyareas = function(){
+		
+		api.updateStudyareas($scope.studyareas).then(function(response){
+
+			console.log(response);
+
+		});
+
+	}
+
+
 	function loadRemoteData(){
 		api.getStudyareas().then(function(response){
+					for(var i=0; i<response.study_areas.length; i++){
+						//$scope.question_set.order[]	
+						$scope.studyareas[response.study_areas[i].id]=response.study_areas[i];
 
-					$scope.studyareas = response.study_areas;
+						$scope.studyareas[response.study_areas[i].id].selected_question_set=response.study_areas[i].question_set
+					}
+					//$scope.studyareas = response.study_areas;
 
-					
-					console.log(response);
+						
+					console.log($scope.studyareas);
 
 				});
 		
@@ -85,6 +108,7 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 			});
 	}
+
 	function applyStudyArea(studyarea){
 		$scope.studyarea=studyarea;
 	}

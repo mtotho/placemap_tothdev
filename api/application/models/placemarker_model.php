@@ -17,7 +17,7 @@ class Placemarker_model extends CI_Model{
 	}
 
 	function getPlacemarkers($study_area_id,$participant_id=null){
-
+		$this->load->model("audit_model");
 		//Study area specified but
 		
 		$this->load->model("studyarea_model");
@@ -34,7 +34,17 @@ class Placemarker_model extends CI_Model{
 */
 		//error_log("[GET][Placemarkers]: ".$query);
 		$results = $this->db->query($query);
-		return $results->result_array();
+
+		$results = $results->result_array();
+		$i=0;
+		foreach($results as $marker){
+
+			$results[$i]['response'] = $this->audit_model->getResponse($marker['id']);
+			$i++;
+		}
+
+
+		return $results;
 		
 	}
 
