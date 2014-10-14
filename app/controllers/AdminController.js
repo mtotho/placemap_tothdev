@@ -2,7 +2,7 @@
 
 app.controller('AdminController', function($scope, api, auth,$location, $cookieStore, $routeParams){
 	$scope.pages = 
-		{ study_areas: 'app/partials/admin_studyarea.html?v=2ssassass4',
+		{ study_areas: 'app/partials/admin_studyarea.html?v=2sssasssass4',
 		  users: 'app/partials/admin_users.html',
 		  questions:'app/partials/admin_questions.html?v=3ss'};
 
@@ -49,12 +49,15 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 
 app.controller('AdminSAController', function($scope, api, auth,$location, $cookieStore, $routeParams){
 	
-	$scope.updates = new Object();	
+	$scope.updates = new Object();
+	
 	function init(){
 		$("#admin_nav li:nth-child(1)").addClass("active");
 		$("#admin_nav li:nth-child(2)").removeClass("active");
 		$("#admin_nav li:nth-child(3)").removeClass("active");
 		
+		$scope.selQuestionSets = new Object();
+
 
 		$scope.studyareas = new Object();
 
@@ -70,9 +73,9 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 	}
 
-	$scope.qsChange = function(sa_id, qs){
-	
-		$scope.studyareas[sa_id].question_set=qs;
+	$scope.qsChange = function(sa_id){
+		console.log($scope.selQuestionSets[sa_id]);
+		$scope.studyareas[sa_id].question_set.id=$scope.selQuestionSets[sa_id];
 
 	}
 	$scope.btnSaveStudyareas = function(){
@@ -87,30 +90,40 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 
 	function loadRemoteData(){
+		api.getQuestionSets().then(function(response){
+			$scope.question_sets = response.question_sets;
+			console.log(response);
+
+
+		});
+
 		api.getStudyareas().then(function(response){
-					for(var i=0; i<response.study_areas.length; i++){
-						//$scope.question_set.order[]	
-						$scope.studyareas[response.study_areas[i].id]=response.study_areas[i];
 
-						$scope.studyareas[response.study_areas[i].id].selected_question_set=response.study_areas[i].question_set
-					}
-					//$scope.studyareas = response.study_areas;
-
-						
+					applyStudyAreas(response.study_areas);
+					
 					console.log($scope.studyareas);
 
-				});
-		
-		api.getQuestionSets().then(function(response){
-				$scope.question_sets = response.question_sets;
-				console.log(response);
-
-
 			});
+		
+	
 	}
 
-	function applyStudyArea(studyarea){
-		$scope.studyarea=studyarea;
+	function applyStudyAreas(studyareas){
+
+
+		for(var i=0; i<studyareas.length; i++){
+
+			//$scope.question_set.order[]	
+			$scope.studyareas[studyareas[i].id]=studyareas[i];
+
+			$scope.selQuestionSets[studyareas[i].id]=studyareas[i].question_set.id;
+
+
+			//$scope.studyareas[response.study_areas[i].id].selected_question_set=response.study_areas[i].question_set
+		}
+					//$scope.studyareas = response.study_areas;
+
+		//$scope.studyarea=studyarea;
 	}
 
 });
