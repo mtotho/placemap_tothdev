@@ -89,7 +89,8 @@ class Audit_model extends CI_Model{
 				  inner join audit_response_TO_question atq on atq.fk_audit_response_id=r.id
 				  inner join audit_question q on q.id=atq.fk_audit_question_id
 				  inner join audit_question_type at on at.id=q.fk_question_type_id
-				   where r.fk_placemarker_id=?";
+				  inner join audit_type_TO_question attq on attq.fk_question_id=q.id
+				   where r.fk_placemarker_id=? order by attq.order ";
 		$results = $this->db->query($query, array($marker_id));
 		$results = $results->result_array();
 

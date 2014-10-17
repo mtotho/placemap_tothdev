@@ -137,6 +137,33 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 	
 	}
+	function bindMarkerClick(markerObj){
+		 	if(!setMarkerIsClicked){
+		   		if(!angular.isUndefined(selectedMarker)){
+		   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
+		   		}
+
+		   		
+			   	 // $(".response_panel").collapse("hide");
+		     	var marker_id=markerObj.marker_id;
+			    //	 console.log(this);
+
+		     	var dbmarker = placemarkers[marker_id];
+
+		   		selectedMarker=markerObj;
+		   		selectedDBMarker = dbmarker;
+
+			    //console.log(dbmarker);
+		   	  	applyResponsePanel(dbmarker);
+
+
+		   	  	markerObj.setIcon(gmap.getIcons()[dbmarker.icon+"-delete"]);
+		   	  	console.log(dbmarker);
+			     
+
+		      	$(".response_panel").collapse("show");
+		  	}
+	}
 	
 	init();
 	function applyResponsePanel(marker){
