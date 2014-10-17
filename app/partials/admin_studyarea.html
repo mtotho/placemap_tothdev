@@ -4,8 +4,11 @@
 	    	<h3 class="panel-title">Study Areas</h3>
 	  	</div>
 
+	  	<div class="panel-body">
+	  		<label for="txtStudyFilter">Studyarea Search</label>
+			<input type="text" class="form-control" ng-model="saSearch"  /> <br />
 			<table id="tblStudyAreas" class="table table-striped">
-				<tr>
+				<tr> 
 					<th>#</th>
 					<th>Name</th>
 					<th>Marker Count</th>
@@ -13,13 +16,13 @@
 					<th>Link</th>
 				</tr>
 
-				<tr ng-repeat="sa in studyareas">
+				<tr ng-repeat="sa in studyareas | filter: saSearch">
 					<td>{{ sa.id }}</td>
 					<td>{{ sa.name }}</td>
 					<td>{{ sa.placemarkers.length }}</td>
 					<td>
 						
-						<select class="form-control" ng-change="qsChange(sa.id)" ng-model="selQuestionSets[sa.id]"  ng-options="qs.id as qs.name for qs in question_sets">
+						<select class="form-control" ng-change="qsChange(sa.id, $index)" ng-model="studyareas[$index].question_set.id"  ng-options="qs.id as qs.name for qs in question_sets">
 							
 						</select>
 
@@ -27,6 +30,7 @@
 					<td><a href="{{ sa_url_part + sa.id }}">Link</a></td>
 				</tr>
 			</table>
+			</div>
 		</div>
 		<button type="button" ng-click="btnNewStudyArea()"class="btn btn-success">New Study Area</button>
 		<button type="button" ng-click="btnSaveStudyareas()" class="btn btn-success pull-right">Save Changes</button>

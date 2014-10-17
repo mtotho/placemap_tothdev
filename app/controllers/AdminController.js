@@ -1,10 +1,13 @@
 
 
 app.controller('AdminController', function($scope, api, auth,$location, $cookieStore, $routeParams){
+	var rand = Math.round(Math.random()*1000);
+	console.log(rand);
+
 	$scope.pages = 
-		{ study_areas: 'app/partials/admin_studyarea.html?v=2sssasssass4',
-		  users: 'app/partials/admin_users.html',
-		  questions:'app/partials/admin_questions.html?v=3ss'};
+		{ study_areas: 'app/partials/admin_studyarea.html?v='+rand,
+		  users: 'app/partials/admin_users.html?v='+rand,
+		  questions:'app/partials/admin_questions.html?v='+rand};
 
 
 	function init(){
@@ -59,7 +62,7 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 		$scope.selQuestionSets = new Object();
 
 
-		$scope.studyareas = new Object();
+		$scope.studyareas = new Array();
 
 		$scope.sa_url_part = "http://localhost/placemap_tothdev/main.html#/studyarea/";
 
@@ -73,9 +76,10 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 	}
 
-	$scope.qsChange = function(sa_id){
-		console.log($scope.selQuestionSets[sa_id]);
-		$scope.studyareas[sa_id].question_set.id=$scope.selQuestionSets[sa_id];
+
+	$scope.qsChange = function(sa_id,index){
+		// questionsconsole.log($scope.studyareas[index].question_set);
+		//$scope.studyareas[index].question_set.id=$scope.selQuestionSets[sa_id];
 
 	}
 	$scope.btnSaveStudyareas = function(){
@@ -111,18 +115,9 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 	function applyStudyAreas(studyareas){
 
 
-		for(var i=0; i<studyareas.length; i++){
-
-			//$scope.question_set.order[]	
-			$scope.studyareas[studyareas[i].id]=studyareas[i];
-
-			$scope.selQuestionSets[studyareas[i].id]=studyareas[i].question_set.id;
-
-
-			//$scope.studyareas[response.study_areas[i].id].selected_question_set=response.study_areas[i].question_set
-		}
-					//$scope.studyareas = response.study_areas;
-
+		$scope.studyareas = studyareas;
+		//console.lo
+		
 		//$scope.studyarea=studyarea;
 	}
 
