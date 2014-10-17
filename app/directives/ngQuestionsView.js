@@ -11,7 +11,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
             console.log("hidden");
             scope.qvopen=false;
             scope.qindex=0;
-            
+            scope.completion=false;
             scope.progress=0;
             scope.$apply();
             // do something...

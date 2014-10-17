@@ -13,16 +13,17 @@ class Placemarker_model extends CI_Model{
 									pm.fk_study_area_id as study_area_id,  
 									pm.fk_participant_id as participant_id,
 									pm.icon
-								from placemarker pm";
+								from placemarker pm 
+									inner join audit_response ar on ar.fk_placemarker_id=pm.id";
 	}
 
-	function getPlacemarkers($study_area_id,$participant_id=null){
+	function getPlacemarkers($study_area_id, $audit_type_id,$participant_id=null){
 		$this->load->model("audit_model");
 		//Study area specified but
 		
 		$this->load->model("studyarea_model");
 		//Only build query if markers are visible for this study area
-		$query = $this->marker_query." where pm.fk_study_area_id=".$this->db->escape($study_area_id);
+		$query = $this->marker_query." where pm.fk_study_area_id=".$this->db->escape($study_area_id)." and ar.fk_audit_type_id=".$this->db->escape($audit_type_id);
 		/*
 		if($this->studyarea_model->areMarkersVisible($study_area_id)){
 			$query = $this->marker_query." where pm.fk_study_area_id=".$this->db->escape($study_area_id);
