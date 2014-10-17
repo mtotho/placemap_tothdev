@@ -14,6 +14,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	var question_page_div = new Array();
 	var placemarkers = new Array();
 	var initState = true;
+	var selectedMarker;
+	var selectedDBMarker;
 	$scope.marker;
 
 	function init(){
@@ -75,24 +77,47 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	     			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 			 	}
 			 });
-
-
+			google.maps.event.addListener(gmap.getMap(), 'click', function() {
+		     	if(!angular.isUndefined(selectedMarker)){
+				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
+			   		}
+	     		$(".response_panel").collapse("hide");
+	 		});
  	     	var mapmarkers = gmap.getMapMarkers();
  	     	placemarkers = gmap.getPlaceMarkers();
-
+ 	   		
  	     	for(var i=0; i<mapmarkers.length; i++){
  	     		var marker = mapmarkers[i];
 
+
 	 			google.maps.event.addListener(marker, 'click', function() {
-				     $(".response_panel").collapse("hide");
-				     var marker_id=marker.marker_id;
+				   	
+				   	//ONLY show response if not currently rating
+				   	if(!setMarkerIsClicked){
+				   		if(!angular.isUndefined(selectedMarker)){
+				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
+				   		}
 
-				     var dbmarker = placemarkers[marker_id];
-				     console.log(dbmarker);
-				   	  applyResponsePanel(dbmarker);
-				     
-				      $(".response_panel").collapse("show");
+				   		
+					   	 // $(".response_panel").collapse("hide");
+				     	var marker_id=this.marker_id;
+					    //	 console.log(this);
 
+				     	var dbmarker = placemarkers[marker_id];
+
+				   		selectedMarker=this;
+				   		selectedDBMarker = dbmarker;
+
+					    //console.log(dbmarker);
+				   	  	applyResponsePanel(dbmarker);
+
+
+				   	  	this.setIcon(gmap.getIcons()[dbmarker.icon+"-delete"]);
+				   	  	console.log(dbmarker);
+					     
+
+				      	$(".response_panel").collapse("show");
+				  	}
 			     	//gmap.getDraggableMarker().setAnimation(null);
 				});
  	     	}
@@ -162,6 +187,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 		//Don't allow button click if it's already clicked or no maarker rating is defined
 		if(!setMarkerIsClicked && $scope.markerType!="undefined"){
+			$(".response_panel").collapse("hide");
 			//flag so we know button is clicked
 			setMarkerIsClicked = true;
 			
@@ -195,6 +221,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	 		
 	 		
         if(!enabled && !initState){
+
         	$scope.btnCancelMarkerPlacement();
         }
     });

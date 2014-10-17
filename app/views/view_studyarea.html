@@ -11,8 +11,32 @@
 
 		<div class="response_panel map_panel panel-collapse collapse">
 			<h3>Response</h3>
+
+			<div ng-repeat="r in response_marker.response">
+				
+				<div class="question_response" ng-hide="r.question_type!='check'">
+					<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
+					<div class="row">
+						<div class="col-md-6" ng-repeat="(key,value) in r.response_json">
+							<p class='response_text'>{{ key }}</p>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="question_response" ng-hide="r.question_type!='shortanswer'">
+					<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
+					<p class='response_text'>{{ r.response_text }}</p>
+
+				</div>
+
+			</div>
+
+			<!--
+			<p>Other Stats</p>
 			Lat: {{ response_marker.lat }} <br />
-			lng: {{ response_marker.lng }}
+			lng: {{ response_marker.lng }}-->
 		</div>
 
 		<!--

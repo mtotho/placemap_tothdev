@@ -16,7 +16,7 @@ app.service('gmap', function($cookieStore){
 	this.mapOptions.disableDoubleClickZoom=false;
 	this.mapOptions.scaleControl=true;
 	this.studyarea;
-	this.placemarkers = new Array();
+	this.placemarkers = new Object();
 	this.mapmarkers = new Array();
 
 	this.icons={
@@ -113,17 +113,20 @@ app.service('gmap', function($cookieStore){
 					    	//title:markerdata.location_type,
 					    	marker_id:markerdata.id
 
-	    });
-	   
+		    });
+		   
 	   	marker.setClickable(true);
 	   	this.mapmarkers.push(marker);
 		
 	    if(markerdata.participant_id==$cookieStore.get("placemap-participant_id")){
 
 	    	
-	    	marker.setIcon(this.icons[markerdata.icon+"-delete"]);
+	    	//marker.setIcon(this.icons[markerdata.icon+"-delete"]);
     		
 	    }
+	}
+	this.getIcons = function(){
+		return this.icons;
 	}
 	this.getMapMarkers = function(){
 		return this.mapmarkers;

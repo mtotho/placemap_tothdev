@@ -101,7 +101,7 @@ header h1{
 }
 .map_panel h3{
 	font-size:1.25em;
-	font-style:italic;
+	
 	font-weight:800;
 }
 .map_create{
@@ -119,7 +119,7 @@ ng-questions-view p{
 	margin-bottom:1em;
 }
 .response_panel{
-	top:50%;
+	top:15%;
 	left:5%;
 }
 .rating_panel{
@@ -127,7 +127,7 @@ ng-questions-view p{
 	right:5%;
 }
 .rating_panel h4{
-	font-style:italic;
+	
 	font-weight:800;
 }
 .rating_panel .rdoRate label{
@@ -191,6 +191,27 @@ ng-questions-view p{
 table th{
 	font-weight:bold;
 }
+
+.response_panel h3{
+	margin-bottom:0.5em;
+}
+.response_panel .question_text{
+	font-size:0.85em;
+	font-weight:bold;
+	color:#676768;
+	
+}
+.response_panel .question_response{
+	margin-bottom:0.5em;
+}
+.response_panel .response_text{
+	font-style:italic;
+	color:#604984;
+	font-size:0.85em;
+	
+}
+
+
 
 /*admin*/
 #question_list li{
