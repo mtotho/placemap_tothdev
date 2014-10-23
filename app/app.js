@@ -18,16 +18,16 @@ app.config(function ($routeProvider) {
 	    		controller:'MapCreateController',
 	    		templateUrl:'app/views/view_mapcreate.html'
 	    	})
+	    .when('/studyarea/',
+	    	{
+	    		controller:'SASelectController',
+	    		templateUrl:'app/views/view_sa_select.html'
+	    	})
 	    .when('/studyarea/:studyarea_id',
 	    	{
 	    		controller:'StudyAreaController',
 	    		templateUrl:'app/views/view_studyarea.html'
 	    	})
-	    .when('/about',
-		    {
-		      	controller: 'MapController',
-		        templateUrl: 'app/views/customers.html'
-		    })
 		.when('/login',
 		    {
 		      	controller: 'loginController',

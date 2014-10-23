@@ -1,0 +1,29 @@
+<div id="sa_select">
+
+	<div  id='sa_search_row'>
+		<div class="container">
+			<label for="txtStudyFilter">Studyarea Search</label>
+			<input type="text" class="form-control" ng-model="saSearch"  /> <br />
+		</div>
+		
+	</div>
+
+	<div id="sa_table_row">
+
+		<div class="container">
+			<table id="tblSASelect" class="table table-striped">
+					<tr> 
+						<th>Name</th>
+						<th>Marker Count</th>
+						
+					</tr>
+
+					<tr ng-repeat="sa in studyareas | filter: saSearch">	
+						<td><a href="{{ sa_url_part + sa.id }}">{{ sa.name }}</a></td>
+						<td>{{ sa.placemarkers.length }}</td>
+						
+					</tr>
+				</table>
+		</div>
+	</div>
+</div>

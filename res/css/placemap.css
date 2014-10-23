@@ -253,3 +253,28 @@ table th{
     vertical-align: middle;
     float: none;
 }
+/*sa select */
+
+#sa_search_row{
+	background-color:#E8E8E8;
+	padding:2em 0 2em 0;
+}
+#sa_table_row{
+	padding:2em 0 2em 0;
+
+}
+#tblSASelect{
+	font-size:1.2em;
+	border:none;
+	border-color:white;
+}
+#tblSASelect tr:nth-child(2n+1) th{
+	background-color:#E8E8E8;
+}
+#tblSASelect tr:nth-child(2n+1) td{
+	background-color:#D2DDE7;
+}
+#tblSASelect th, #tblSASelect td{
+	border-top:none;
+	
+}
