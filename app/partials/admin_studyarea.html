@@ -13,6 +13,7 @@
 					<th>Name</th>
 					<th>Marker Count</th>
 					<th>Question Set</th>
+					<th>Public</th>
 					<th>Link</th>
 				</tr>
 
@@ -26,6 +27,9 @@
 							
 						</select>
 
+					</td>
+					<td>
+						<input type="checkbox" ng-model="studyareas[$index].is_public" ng-checked="studyareas[$index].is_public=='1'"/>
 					</td>
 					<td><a href="{{ sa_url_part + sa.id }}">Link</a></td>
 				</tr>

@@ -15,7 +15,7 @@ app.controller('SASelectController', function($scope, api, auth,$location, $cook
 	init();
 
 	function loadRemoteData(){
-		api.getStudyareas().then(function(response){
+		api.getPublicStudyareas().then(function(response){
 
 					applyStudyAreas(response.study_areas);
 					

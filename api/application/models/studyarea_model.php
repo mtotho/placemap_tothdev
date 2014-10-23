@@ -8,18 +8,21 @@ class Studyarea_model extends CI_Model{
 		parent::__construct();
 
 		$this->sa_query="select 
-							sa.id, sa.name, sa.lat, sa.lng, sa.zoom, at.id as audit_type_id, sa.fk_user_id as user_id 
+							sa.id, sa.name, sa.lat, sa.lng, sa.zoom, at.id as audit_type_id, sa.fk_user_id as user_id, sa.display_placemarkers as is_public 
 							
 						from study_area sa 
 							inner join audit_type at on at.id=sa.default_audit_type  ";
 	}
 
-	function getStudyArea($id=null){
+	function getStudyArea($id=null, $is_public=null){
 
 		$this->load->model("placemarker_model");
 		$this->load->model("audit_model");
+		
 		if($id!=null){
 			$query = $this->sa_query." where sa.id=".$this->db->escape($id);
+		}else if($is_public!=null){
+			$query = $this->sa_query." where display_placemarkers=1";
 		}else{
 			$query = $this->sa_query;
 		}
@@ -57,11 +60,12 @@ class Studyarea_model extends CI_Model{
 	function updateStudyArea($sa){
 		$query = "update study_area set 
 					name =?,
-					default_audit_type=?
+					default_audit_type=?,
+					display_placemarkers=?
 					where id=?
 					";
 		//error_log(print_r($sa['question_set'], true));
-		$this->db->query($query, array($sa['name'], $sa['question_set']['id'], $sa['id']));		
+		$this->db->query($query, array($sa['name'], $sa['question_set']['id'], $sa['is_public'], $sa['id']));		
 	}
 
 	function postStudyArea($studyarea){

@@ -87,7 +87,7 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 	}
 	$scope.btnSaveStudyareas = function(){
-		
+		console.log($scope.studyareas);
 		api.updateStudyareas($scope.studyareas).then(function(response){
 
 			console.log(response);

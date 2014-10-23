@@ -7,12 +7,19 @@ class Studyarea extends REST_Controller {
 		$this->load->model("studyarea_model");
 
 		$studyarea_id = $this->get("id");
+		$is_public = $this->get("public");
+
+
 
 		if($studyarea_id==""){
 			$studyarea_id=null;
 		}
 
-		$study_areas = $this->studyarea_model->getStudyArea($studyarea_id);
+		if($is_public == ""){
+			$is_public=null;
+		}
+
+		$study_areas = $this->studyarea_model->getStudyArea($studyarea_id, $is_public);
 
 		$response['study_areas']=$study_areas;
 

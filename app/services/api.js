@@ -11,9 +11,11 @@ app.service('api', function($http, $q, auth){
 		}else{
 			var studyareaGet = $http.get(url+"studyarea?id="+id);
 		}
-		
 
-
+		return studyareaGet.then(handleSuccess, handleError);
+	}
+	this.getPublicStudyareas = function(){
+		var studyareaGet = $http.get(url+"studyarea?public=true");
 		return studyareaGet.then(handleSuccess, handleError);
 	}
 
