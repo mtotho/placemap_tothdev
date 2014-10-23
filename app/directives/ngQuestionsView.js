@@ -8,7 +8,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
     },
     link:function(scope, element, attrs){
         $('ng-questions-view .modal').on('hidden.bs.modal', function (e) {
-            console.log("hidden");
+            if(window.debug)console.log("--Question View: Hidden");
             scope.qvopen=false;
             scope.qindex=0;
             scope.completion=false;
@@ -27,7 +27,6 @@ app.directive('ngQuestionsView', function(api,gmap) {
         $scope.responses = new Object();
 
     	function init(){
-            //console.log($scope.study_area);
 
             $("ng-questions-view .qback").addClass("disabled");
     		$scope.types={
@@ -45,7 +44,6 @@ app.directive('ngQuestionsView', function(api,gmap) {
             });
 
     	}
-
     	init();
 
         $scope.$watch('qindex', function(qindex){
@@ -140,21 +138,29 @@ app.directive('ngQuestionsView', function(api,gmap) {
                 }
             }
 
-            api.postMarker(data).then(function(response){
-                //$("#mdlAddMarker").modal('hide');
-                console.log(response);
-               // $scope.btnCancelMarkerPlacement();
-               gmap.loadMarker(response.marker);
-               $scope.qvopen=false;
-                //$scope.participant.markers_placed++;
+            if(window.debug)console.log("===Marker Post===");
+            if(window.debug)console.log(data);
+            if(window.debug)console.log(" ");
 
-                //$cookieStore.put("placemap-participant_marker_count", $scope.participant.markers_placed);
+            //post marker to database
+            api.postMarker(data).then(function(response){
+                
+                if(window.debug)console.log("===Marker Post - Response===");
+                if(window.debug)console.log(response);
+                if(window.debug)console.log(" ");
+
+              
+                gmap.loadMarker(response.marker);
+                
+                //hide the qv modal
+                $scope.qvopen=false;
+            
             });
 
-            console.log(data);
+         
         }
         function setQuestion(qindex){
-            console.log(qindex);
+         
             $scope.progress = (qindex) / $scope.study_area.question_set.questions.length;
             $("ng-questions-view .progress-bar").css('width', $scope.progress*100 + "%" );
           
@@ -166,7 +172,9 @@ app.directive('ngQuestionsView', function(api,gmap) {
             $scope.responses[$scope.curQuestion.question_id].question_id=$scope.curQuestion.question_id;
             $scope.responses[$scope.curQuestion.question_id].question_type =$scope.curQuestion.question_type;
 
-            console.log($scope.curQuestion);
+            if(window.debug)console.log("=== Current Question===");
+            if(window.debug)console.log($scope.curQuestion);
+            if(window.debug)console.log(" ");
         }
 
         $scope.btnMdlCancel = function(){

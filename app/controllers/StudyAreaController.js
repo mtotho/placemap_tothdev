@@ -18,9 +18,18 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	var selectedDBMarker;
 	$scope.marker;
 
+
+
 	function init(){
+
+		//Flag the question view panel closed initially.
 		$scope.qvopen=false;
-		//$scope.initial_state=true;
+		
+		//Set the study area id to the value in the url parameter
+		studyarea_id = $routeParams.studyarea_id;
+
+
+
 		//make the rate select button disabled
 		$("#btnSelectMarkerLocation").addClass("disabled");
 		$("#btnConfirmLocation").addClass("disabled");
@@ -29,6 +38,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			"markers_placed":"0"
 		};
 
+		//Check marker count cookie - rework this system
 		if(angular.isUndefined($cookieStore.get("placemap-participant_marker_count"))){
 			$scope.participant.markers_placed=0;
 			$cookieStore.put("placemap-participant_marker_count",0);
@@ -36,28 +46,29 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			$scope.participant.markers_placed = $cookieStore.get("placemap-participant_marker_count");
 		}
 
-		studyarea_id = $routeParams.studyarea_id;
-
-		//debug fake participant info
-	
 
 		//get the current participant
 		auth.getParticipant().then(function(response){
 			$scope.participant.id=response.participant.id;
 			$cookieStore.put("placemap-participant_id", $scope.participant.id);
 		});
-		console.log($scope.participant);
 
-
+		if(window.debug)console.log("===Participant===");
+		if(window.debug)console.log($scope.participant);
+		if(window.debug)console.log(" ");
 
 		//get the study area
 		api.getStudyareas(studyarea_id).then(function(response){
-			console.log(response);
+			
+			if(window.debug)console.log("===Studyarea===");
+			if(window.debug)console.log(response);
+			if(window.debug)console.log(" ");
 			var studyarea = response.study_areas[0]
 			var placemarkers = studyarea.placemarkers;
-			console.log(placemarkers);
-			//console.log(response);
-			//console.log(response.study_areas[0]);
+			
+			
+			
+			//set up google map and load placemarkers
 			gmap.setStudyArea(studyarea);
 			gmap.init("map_canvas");
 			gmap.loadMarkers(placemarkers);
@@ -66,63 +77,72 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 			gmap.toggleDraggable("grey");
 
+			//Stop draggable marker from bouncing on mouseover
 	     	google.maps.event.addListener(gmap.getDraggableMarker(), 'mouseover', function() {
-		     
 	     		gmap.getDraggableMarker().setAnimation(null);
 	 		});
 
+	     	//Start draggable marker bounce upon mouseout
  	     	google.maps.event.addListener(gmap.getDraggableMarker(), 'mouseout', function() {
-		     	
-		     	if(!setMarkerIsClicked){
+		     	if(!setMarkerIsClicked){ //We do not want to animate marker if the user has locked in a location to rate
 	     			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 			 	}
 			 });
+
+ 	     	//Map click event
 			google.maps.event.addListener(gmap.getMap(), 'click', function() {
+		     	
+		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
 		     	if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
 			   		}
+			   	//Hide the response panel
 	     		$(".response_panel").collapse("hide");
 	 		});
- 	     	var mapmarkers = gmap.getMapMarkers();
- 	     	placemarkers = gmap.getPlaceMarkers();
+
+ 	     	var mapmarkers = gmap.getMapMarkers(); //Map markers are the actual google maps marker objects
+ 	     	placemarkers = gmap.getPlaceMarkers(); //placemap markers
  	   		
+ 	   		//Loop through all the google map marker objects and add click event
  	     	for(var i=0; i<mapmarkers.length; i++){
  	     		var marker = mapmarkers[i];
-
 
 	 			google.maps.event.addListener(marker, 'click', function() {
 				   	
 				   	//ONLY show response if not currently rating
 				   	if(!setMarkerIsClicked){
+
+				   		//If another marker has already been selected, revert that marker's icon back to normal 
 				   		if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
 				   		}
+				   		//Set the selected marker to be this current one we just clicked
+				   		selectedMarker=this;
 
-				   		
-					   	 // $(".response_panel").collapse("hide");
+				   		//Grab the database marker 'placemap marker' object associated with this google map marker 
 				     	var marker_id=this.marker_id;
-					    //	 console.log(this);
-
 				     	var dbmarker = placemarkers[marker_id];
 
-				   		selectedMarker=this;
+				     	//set the selected DB marker for use elsewhere
 				   		selectedDBMarker = dbmarker;
 
-					    //console.log(dbmarker);
+				   		//apply dbmarker data to the scope
 				   	  	applyResponsePanel(dbmarker);
 
-
+				   	  	//set the icon of the selected marker to a noticeably different one so we can distinguish
 				   	  	this.setIcon(gmap.getIcons()[dbmarker.icon+"-delete"]);
-				   	  	console.log(dbmarker);
-					     
+				   	  	
+				   	  	if(window.debug)console.log("===Marker Clicked===");
+				   	  	if(window.debug)console.log(dbmarker);
+					    if(window.debug)console.log(" ");
 
 				      	$(".response_panel").collapse("show");
 				  	}
-			     	//gmap.getDraggableMarker().setAnimation(null);
-				});
- 	     	}
-			//console.log(response);
-		});
+			    
+				});//end marker click
+ 	     	}//end for
+			
+		});//end massive bloated studyarea pull .then function
 
 
 		$('.collapse').collapse({
@@ -131,71 +151,13 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		
 		$('#mdlAddMarker').modal({
 		  show: false
-		});
-
-
-
-	
-	}
-	function bindMarkerClick(markerObj){
-		 	if(!setMarkerIsClicked){
-		   		if(!angular.isUndefined(selectedMarker)){
-		   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
-		   		}
-
-		   		
-			   	 // $(".response_panel").collapse("hide");
-		     	var marker_id=markerObj.marker_id;
-			    //	 console.log(this);
-
-		     	var dbmarker = placemarkers[marker_id];
-
-		   		selectedMarker=markerObj;
-		   		selectedDBMarker = dbmarker;
-
-			    //console.log(dbmarker);
-		   	  	applyResponsePanel(dbmarker);
-
-
-		   	  	markerObj.setIcon(gmap.getIcons()[dbmarker.icon+"-delete"]);
-		   	  	console.log(dbmarker);
-			     
-
-		      	$(".response_panel").collapse("show");
-		  	}
-	}
-	
+		});	
+	}//end: init()
 	init();
+
 	function applyResponsePanel(marker){
 		$scope.response_marker = marker;
 		$scope.$apply();
-	}
-
-	$scope.zoomChange = function(){
-		$scope.map.zoom=parseInt($scope.zoom);
-
-		
-		console.log($scope.map);
-	}
-	$scope.btnNextPage = function(){
-		question_page_index++;
-
-		$("#question_panel .collapse:nth-child("+(question_page_index-1)+")").collapse('hide');
-		$("#question_panel .collapse:nth-child("+question_page_index+")").collapse('show');
-
-		//$("#collapsible_content").collapse('hide');
-			//expand collapsible content
-		//$("#collapsible_content2").collapse('show');
-	}
-	$scope.btnLastPage = function(){
-		question_page_index--;
-
-		$("#question_panel .collapse:nth-child("+(question_page_index+1)+")").collapse('hide');
-		$("#question_panel .collapse:nth-child("+question_page_index+")").collapse('show');
-
-		//$("#collapsible_content").collapse('hide');
-			//expand collapsible content
-		//$("#collapsible_content2").collapse('show');
 	}
 
 	$scope.$watch('participant.markers_placed', function(value){
@@ -204,7 +166,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			///gmap.toggleDraggable();
 			//$("input[name='markerType']").addClass("disabled");
 		}
-	})
+	});
+
 	//Confirm rating/Temporation location
 	$scope.btnSetRating = function(){
 		//if($scope.participant.markers_placed==15){
@@ -214,22 +177,22 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 		//Don't allow button click if it's already clicked or no maarker rating is defined
 		if(!setMarkerIsClicked && $scope.markerType!="undefined"){
-			$(".response_panel").collapse("hide");
-			//flag so we know button is clicked
+			//flag so we know this button is clicked
 			setMarkerIsClicked = true;
-			
+
 			//indicate button is pressed
 			$("#btnSelectMarkerLocation").addClass("active");
 
+			//Hide any response panels showing 
+			$(".response_panel").collapse("hide");
+			
 			//lock the draggable marker into place (and stop the bouncing)
 			gmap.lockDraggableMarker(true);
 
-			//expand collapsible content
-			//$("ng-questions-view .collapse:nth-child(1)").collapse('show');
-			//$("ng-questions-view .modal").modal('show');
+			//flag initState false - hack to make sure watch function doesnt run right away (watch qvopen)
 			initState=false;
 			
-			
+			//define marker so we can post it to db should user go through with questions
 			var pos =  gmap.getDraggableMarker().getPosition();
 			$scope.marker={
 				"lat":pos.lat(),
@@ -239,93 +202,57 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				"icon":$scope.markerType
 			}
 
+			//flag qvopen to true to show the questions view
 			$scope.qvopen=true;
-
 		}
 
 	}
-	 $scope.$watch('qvopen', function(enabled){
-	 		
-	 		
-        if(!enabled && !initState){
 
+	//watch 'qvopen' change to decide whether to cancemarker placement
+	$scope.$watch('qvopen', function(enabled){
+		
+		//Cancel marker placement if question view is hidden
+        if(!enabled && !initState){
         	$scope.btnCancelMarkerPlacement();
         }
     });
-
-	$scope.btnDebug = function(){
-		//$cookieStore.remove("placemap-participant_id");
-		//$cookieStore.remove("placemap-participant_marker_count");
-		//location.reload();
-
-		//expand collapsible content
-			
-	}
 
 	//Cancel the the marker rating and location lock
 	$scope.btnCancelMarkerPlacement = function(){
 		//reflag the button as not clicked
 		setMarkerIsClicked=false;
 
-		question_page_index=1;
-		$scope.question_1="";
-		$scope.question_2="";
-		$scope.question_3="";
-		$scope.question_4="";
-		$scope.question_5="";
-		
 		//unlock draggable marker and continue bounce
 		gmap.lockDraggableMarker(false);
 
 		//set the draggable icon color back to default
 		gmap.setDraggableIcon("grey");
-		$scope.markerType=null;
-		//remove indication button is clicked
-		$("#btnSelectMarkerLocation").removeClass("active");
-		//redisable  button 
-		$("#btnSelectMarkerLocation").addClass("disabled");
-
+	  	$scope.markerType=null;
+		
 		//Replace the draggable marker on the map (it seems to disapear from the map when you change icon)
 		gmap.getDraggableMarker().setMap(gmap.getMap());
 
-		//undo location type selection
-		$scope.locationType=null;
+		//remove indication button is clicked
+		$("#btnSelectMarkerLocation").removeClass("active");
+		
+		//redisable  button 
+		$("#btnSelectMarkerLocation").addClass("disabled");
 
 		//redisable confirm button
 		$("#btnConfirmLocation").addClass("disabled");
 
+		//undo location type selection
+		$scope.locationType=null;
 
 		//hide collapsible content
-		$(".collapse").collapse('hide');
+		//$(".collapse").collapse('hide');
 	}
 
-	//confirm location - post data
-	$scope.btnPlaceMarker = function(){
-		
-		if($scope.locationType!="undefined"){
-			
-
-
-		
-
-
-			//var markerDescription = $scope.markerDescription;
-			console.log(marker);
-			//post marker
-			
-		}
-		
-
-
-
-		//$("#mdlAddMarker").modal('show');
-	}
 
 	//Change event handler for marker rating change
 	$scope.rdoColorChange = function(markerType){
 		
 		if($scope.markerType!="undefined"){
-			console.log($scope.markerType);
 			//set the draggable icon color
 			gmap.setDraggableIcon("light-"+$scope.markerType);
 
@@ -359,33 +286,6 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		$("#btnConfirmLocation").removeClass("disabled");
 	}
 
-	
-	$scope.modalSubmitMarker = function(){
-
-		var pos =  gmap.getDraggableMarker().getPosition();
-		var marker={
-			"lat":pos.lat(),
-			"lng":pos.lng(),
-			"study_area_id":studyarea_id,
-			"participant_id":-1,
-			"icon":$scope.markerType
-		}
-		var markerDescription = $scope.markerDescription;
-
-		//post marker
-		api.postMarker(marker).then(function(response){
-			$("#mdlAddMarker").modal('hide');
-			$scope.btnCancelMarkerPlacement();
-			gmap.loadMarker(response.placemarker);
-		});
-
-
-
-	}
-
-	function loadRemoteData(){
-		
-	}
 	function applyStudyArea(studyarea){
 		$scope.studyarea=studyarea;
 

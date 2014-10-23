@@ -143,7 +143,6 @@ app.service('gmap', function($cookieStore){
 	}
 
 	this.setStudyArea = function(studyarea){
-		console.log(studyarea);
 		this.studyarea=studyarea;
 		this.mapOptions.center = new google.maps.LatLng(studyarea.lat, studyarea.lng);
 		this.mapOptions.zoom = parseInt(studyarea.zoom);

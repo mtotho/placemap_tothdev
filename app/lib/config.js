@@ -1,3 +1,1 @@
-window.config = new Array();
-
-window.config['api_path'] = "http://localhost/placemap_tothdev/api/";
+window.config['site_path'] = "http://localhost/placemap_tothdev/";

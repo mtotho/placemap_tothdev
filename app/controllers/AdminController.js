@@ -64,7 +64,11 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 
 		$scope.studyareas = new Array();
 
-		$scope.sa_url_part = "http://localhost/placemap_tothdev/main.html#/studyarea/";
+		//Dynamically grab site url for study area link
+		var abs_url = $location.absUrl();
+		var base_url = abs_url.split("#")[0];
+
+		$scope.sa_url_part = base_url + "#/studyarea/";
 
 		loadRemoteData();
 	}

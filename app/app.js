@@ -1,4 +1,4 @@
-var app = angular.module('placemapApp', ['ngRoute','ngCookies','google-maps']);
+var app = angular.module('placemapApp', ['ngRoute','ngCookies']);
 
 app.config(function ($routeProvider) {
 
@@ -53,7 +53,9 @@ app.factory('simpleFactory', function(){
 });
 
 $(document).ready(function(){
-	
+	window.debug = true;
+
+
 });
 $(window).resize(function(){
 	autosize();
