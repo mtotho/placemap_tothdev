@@ -5,9 +5,9 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 	console.log(rand);
 
 	$scope.pages = 
-		{ study_areas: 'app/partials/admin_studyarea.html?v='+rand,
-		  users: 'app/partials/admin_users.html?v='+rand,
-		  questions:'app/partials/admin_questions.html?v='+rand};
+		{ study_areas: 'app/partials/admin_studyarea.html?v=a'+rand,
+		  users: 'app/partials/admin_users.html?v=d'+rand,
+		  questions:'app/partials/admin_questions.html?v=21'+rand};
 
 
 	function init(){
