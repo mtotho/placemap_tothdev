@@ -42,12 +42,17 @@
 				</tr>
 
 				<tbody id="question_list">
-					<tr data-qid="{{ q.question_id }}" ng-repeat="q in question_set.questions">
-						<td>{{ q.question_text }}</td>
-						<td>{{ q.question_type }}</td>
-						<td>{{ q.order }}</td>
 					
-					</tr>
+						<tr data-qid="{{ q.question_id }}" ng-repeat="q in question_set.questions">
+							
+								<td ng-click="editClick(q.question_id)">{{ q.question_text }}</td>
+								<td>{{ q.question_type }}</td>
+								<td>{{ q.order }}</td>
+							
+							
+						</tr>
+					</div>
+					
 				</tbody>
 			</table>
 		</div><!--end panel primary-->
@@ -59,7 +64,7 @@
 
 	
 		        
-	<ng-question-add qs="question_set" ></ng-question-add>
+	<ng-question-add qs="question_set" edit="edit_mode" eid="eid"></ng-question-add>
 				 	
 				
 

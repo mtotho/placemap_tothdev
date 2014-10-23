@@ -60,7 +60,7 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 		$("#admin_nav li:nth-child(3)").removeClass("active");
 		
 		$scope.selQuestionSets = new Object();
-
+	
 
 		$scope.studyareas = new Array();
 
@@ -79,7 +79,6 @@ app.controller('AdminSAController', function($scope, api, auth,$location, $cooki
 		$location.path("studyarea/create");
 
 	}
-
 
 	$scope.qsChange = function(sa_id,index){
 		// questionsconsole.log($scope.studyareas[index].question_set);
@@ -203,7 +202,8 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		$("#admin_nav li:nth-child(2)").removeClass("active");
 		$("#admin_nav li:nth-child(3)").addClass("active");
 
-
+		$scope.edit_question_id = -1;
+		$scope.edit_mode = false;	
 		loadRemoteData();
 		//console.log("admin questions");
 	
@@ -236,13 +236,19 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 
 	init();
 	
+	$scope.editClick = function(qid){
+		
+		$scope.eid = qid;
+		$scope.edit_mode = true;
+		$("ng-question-add .modal").modal('show');
+	}
 	function loadRemoteData(){
 		
 		api.getQuestionSets().then(function(response){
 			$scope.question_sets = response.question_sets;
 			
 
-			console.log(response);
+				console.log(response);
 
 
 			});

@@ -2,11 +2,18 @@ app.directive('ngQuestionAdd', function(api) {
   return {
     restrict: 'E',
     scope:{
-    	question_set: '=qs'
+    	question_set: '=qs',
+        edit_mode: '=edit',
+        eid: '='
     },
     link:function(scope, element, attrs){
-    	//element.click(function(){
-		//});
+    	 $('ng-question-add .modal').on('hidden.bs.modal', function (e) {
+            if(scope.edit_mode){
+                scope.edit_mode=false;
+            }
+            scope.$apply();
+            // do something...
+        })
     },
     controller:function($scope){
   		
@@ -78,7 +85,15 @@ app.directive('ngQuestionAdd', function(api) {
 			
 			$scope.tempQuestion = null;
     	}
+        $scope.$watch('edit_mode', function(value){
+            if(value){
 
+                $scope.tempQuestion = $scope.question_set.questions[$scope.eid];
+                console.log($scope.tempQuestion);
+               //$scope.tempQuestion = 
+
+           }
+        });
 
     	$scope.$watch('selQT',function(){
     		
