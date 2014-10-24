@@ -207,7 +207,7 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		loadRemoteData();
 		//console.log("admin questions");
 	
-
+/*
 		$("#question_list").sortable({
 
 			update: function(event,ui){
@@ -225,7 +225,7 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 					console.log($scope.question_set.questions);
 		  			//console.log(question_set);
 			}
-		});
+		});*/
 
 		$('.collapse').collapse({
 		  toggle: false
@@ -242,6 +242,21 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		$scope.edit_mode = true;
 		$("ng-question-add .modal").modal('show');
 	}
+	$scope.removeQuestion = function(qid){
+		var conf = confirm("Are you sure you would like to delete this question?");
+		console.log(qid);
+		if(conf){
+			api.deleteQuestion(qid).then(function(response){
+				//$scope.question_sets = response.question_sets;
+					
+					delete $scope.question_set.questions[qid];
+					console.log(response);
+
+
+			});
+		}
+	}
+
 	function loadRemoteData(){
 		
 		api.getQuestionSets().then(function(response){
@@ -309,7 +324,9 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 		$scope.tempQuestion = null;
 	}
 	function loadQuestionSet(value){
-		temp_questions = value.questions;
+		var temp_questions = new Array();
+		angular.copy(value.questions, temp_questions);
+		//temp_questions =  value.questions;
 		$scope.question_set = value;
 
 		$scope.question_set.questions = new Object();
@@ -319,6 +336,7 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 
 		for(var i=0; i<temp_questions.length; i++){
 			//$scope.question_set.order[]
+			//angular.copy(temp_questions[i], $scope.question_set.questions[temp_questions[i].question_id]);
 			$scope.question_set.questions[temp_questions[i].question_id]=temp_questions[i];
 		}
 		//question_set.questions.length=i;
@@ -329,6 +347,7 @@ app.controller('AdminQuestionController', function($scope, api, auth,$location, 
 	$scope.$watch('selQS', function(value){
 		
 		if(!angular.isUndefined(value)){
+		//	console.log(value);
 			loadQuestionSet(value);
 			//$scope.questions = question_set.questions;
 

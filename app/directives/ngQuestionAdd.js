@@ -11,7 +11,10 @@ app.directive('ngQuestionAdd', function(api) {
             if(scope.edit_mode){
                 scope.edit_mode=false;
             }
+            scope.tempQuestion = new Object();
+            $('ng-question-add .collapse').collapse('hide');
             scope.$apply();
+
             // do something...
         })
     },
@@ -19,6 +22,7 @@ app.directive('ngQuestionAdd', function(api) {
   		
     	
     	function init(){
+
     		$scope.types={
 	    		shortanswer:false,
 	    		radio:false,
@@ -55,6 +59,19 @@ app.directive('ngQuestionAdd', function(api) {
     		}
     	}
 
+        $scope.btnUpdate = function(){
+            var tempQuestion = $scope.tempQuestion;
+            
+            api.updateQuestion({"question":tempQuestion}).then(function(response){
+              
+
+              $scope.question_set.questions[response.question.question_id]=response.question;
+              console.log(response);
+              $("ng-question-add .modal").modal('hide');
+            });
+
+        }
+
     	//Submit question to db
     	$scope.btnSubmit = function(){
 
@@ -63,10 +80,10 @@ app.directive('ngQuestionAdd', function(api) {
 			var data ={
 				"question":{
 					"question_text":tempQuestion.question_text,
-					"question_type":$scope.selQT,
+					"question_type":tempQuestion.question_type,
 					"order":countProperties($scope.question_set.questions) + 1,
 					"question_set_id":$scope.question_set.id
-				}
+		      }
 
 			}
 
@@ -83,19 +100,31 @@ app.directive('ngQuestionAdd', function(api) {
 			
 			$("ng-question-add .modal").modal('hide');
 			
-			$scope.tempQuestion = null;
+			//$scope.tempQuestion = null;
     	}
         $scope.$watch('edit_mode', function(value){
             if(value){
 
-                $scope.tempQuestion = $scope.question_set.questions[$scope.eid];
+                angular.copy($scope.question_set.questions[$scope.eid], $scope.tempQuestion)
+                //$scope.tempQuestion = $scope.question_set.questions[$scope.eid];
+                $scope.selQT = $scope.tempQuestion.question_type;
+
+                if($scope.tempQuestion.jsonOpts == null){
+                    $scope.tempQuestion.opts = new Array();
+                }else{
+                    $scope.tempQuestion.opts=$scope.tempQuestion.jsonOpts;
+                }
+                
+
                 console.log($scope.tempQuestion);
                //$scope.tempQuestion = 
 
            }
         });
-
-    	$scope.$watch('selQT',function(){
+        $scope.removeOpt = function(index){
+            $scope.tempQuestion.opts.splice(index,1);
+        }
+    	$scope.$watch('tempQuestion.question_type',function(){
     		
     		//hide all of the types
     		for(type in $scope.types){
@@ -103,8 +132,8 @@ app.directive('ngQuestionAdd', function(api) {
     		}
 
     		//enable the type that is selected
-    		if(!angular.isUndefined($scope.selQT)){
-	    		$scope.types[$scope.selQT]=true;
+    		if(!angular.isUndefined($scope.tempQuestion.question_type)){
+	    		$scope.types[$scope.tempQuestion.question_type]=true;
 
 	    		$('ng-question-add .collapse').collapse('show');
 	    	}
@@ -117,6 +146,6 @@ app.directive('ngQuestionAdd', function(api) {
 		}
     },
     //template:'derp'
-  	templateUrl:'app/partials/directives/ngQuestionAdd.html'
+  	templateUrl:'app/partials/directives/ngQuestionAdd.html?v=2'
   }
 });

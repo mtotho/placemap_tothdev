@@ -39,16 +39,19 @@
 					<th>Question Text</th>
 					<th>Question Type</th>
 					<th>Order</th>
+					<th></th>
+					<th></th>
 				</tr>
 
 				<tbody id="question_list">
 					
 						<tr data-qid="{{ q.question_id }}" ng-repeat="q in question_set.questions">
 							
-								<td ng-click="editClick(q.question_id)">{{ q.question_text }}</td>
+								<td>{{ q.question_text }}</td>
 								<td>{{ q.question_type }}</td>
 								<td>{{ q.order }}</td>
-							
+								<td><a ng-click="editClick(q.question_id)">edit</a></td>
+								<td><a ng-click="removeQuestion(q.question_id)">remove</a></td>
 							
 						</tr>
 					</div>

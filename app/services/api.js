@@ -60,6 +60,16 @@ app.service('api', function($http, $q, auth){
 		var post = $http.post(url+"question", data);
 		return post.then(handleSuccess, handleError);
 	}
+	this.updateQuestion = function(data){
+		data.user=auth.getUser();
+		var put = $http.put(url+"question", data);
+		return put.then(handleSuccess, handleError);
+	}
+	this.deleteQuestion = function(qid){
+		var user = auth.getUser();
+		var del = $http.delete(url+"question?qid="+qid);
+		return del.then(handleSuccess, handleError);
+	}
 	this.getUsers = function(){
 		var user = auth.getUser();
 

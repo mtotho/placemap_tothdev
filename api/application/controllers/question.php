@@ -26,4 +26,27 @@ class Question extends REST_Controller {
 		
 		$this->response($response);
 	}
+	public function index_put(){
+		$this->load->model("audit_model");
+
+		$user = $this->put('user');
+
+		$question = $this->put('question');
+
+		$response['question'] = $this->audit_model->updateQuestion($question);
+		
+		$this->response($response);
+	}
+
+	public function index_delete(){
+		$qid = $this->input->get("qid");
+		$this->load->model("audit_model");
+
+		$user = $this->put('user');
+
+		$response = $this->audit_model->removeQuestion($qid);
+		
+		$this->response($response);
+	}
+
 }

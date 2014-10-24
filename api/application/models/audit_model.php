@@ -38,7 +38,7 @@ class Audit_model extends CI_Model{
 				  from audit_question q  
 					inner join audit_question_type aqt on aqt.id=q.fk_question_type_id
 					inner join audit_type_TO_question atTOq on atTOq.fk_question_id=q.id
-				  where atTOq.fk_audit_type_id=? order by atTOq.order
+				  where atTOq.fk_audit_type_id=? and q.is_deleted=0 order by atTOq.order
 				";
 
 		$results = $this->db->query($query, array($audit_type_id));
@@ -83,6 +83,28 @@ class Audit_model extends CI_Model{
 		return $question;
 
 	}
+	function updateQuestion($question){
+		$query = "update audit_question set 
+					question_text = ?,
+					fk_question_type_id= (select qt.id from audit_question_type qt where type=?),
+					jsonOpts=?
+				  where id=?";
+		$this->db->query($query, array($question['question_text'], $question['question_type'], json_encode($question['opts']), $question['question_id']));
+
+		return $question;
+	}
+	function removeQuestion($qid){
+		//$query = "delete from audit_type_TO_question where fk_question_id=?";
+		//$this->db->query($query, array($qid));
+
+		$query = "update audit_question set is_deleted = 1 where id=".$this->db->escape($qid);
+		$this->db->query($query);
+		error_log($this->db->last_query());
+
+		$response['message']="success";
+		return $response;
+	}
+
 	function getResponse($marker_id){
 		$query = "select r.id as response_id, r.timestamp, atq.fk_audit_question_id as question_id, atq.response_text, at.type as question_type, atq.response_json
 					from audit_response r
