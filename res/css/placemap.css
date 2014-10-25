@@ -6,7 +6,7 @@ a{
 }
 
 body{
-	background-color:white;
+	background-color:#D2DDE7;
 	height:100%;
 
 }
@@ -41,7 +41,7 @@ ol.example li.placeholder:before {
 	background-color:white;
 }
 .view_content{
-	margin:1em 1em 0 1em;
+	margin:2em 1em 3em 1em;
 
 }
 header{
@@ -279,13 +279,74 @@ table th{
 /*sa select */
 
 #sa_search_row{
-	background-color:#E8E8E8;
-	padding:2em 0 2em 0;
+	background-color:#e8e8e8;
+	padding:5em 0 4em 0;
 }
-#sa_table_row{
-	padding:2em 0 2em 0;
+#sa_search_row input{
+	width:80%;
+	margin:0 auto 0 auto;
+	height:3em;
+}
+#sa_tile_row{
+	padding:0 0 4em 0;
+	background-color:#e8e8e8;
 
 }
+#sa_tile_row .col-md-4{
+	padding:1.5em 1.5em 1.5em 1.5em;
+}
+.sa_tile{
+	position:relative;
+	cursor:pointer;
+	background-color: #7EA7D8;
+	width:100%;
+	padding:0;
+	height:5em;
+	border:1px solid #75A0D5;
+}
+.sa_tile img{
+	width:25%;
+	position:absolute;
+	bottom:25%;
+	right:-5%;
+}
+@media screen and (max-width:990px) {
+	#sa_tile_row .col-md-4{
+		padding:1em 1em 1.5em 1em;
+	}
+	.sa_tile img{
+		width:11%;
+	}
+	.sa_tile{
+		height:6em;
+	}
+}
+.sa_tile:hover{
+	background-color:#ACACAC;
+	border:1px solid #ACACAC;
+	box-shadow: 0px 3px 3px #C7C7C7;
+}
+.sa_tile p{
+	padding:0;
+	margin:0;
+}
+.sa_tile .sa_title{
+	position:absolute;
+	top:0.5em;
+	left:0.5em;
+
+	font-weight:bold;
+	color:white;
+}
+.sa_tile .sa_mrkcount{
+	padding:0;
+	position:absolute;
+	bottom:0.5em;
+	right:0.5em;
+
+}
+
+
 #tblSASelect{
 	font-size:1.2em;
 	border:none;

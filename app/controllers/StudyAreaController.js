@@ -22,7 +22,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 	function init(){
 		$("header .nav li").removeClass("active");
-
+		$("header .nav li:nth-child(2)").addClass("active");
+		
 		//Flag the question view panel closed initially.
 		$scope.qvopen=false;
 		

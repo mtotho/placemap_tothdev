@@ -2,28 +2,25 @@
 
 	<div  id='sa_search_row'>
 		<div class="container">
-			<label for="txtStudyFilter">Studyarea Search</label>
-			<input type="text" class="form-control" ng-model="saSearch"  /> <br />
+			<input type="text" class="form-control" ng-model="saSearch" placeholder="Search for a Study Area" /> 
 		</div>
 		
 	</div>
 
-	<div id="sa_table_row">
+	<div id="sa_tile_row">
 
 		<div class="container">
-			<table id="tblSASelect" class="table table-striped">
-					<tr> 
-						<th>Name</th>
-						<th>Marker Count</th>
-						
-					</tr>
 
-					<tr ng-repeat="sa in studyareas | filter: saSearch">	
-						<td><a href="{{ sa_url_part + sa.id }}">{{ sa.name }}</a></td>
-						<td>{{ sa.placemarkers.length }}</td>
-						
-					</tr>
-				</table>
+			
+				<div class="col-md-4" ng-repeat="sa in studyareas | filter: saSearch">
+					<div class="sa_tile" ng-click="tileClick(sa.id)">
+						<p class="sa_title">{{ sa.name }}</p>
+						<p class="sa_mrkcount">Responses: {{ sa.placemarkers.length }}</a></p>
+						<img src="res/images/marker_icon_sa.png" />
+					</div>
+				</div>
+			
+
 		</div>
 	</div>
 </div>
