@@ -302,7 +302,7 @@ table th{
 	width:100%;
 	padding:0;
 	height:5em;
-	border:1px solid #75A0D5;
+	
 }
 .sa_tile img{
 	width:25%;
@@ -323,8 +323,8 @@ table th{
 }
 .sa_tile:hover{
 	background-color:#ACACAC;
-	border:1px solid #ACACAC;
-	box-shadow: 0px 3px 3px #C7C7C7;
+	
+	box-shadow: 0px 2px 2px #C7C7C7;
 }
 .sa_tile p{
 	padding:0;
