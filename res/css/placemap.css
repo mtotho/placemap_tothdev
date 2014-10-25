@@ -92,7 +92,11 @@ header .nav li.lnkLogin>a{
 	
 
 }
+header .nav li.lnkLogout>a{
+	font-weight:normal;
+	color:#A187BE;
 
+}
 
 .map_outter_div{
 	position:relative;

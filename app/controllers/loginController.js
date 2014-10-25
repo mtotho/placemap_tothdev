@@ -4,8 +4,7 @@ app.controller('loginController', function($scope, api, auth, $cookieStore, $loc
 
 	//init (optional)
 	function init(){
-		$("header .nav li").removeClass("active");
-		$("header .nav li:nth-child(3)").addClass("active");
+	
 		//check cookie
 		//var emailCookie = $cookieStore.get('placemap-email');
 
