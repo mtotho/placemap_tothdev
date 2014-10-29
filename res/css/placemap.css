@@ -183,6 +183,9 @@ ng-questions-view p{
 }
 .name_panel h3{
 	margin:0;
+
+	opacity:0.9;
+
 }
 .markers_remain_panel{
 	left:5%;
