@@ -178,10 +178,11 @@ ng-questions-view p{
 	left:5%;
 	width:15%;
 	min-width:15em;
-	height:2em;
-	line-height:1em;
 	opacity:0.9;
-	padding:0.4em 0 0 1em;
+	padding:0.4em 0 0.4em 1em;
+}
+.name_panel h3{
+	margin:0;
 }
 .markers_remain_panel{
 	left:5%;
@@ -302,7 +303,7 @@ table th{
 .sa_tile{
 	position:relative;
 	cursor:pointer;
-	background-color: #7EA7D8;
+	background-color: #D2DDE7;
 	width:100%;
 	padding:0;
 	height:5em;
@@ -340,7 +341,7 @@ table th{
 	left:0.5em;
 
 	font-weight:bold;
-	color:white;
+	color:#777D83;
 }
 .sa_tile .sa_mrkcount{
 	padding:0;
