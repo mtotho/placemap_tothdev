@@ -63,9 +63,10 @@ $(window).resize(function(){
 
 function autosize(){
 	var headerheight=$("header").outerHeight();
+	var info_height=$("#info_area").outerHeight();
 	var windowheight=$(window).outerHeight();
 
-	var targetheight = windowheight - headerheight;
+	var targetheight = windowheight - (headerheight + info_height);
 
 
 	var namewidth = $(".name_panel h3").width();

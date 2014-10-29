@@ -3,11 +3,19 @@
 	<!--<div class="col-md-9 col-left"> -->
 	<!--	<div id="ui_handle"></div>-->
 
+		<div id="info_area" class="container-fluid">
+			
+			<div class="col-md-6">
+				<p class="sa_label">STUDY AREA </p><span class="glyphicon glyphicon-chevron-right"></span><p class="sa_title"> {{ studyarea.name }}</p>
+			</div>
+				
+			<div class="clearfix"></div>
+		</div>
 		<div id="map_canvas" class="map_div" ></div>
 	   
-		<div class="name_panel map_panel">
-			<h3> {{ studyarea.name }}</h3>
-		</div>
+	
+			
+		
 
 		<div class="response_panel map_panel panel-collapse collapse">
 			<h3>Response</h3>
@@ -84,7 +92,7 @@
 	    	
 	    	<button id="btnSelectMarkerLocation" type="button" data-ng-click="btnSetRating()"  class="btn">Rate Location</button>
 	    	<!--<button type="button" data-ng-click="btnDebug()"  class="btn">(debug)</button>-->
-	    	<hr />
+	    
 
 	    
 	    		
