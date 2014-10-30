@@ -259,7 +259,9 @@ ng-questions-view p{
 	
 }
 
-
+#rating_panel.opaque{
+	opacity:0.5;
+}
 .rating_panel{
 	top:3em;
 	right:5%;

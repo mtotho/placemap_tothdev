@@ -93,19 +93,16 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
  	     	//Map click event
 			google.maps.event.addListener(gmap.getMap(), 'click', function(event) {
-		     	
+		     	$("#rating_panel").removeClass("opaque");
 
 		     	gmap.getDraggableMarker().setPosition(event.latLng);
+		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
 		     	if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
 			   		}
 			   	//Hide the response panel
-	     		$(".response_panel").collapse("hide");
-
-		      	$scope.$apply(function(){
-	     			$scope.responseShown = false;
-	     		});
+	     		hideResponse();
 	 		});
 
  	     	var mapmarkers = gmap.getMapMarkers(); //Map markers are the actual google maps marker objects
@@ -119,7 +116,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   	
 				   	//ONLY show response if not currently rating
 				   	if(!setMarkerIsClicked){
-
+				   		$("#rating_panel").addClass("opaque");
+				   		$scope.btnCancelMarkerPlacement();
 				   		//If another marker has already been selected, revert that marker's icon back to normal 
 				   		if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
@@ -168,6 +166,13 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}//end: init()
 	init();
 
+	function hideResponse(){
+		$(".response_panel").collapse("hide");
+
+      	$scope.$apply(function(){
+ 			$scope.responseShown = false;
+ 		});
+	}
 	function applyResponsePanel(marker){
 		$scope.response_marker = marker;
 		$scope.$apply();
@@ -266,6 +271,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.rdoColorChange = function(markerType){
 		
 		if($scope.markerType!="undefined"){
+			hideResponse();
+			$("#rating_panel").removeClass("opaque");
 			//set the draggable icon color
 			gmap.setDraggableIcon("light-"+$scope.markerType);
 
