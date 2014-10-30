@@ -35,26 +35,26 @@ app.service('gmap', function($cookieStore){
  	 	[
  	 		[
  	 			{
-			        url: '../images/people35.png',
-			        height: 35,
-			        width: 35,
-			        anchor: [16, 0],
-			        textColor: '#ff00ff',
-			        textSize: 10
+			        url: 'res/images/clustering/greyCircle-30.png',
+			        height: 30,
+			        width: 30,
+			        anchor: [0, 0],
+			        textColor: '#ffffff',
+			        textSize: 9
 	     		 }, 
 	      		{
-			        url: '../images/people45.png',
-			        height: 45,
-			        width: 45,
-			        anchor: [24, 0],
-			        textColor: '#ff0000',
+			        url: 'res/images/clustering/greyCircle-40.png',
+			        height: 40,
+			        width: 40,
+			        anchor: [0, 0],
+			        textColor: '#ffffff',
 			        textSize: 11
 	     		 }, 
 	      		{
-			        url: '../images/people55.png',
+			        url: 'res/images/clustering/greyCircle-55.png',
 			        height: 55,
 			        width: 55,
-			        anchor: [32, 0],
+			        anchor: [0, 0],
 			        textColor: '#ffffff',
 			        textSize: 12
 	      		}
@@ -159,9 +159,9 @@ app.service('gmap', function($cookieStore){
 		}
 
 		var mc = new MarkerClusterer(this.map, clusterMarkers, {
-	  		  maxZoom: 15,
-	          gridSize: 35
-	         // styles: styles[style]
+	  		  maxZoom: 17,
+	          gridSize: 25,
+	          styles: this.styles[0]
 		});
 	}
 	this.loadMarker = function(markerdata){
