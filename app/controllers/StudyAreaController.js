@@ -99,7 +99,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
 		     	if(!angular.isUndefined(selectedMarker)){
-				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
+				   			selectedMarker.setIcon({"url":gmap.getIcons()[selectedDBMarker.icon], "anchor":new google.maps.Point(12,13)});
 			   		}
 			   	//Hide the response panel
 			   	$scope.$apply(function(){
@@ -124,7 +124,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   		$scope.btnCancelMarkerPlacement();
 				   		//If another marker has already been selected, revert that marker's icon back to normal 
 				   		if(!angular.isUndefined(selectedMarker)){
-				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
+				   			selectedMarker.setIcon({"url":gmap.getIcons()[selectedDBMarker.icon], "anchor":new google.maps.Point(12,13)});
 				   		}
 				   		//Set the selected marker to be this current one we just clicked
 				   		selectedMarker=this;
