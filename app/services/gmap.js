@@ -42,7 +42,7 @@ app.service('gmap', function($cookieStore){
  	 	[
  	 		[
  	 			{
-			        url: 'res/images/clustering/greyCircle-30.png',
+			        url: 'res/images/clustering/greyCircle-30.png?v=1',
 			        height: 30,
 			        width: 30,
 			        anchor: [0, 0],
@@ -50,7 +50,7 @@ app.service('gmap', function($cookieStore){
 			        textSize: 9
 	     		 }, 
 	      		{
-			        url: 'res/images/clustering/greyCircle-40.png',
+			        url: 'res/images/clustering/greyCircle-40.png?v=1',
 			        height: 40,
 			        width: 40,
 			        anchor: [0, 0],
@@ -64,6 +64,14 @@ app.service('gmap', function($cookieStore){
 			        anchor: [0, 0],
 			        textColor: '#ffffff',
 			        textSize: 12
+	      		},
+      			{
+			        url: 'res/images/clustering/greyCircle-65.png?v=1',
+			        height: 65,
+			        width: 65,
+			        anchor: [0, 0],
+			        textColor: '#ffffff',
+			        textSize: 13
 	      		}
       		], 
       		[
@@ -167,7 +175,7 @@ app.service('gmap', function($cookieStore){
 		}
 
 		var mc = new MarkerClusterer(this.map, clusterMarkers, {
-	  		  maxZoom: 17,
+	  		  maxZoom: 19,
 	          gridSize: 20,
 	          styles: this.styles[0]
 		});
