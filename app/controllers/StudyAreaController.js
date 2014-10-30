@@ -102,7 +102,9 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
 			   		}
 			   	//Hide the response panel
-	     		hideResponse();
+			   	$scope.$apply(function(){
+	     			hideResponse();
+	     		});
 	 		});
 
  	     	var mapmarkers = gmap.getMapMarkers(); //Map markers are the actual google maps marker objects
@@ -171,9 +173,9 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	function hideResponse(){
 		$(".response_panel").collapse("hide");
 
-      	$scope.$apply(function(){
+      	
  			$scope.responseShown = false;
- 		});
+ 		
 	}
 	function applyResponsePanel(marker){
 		$scope.response_marker = marker;
