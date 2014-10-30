@@ -112,8 +112,9 @@ app.service('gmap', function($cookieStore){
 			 
  			 });
 */
-
+			
 		    autosize();
+		    this.checkResize();
 	}
 
 	this.checkResize = function(){
@@ -176,7 +177,7 @@ app.service('gmap', function($cookieStore){
 					    	map: this.map,
 					    	position:new google.maps.LatLng(markerdata.lat, markerdata.lng),
 					    	draggable:false,
-					    	icon:this.icons[markerdata.icon],
+					    	icon:{"url":this.icons[markerdata.icon], "anchor":new google.maps.Point(12,13)},
 					    	//title:markerdata.location_type,
 					    	marker_id:markerdata.id
 
