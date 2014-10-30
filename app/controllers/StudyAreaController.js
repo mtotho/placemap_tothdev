@@ -17,7 +17,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	var selectedMarker;
 	var selectedDBMarker;
 	$scope.marker;
-
+	$scope.responseShown= false;
 
 
 	function init(){
@@ -92,14 +92,20 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			 });
 
  	     	//Map click event
-			google.maps.event.addListener(gmap.getMap(), 'click', function() {
+			google.maps.event.addListener(gmap.getMap(), 'click', function(event) {
 		     	
+
+		     	gmap.getDraggableMarker().setPosition(event.latLng);
 		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
 		     	if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon(gmap.getIcons()[selectedDBMarker.icon]);
 			   		}
 			   	//Hide the response panel
 	     		$(".response_panel").collapse("hide");
+
+		      	$scope.$apply(function(){
+	     			$scope.responseShown = false;
+	     		});
 	 		});
 
  	     	var mapmarkers = gmap.getMapMarkers(); //Map markers are the actual google maps marker objects
@@ -139,6 +145,11 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 					    if(window.debug)console.log(" ");
 
 				      	$(".response_panel").collapse("show");
+				      	$scope.$apply(function(){
+				      		$scope.responseShown=true;
+				      	});
+				      	
+
 				  	}
 			    
 				});//end marker click

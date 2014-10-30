@@ -1,50 +1,55 @@
 
+<div id="info_area" class="container-fluid">
+	
+	<div class="col-md-6">
+		<p class="sa_label">STUDY AREA </p><span class="glyphicon glyphicon-chevron-right"></span><p class="sa_title"> {{ studyarea.name }}</p>
+	</div>
+		
+	<div class="clearfix"></div>
+</div>
 <div id="page_studyarea" class="map_outter_div">
 	<!--<div class="col-md-9 col-left"> -->
 	<!--	<div id="ui_handle"></div>-->
 
-		<div id="info_area" class="container-fluid">
-			
-			<div class="col-md-6">
-				<p class="sa_label">STUDY AREA </p><span class="glyphicon glyphicon-chevron-right"></span><p class="sa_title"> {{ studyarea.name }}</p>
-			</div>
-				
-			<div class="clearfix"></div>
-		</div>
 		<div id="map_canvas" class="map_div" ></div>
 	   
 	
 			
 		
-
+		<div ng-show="responseShown" class="response_panel_opacity map_panel"></div>
 		<div class="response_panel map_panel panel-collapse collapse">
+
 			<h3>Response</h3>
 
-			<div ng-repeat="r in response_marker.response">
-				
-				<div class="question_response" ng-hide="r.question_type!='check'">
-					<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
-					<div class="row">
-						<div class="col-md-6" ng-repeat="(key,value) in r.response_json">
-							<p class='response_text'>{{ key }}</p>
+			<div id="response_content">
+				<div ng-repeat="r in response_marker.response">
+					
+					
+					<div class="question_response" ng-hide="r.question_type!='check'">
+						<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
+						<div class="row">
+							<div class="col-md-6" ng-repeat="(key,value) in r.response_json">
+								<p class='response_text'>{{ key }}</p>
+							</div>
+
 						</div>
 
 					</div>
 
+					<div class="question_response" ng-hide="r.question_type!='shortanswer'">
+						<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
+						<p class='response_text'>{{ r.response_text }}</p>
+
+					</div>
+					
 				</div>
-
-				<div class="question_response" ng-hide="r.question_type!='shortanswer'">
-					<p class='question_text'>{{ studyarea.question_set.questions[$index].question_text }}</p>
-					<p class='response_text'>{{ r.response_text }}</p>
-
-				</div>
-
-			</div>
 
 			<!--
 			<p>Other Stats</p>
 			Lat: {{ response_marker.lat }} <br />
 			lng: {{ response_marker.lng }}-->
+			</div>
+
 		</div>
 
 		<!--
