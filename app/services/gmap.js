@@ -165,7 +165,7 @@ app.service('gmap', function($cookieStore){
 		}
 
 		var mc = new MarkerClusterer(this.map, clusterMarkers, {
-	  		  maxZoom: 18,
+	  		  maxZoom: 17,
 	          gridSize: 20,
 	          styles: this.styles[0]
 		});
