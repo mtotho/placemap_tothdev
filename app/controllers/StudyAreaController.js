@@ -343,16 +343,18 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 		if(markerType!="undefined"){
 			hideResponse();
-			setRatingMode(true);
+			//setRatingMode(true);
 			//set the draggable icon color
+			//var pos = gmap.getDraggableMarker().getPosition();
 			gmap.setDraggableIcon("light-"+$scope.markerType);
 
 			//Replace the draggable marker on the map (it seems to disapear from the map when you change icon)
 			gmap.getDraggableMarker().setMap(gmap.getMap());
 
+
 			//set the animation to bounce to the user can see where it is placed.
 			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
-
+		//	gmap.getDraggableMarker().setPosition(pos);
 
 
 			switch($scope.markerType){
