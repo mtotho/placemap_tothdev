@@ -140,7 +140,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   	  	applyResponsePanel(dbmarker);
 
 				   	  	//set the icon of the selected marker to a noticeably different one so we can distinguish
-				   	  	this.setIcon(gmap.getIcons()[dbmarker.icon+"-select"]);
+				   	  	this.setIcon({"url":gmap.getIcons()[dbmarker.icon+"-select"], "anchor":new google.maps.Point(12,13)});
 				   	  	
 				   	  	if(window.debug)console.log("===Marker Clicked===");
 				   	  	if(window.debug)console.log(dbmarker);
