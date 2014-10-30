@@ -9,11 +9,15 @@ app.directive('ngQuestionsView', function(api,gmap) {
     link:function(scope, element, attrs){
         $('ng-questions-view .modal').on('hidden.bs.modal', function (e) {
             if(window.debug)console.log("--Question View: Hidden");
-            scope.qvopen=false;
-            scope.qindex=0;
-            scope.completion=false;
-            scope.progress=0;
-            scope.$apply();
+            scope.$apply(function(){
+                  scope.qvopen=false;
+                    scope.qindex=0;
+                    scope.completion=false;
+                    scope.progress=0;
+                  //  scope.responses=  new Object();
+            });
+          
+        
             // do something...
         })
     },
@@ -154,6 +158,7 @@ app.directive('ngQuestionsView', function(api,gmap) {
                 
                 //hide the qv modal
                 $scope.qvopen=false;
+                 $scope.responses = new Object();
             
             });
 
@@ -166,8 +171,11 @@ app.directive('ngQuestionsView', function(api,gmap) {
           
             $scope.curQuestion = $scope.study_area.question_set.questions[qindex];
             
-            $scope.responses[$scope.curQuestion.question_id] = new Object();
-            $scope.responses[$scope.curQuestion.question_id].opts = new Object();
+           if(angular.isUndefined($scope.responses[$scope.curQuestion.question_id])){
+                $scope.responses[$scope.curQuestion.question_id] = new Object();
+                $scope.responses[$scope.curQuestion.question_id].opts = new Object();
+           } 
+            
 
             $scope.responses[$scope.curQuestion.question_id].question_id=$scope.curQuestion.question_id;
             $scope.responses[$scope.curQuestion.question_id].question_type =$scope.curQuestion.question_type;
