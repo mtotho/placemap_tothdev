@@ -134,6 +134,9 @@ header .nav li.lnkLogout>a{
 	height:100%;
 
 }
+#map_canvas{
+	width:100%;
+}
 
 .map_panel{
 	position:absolute;

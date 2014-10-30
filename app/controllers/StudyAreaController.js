@@ -69,13 +69,14 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			var placemarkers = studyarea.placemarkers;
 			
 			
-			
+			applyStudyArea(studyarea);
+			/*
 			//set up google map and load placemarkers
 			gmap.setStudyArea(studyarea);
 			gmap.init("map_canvas");
 			gmap.loadMarkers(placemarkers);
 			gmap.checkResize();
-			applyStudyArea(studyarea);
+		
 
 			gmap.toggleDraggable("grey");
 
@@ -152,7 +153,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			    
 				});//end marker click
  	     	}//end for
-			
+			*/
 		});//end massive bloated studyarea pull .then function
 
 

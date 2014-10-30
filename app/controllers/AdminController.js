@@ -11,9 +11,7 @@ app.controller('AdminController', function($scope, api, auth,$location, $cookieS
 
 
 	function init(){
-		$("header .nav li").removeClass("active");
-		$("header .nav li:nth-child(4)").addClass("active");
-
+		
 		if(!auth.isLoggedIn()){
 			$location.path("/login");
 		}else{
