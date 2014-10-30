@@ -13,8 +13,9 @@ app.service('gmap', function($cookieStore){
 	this.mapOptions.mapTypeId = google.maps.MapTypeId.ROADMAP;
 	this.mapOptions.draggable=true;
 	this.mapOptions.zoomControl=true;
-	this.mapOptions.disableDoubleClickZoom=false;
+	this.mapOptions.disableDoubleClickZoom=true;
 	this.mapOptions.scaleControl=true;
+	this.mapOptions.disableDefaultUI=false;
 	this.studyarea;
 	this.placemarkers = new Object();
 	this.mapmarkers = new Array();

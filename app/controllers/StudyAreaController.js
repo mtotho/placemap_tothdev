@@ -90,13 +90,16 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	     			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 			 	}
 			 });
+ 	     	google.maps.event.addListener(gmap.getMap(), 'dblclick', function(event) {
+ 	     		 	gmap.getDraggableMarker().setPosition(event.latLng);
+		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 
+ 	     	});
  	     	//Map click event
 			google.maps.event.addListener(gmap.getMap(), 'click', function(event) {
 		     	$("#rating_panel").removeClass("opaque");
 
-		     	gmap.getDraggableMarker().setPosition(event.latLng);
-		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
+		    
 		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
 		     	if(!angular.isUndefined(selectedMarker)){
 				   			selectedMarker.setIcon({"url":gmap.getIcons()[selectedDBMarker.icon], "anchor":new google.maps.Point(12,13)});
