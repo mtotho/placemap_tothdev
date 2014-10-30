@@ -1,6 +1,6 @@
 
 
-app.controller('StudyAreaController', function($scope, api,gmap, auth,$location, $cookieStore, $routeParams){
+app.controller('StudyAreaController', function($scope, api,gmap, auth,$location, $timeout,$cookieStore, $routeParams){
 	//$scope.array = [];
 	//$scope.template.url="partials/part_createStudyArea.html";
 	//init (optional)
@@ -19,11 +19,18 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.marker;
 	$scope.responseShown= false;
 	var markerZindex=100;
+	$scope.ratingModeEnabled=false;
 
 	function init(){
 		$("header .nav li").removeClass("active");
 		$("header .nav li:nth-child(2)").addClass("active");
 		
+		$("#draggableTooltip").tooltip({
+			"trigger":"manual",
+			"placement":"right",
+
+
+		});
 		//Flag the question view panel closed initially.
 		$scope.qvopen=false;
 		
@@ -74,10 +81,11 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 			gmap.setStudyArea(studyarea);
 			gmap.init("map_canvas");
 			gmap.loadMarkers(placemarkers);
-			gmap.checkResize();
+		
 			applyStudyArea(studyarea);
 
-			gmap.toggleDraggable("grey");
+			gmap.setDraggableIcon("grey");
+			setRatingMode(false);
 
 			//Stop draggable marker from bouncing on mouseover
 	     	google.maps.event.addListener(gmap.getDraggableMarker(), 'mouseover', function() {
@@ -95,15 +103,28 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 
  	     	});
+ 	     	
+ 	     	google.maps.event.addListener(gmap.getMap(), 'dragstart', function() {
+ 	     		 	//gmap.getDraggableMarker().setPosition(event.latLng);
+		     	//gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
+		     	$("#draggableTooltip").tooltip('hide');
+
+ 	     	});
+ 	     	google.maps.event.addListener(gmap.getMap(), 'dragend', function() {
+ 	     		 	//gmap.getDraggableMarker().setPosition(event.latLng);
+		     	//gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
+		     	//$("#draggableTooltip").tooltip('hide');
+		     	//showToolTip();
+
+ 	     	});
  	     	//Map click event
 			google.maps.event.addListener(gmap.getMap(), 'click', function(event) {
-		     	$("#rating_panel").removeClass("opaque");
-
+		     	//setRatingMode(false);
+		     //	console.log(gmap.getMap().getBounds());
+		     	//gmap.getMap().panToBounds(gmap.getMap().getBounds());
+		     	//console.log(gmap.getXY(event.latLng));
 		    
-		     	//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
-		     	if(!angular.isUndefined(selectedMarker)){
-				   			selectedMarker.setIcon({"url":gmap.getIcons()[selectedDBMarker.icon], "anchor":new google.maps.Point(12,13)});
-			   		}
+		     	
 			   	//Hide the response panel
 			   	$scope.$apply(function(){
 	     			hideResponse();
@@ -121,9 +142,10 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   	
 				   	//ONLY show response if not currently rating
 				   	if(!setMarkerIsClicked){
-				   		$("#rating_panel").addClass("opaque");
+				  
 				   		this.setZIndex(markerZindex);
-				   		markerZindex++;
+				   		markerZindex++
+
 				   		$scope.btnCancelMarkerPlacement();
 				   		//If another marker has already been selected, revert that marker's icon back to normal 
 				   		if(!angular.isUndefined(selectedMarker)){
@@ -173,9 +195,49 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	}//end: init()
 	init();
 
+	$scope.setRatingMode = function(bool){
+		setRatingMode(bool);
+	}
+	function showToolTip(){
+		if($scope.ratingModeEnabled){
+			var pos = gmap.getXY(gmap.getDraggableMarker().getPosition());
+			$("#draggableTooltip").css("top", pos.y-30);
+			$("#draggableTooltip").css("left", pos.x+15);
+			$("#draggableTooltip").tooltip('show');
+
+			$timeout(function(){
+				$("#draggableTooltip").tooltip('hide');
+			}, 3000)
+
+		}
+	}
+	function setRatingMode(bool){
+	//	console.log("click");
+		$scope.ratingModeEnabled=bool;
+		if(bool){
+			
+			hideResponse();
+			gmap.enableDraggable(true);
+
+			showToolTip();
+
+			$("#rating_panel").removeClass("opaque");
+			gmap.setDraggableIcon("grey");
+
+		}else{
+
+			gmap.enableDraggable(false);
+			$("#rating_panel").addClass("opaque");
+		}
+
+	}
+
 	function hideResponse(){
 		$(".response_panel").collapse("hide");
-
+			//If there is a marker selected (for viewing responses) unselect that marker (change the icon back to default)
+     	if(!angular.isUndefined(selectedMarker)){
+   			selectedMarker.setIcon({"url":gmap.getIcons()[selectedDBMarker.icon], "anchor":new google.maps.Point(12,13)});
+	   		}
       	
  			$scope.responseShown = false;
  		
@@ -247,15 +309,17 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 		//reflag the button as not clicked
 		setMarkerIsClicked=false;
 
+		setRatingMode(false);
+
 		//unlock draggable marker and continue bounce
-		gmap.lockDraggableMarker(false);
+		//gmap.lockDraggableMarker(false);
 
 		//set the draggable icon color back to default
-		gmap.setDraggableIcon("grey");
+		//gmap.setDraggableIcon("grey");
 	  	$scope.markerType=null;
 		
 		//Replace the draggable marker on the map (it seems to disapear from the map when you change icon)
-		gmap.getDraggableMarker().setMap(gmap.getMap());
+		//gmap.getDraggableMarker().setMap(gmap.getMap());
 
 		//remove indication button is clicked
 		$("#btnSelectMarkerLocation").removeClass("active");
@@ -276,10 +340,10 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 
 	//Change event handler for marker rating change
 	$scope.rdoColorChange = function(markerType){
-		
-		if($scope.markerType!="undefined"){
+
+		if(markerType!="undefined"){
 			hideResponse();
-			$("#rating_panel").removeClass("opaque");
+			setRatingMode(true);
 			//set the draggable icon color
 			gmap.setDraggableIcon("light-"+$scope.markerType);
 

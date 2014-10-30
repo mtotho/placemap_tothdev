@@ -58,7 +58,7 @@
 			<p> x{{ 15 - participant.markers_placed }}</p>
 		</div>-->
 
-	    <div id="rating_panel" class="map_panel rating_panel">
+	    <div ng-show="ratingModeEnabled" id="rating_panel" class="map_panel rating_panel">
 	    	<h3>Select a Rating</h3>
 
 	    	<div class="row">
@@ -95,16 +95,22 @@
 		    	</div>
 	    	</div>
 	    	
+
 	    	<button id="btnSelectMarkerLocation" type="button" data-ng-click="btnSetRating()"  class="btn">Rate Location</button>
 	    	<!--<button type="button" data-ng-click="btnDebug()"  class="btn">(debug)</button>-->
 	    
 
 	    
 	    		
-		
+			
 		</div><!--end map panel-->
+		<div ng-show="!ratingModeEnabled" id="placemarker_prompt" class="map_panel">
+			<button type="button" data-ng-click="setRatingMode(true)"  class="btn btn-primary">Place a Marker</button>
+		</div>
+		
+		<div id="draggableTooltip" class="map_panel" data-toggle="tooltip" title="Drag marker to desired location"></div>
 
-		<ng-questions-view sa="studyarea" qvopen="qvopen" mmarker="marker"></ng-questions-view>
+		<ng-questions-view sa="studyarea" qvopen="qvopen" marker="marker"></ng-questions-view>
 	    
 	
 	<!--</div>-->

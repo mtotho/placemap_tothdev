@@ -130,23 +130,26 @@ app.service('gmap', function($cookieStore){
 		google.maps.event.trigger(this.map, 'resize');
 		this.map.setCenter(this.mapOptions.center);
 	}
-	//toggleDraggable(): disables or enables draggable marker. when enabling, sets marker to map center
-	this.toggleDraggable=function(iconColor){
-		if(iconColor==null){
-			iconColor="grey";
-		}
 
-		//Marker is not on a map
-		if(this.draggableMarker.getMap()==null){
+
+	this.enableDraggable = function(bool){
+		
+
+		if(bool==true){
 			this.draggableMarker.setMap(this.map);
 			this.draggableMarker.setPosition(this.mapOptions.center);
-		
-			this.draggableMarker.setIcon(this.icons[iconColor]);
-
-		//Marker already on a map
 		}else{
 			this.draggableMarker.setMap(null);
 		}
+	
+	}
+
+	this.getXY = function (latLng) {
+		var topRight = this.map.getProjection().fromLatLngToPoint(this.map.getBounds().getNorthEast());
+		var bottomLeft = this.map.getProjection().fromLatLngToPoint(this.map.getBounds().getSouthWest());
+		var scale = Math.pow(2, this.map.getZoom());
+		var worldPoint = this.map.getProjection().fromLatLngToPoint(latLng);
+		return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
 	}
 	this.setDraggableIcon = function(iconColor){
 		this.draggableMarker.setIcon(this.icons[iconColor]);

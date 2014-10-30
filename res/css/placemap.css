@@ -259,6 +259,30 @@ ng-questions-view p{
 	
 }
 
+#draggableTooltip{
+
+	top:0;
+	left:0;
+	min-width:1px;
+	width:1px;
+	height:1px;
+	padding:0px;
+	border-radius:0;
+	box-shadow:none;
+}
+#placemarker_prompt{
+	top:3em;
+	right:5%;
+}
+#placemarker_prompt{
+	padding:0.5em;
+	width:auto;
+	min-width:0px;
+}
+#placemarker_prompt button{
+	font-weight:bold;
+	padding:1em 2em 1em 2em;
+}
 #rating_panel.opaque{
 	opacity:0.5;
 }
