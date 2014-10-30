@@ -49,6 +49,24 @@ class Placemarker_model extends CI_Model{
 		
 	}
 
+	
+	function getPlacemarkersByDistance($study_area_id, $distance){
+
+		//$
+
+
+	}
+
+
+	function clusterMarkers($study_area_id){
+
+
+		/*for($placemarkers as $m){
+
+		}*/
+
+	}
+
 	function postPlacemarker($placemarker){
 		
 		$query = "insert into placemarker set 

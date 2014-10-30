@@ -31,6 +31,54 @@ app.service('gmap', function($cookieStore){
 			"yellow-delete":"res/images/marker_icon/icon_yellow_delete.png", 
 			"green-delete":"res/images/marker_icon/icon_green_delete.png"
 		}
+ 	 this.styles = 
+ 	 	[
+ 	 		[
+ 	 			{
+			        url: '../images/people35.png',
+			        height: 35,
+			        width: 35,
+			        anchor: [16, 0],
+			        textColor: '#ff00ff',
+			        textSize: 10
+	     		 }, 
+	      		{
+			        url: '../images/people45.png',
+			        height: 45,
+			        width: 45,
+			        anchor: [24, 0],
+			        textColor: '#ff0000',
+			        textSize: 11
+	     		 }, 
+	      		{
+			        url: '../images/people55.png',
+			        height: 55,
+			        width: 55,
+			        anchor: [32, 0],
+			        textColor: '#ffffff',
+			        textSize: 12
+	      		}
+      		], 
+      		[
+      			{
+			        url: '../images/conv30.png',
+			        height: 27,
+			        width: 30,
+			        anchor: [3, 0],
+			        textColor: '#ff00ff',
+			        textSize: 10
+	     		},
+     		 	{
+			        url: '../images/conv40.png',
+			        height: 36,
+			        width: 40,
+			        anchor: [6, 0],
+			        textColor: '#ff0000',
+			        textSize: 11
+	     	 	}
+  			]
+  		];
+  	
 
 	this.init = function(mapdiv){
 			
@@ -97,14 +145,27 @@ app.service('gmap', function($cookieStore){
 		}
 	}
 	this.loadMarkers = function(markers){
+		
+		
+		var clusterMarkers = new Array();
+
 		this.placemarkers = new Array();
 		this.mapmarkers = new Array();
 		for(var i =0; i<markers.length; i++){
-			this.loadMarker(markers[i]);
+			var tempmarker = this.loadMarker(markers[i]);
+
+			clusterMarkers.push(tempmarker);
 			this.placemarkers[markers[i].id]=markers[i];
 		}
+
+		var mc = new MarkerClusterer(this.map, clusterMarkers, {
+	  		  maxZoom: 15,
+	          gridSize: 35
+	         // styles: styles[style]
+		});
 	}
 	this.loadMarker = function(markerdata){
+
 		var marker = new google.maps.Marker({
 					    	map: this.map,
 					    	position:new google.maps.LatLng(markerdata.lat, markerdata.lng),
@@ -118,6 +179,8 @@ app.service('gmap', function($cookieStore){
 	   	marker.setClickable(true);
 	   	this.mapmarkers.push(marker);
 		
+	   	return marker;
+
 	    if(markerdata.participant_id==$cookieStore.get("placemap-participant_id")){
 
 	    	
