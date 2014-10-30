@@ -18,7 +18,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	var selectedDBMarker;
 	$scope.marker;
 	$scope.responseShown= false;
-
+	var markerZindex=100;
 
 	function init(){
 		$("header .nav li").removeClass("active");
@@ -117,6 +117,8 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   	//ONLY show response if not currently rating
 				   	if(!setMarkerIsClicked){
 				   		$("#rating_panel").addClass("opaque");
+				   		this.setZIndex(markerZindex);
+				   		markerZindex++;
 				   		$scope.btnCancelMarkerPlacement();
 				   		//If another marker has already been selected, revert that marker's icon back to normal 
 				   		if(!angular.isUndefined(selectedMarker)){
@@ -136,7 +138,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 				   	  	applyResponsePanel(dbmarker);
 
 				   	  	//set the icon of the selected marker to a noticeably different one so we can distinguish
-				   	  	this.setIcon(gmap.getIcons()[dbmarker.icon+"-delete"]);
+				   	  	this.setIcon(gmap.getIcons()[dbmarker.icon+"-select"]);
 				   	  	
 				   	  	if(window.debug)console.log("===Marker Clicked===");
 				   	  	if(window.debug)console.log(dbmarker);

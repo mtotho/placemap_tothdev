@@ -20,16 +20,22 @@ app.service('gmap', function($cookieStore){
 	this.mapmarkers = new Array();
 
 	this.icons={
-			"red": "res/images/marker_icon/icon_red.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-			"yellow":"res/images/marker_icon/icon_yellow.png", //"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
-			"green":"res/images/marker_icon/icon_green.png",//"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+			//"red": "res/images/marker_icon/icon_red.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+			//"yellow":"res/images/marker_icon/icon_yellow.png", //"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+			//"green":"res/images/marker_icon/icon_green.png",//"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
 			"grey":"res/images/marker_icon/icon_grey.png",
 			"light-red": "res/images/marker_icon/icon_red_light.png", 
 			"light-yellow":"res/images/marker_icon/icon_yellow_light.png", 
 			"light-green":"res/images/marker_icon/icon_green_light.png",
 			"red-delete": "res/images/marker_icon/icon_red_delete.png", 
 			"yellow-delete":"res/images/marker_icon/icon_yellow_delete.png", 
-			"green-delete":"res/images/marker_icon/icon_green_delete.png"
+			"green-delete":"res/images/marker_icon/icon_green_delete.png",
+			"red": "res/images/clustering/redCircle-25.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+			"yellow":"res/images/clustering/yellowCircle-25.png", //"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+			"green":"res/images/clustering/greenCircle-25.png",//"ht
+			"red-select": "res/images/clustering/redCircle-selected-25.png", //"http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+			"yellow-select":"res/images/clustering/yellowCircle-selected-25.png", //"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png",
+			"green-select":"res/images/clustering/greenCircle-selected-25.png",//"ht
 		}
  	 this.styles = 
  	 	[
@@ -159,8 +165,8 @@ app.service('gmap', function($cookieStore){
 		}
 
 		var mc = new MarkerClusterer(this.map, clusterMarkers, {
-	  		  maxZoom: 17,
-	          gridSize: 25,
+	  		  maxZoom: 18,
+	          gridSize: 20,
 	          styles: this.styles[0]
 		});
 	}
