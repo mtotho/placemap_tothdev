@@ -20,7 +20,7 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.responseShown= false;
 	var markerZindex=100;
 	$scope.ratingModeEnabled=false;
-
+	var tooltipWidth=0;
 	function init(){
 		$("header .nav li").removeClass("active");
 		$("header .nav li:nth-child(2)").addClass("active");
@@ -98,23 +98,49 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	     			gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 			 	}
 			 });
+
+		google.maps.event.addListener(gmap.getDraggableMarker(), 'drag', function(){
+			//var pos = gmap.getXY(gmap.getDraggableMarker().getPosition());
+			//console.log(pos);
+			//$(".tooltip").css("left", pos.x + 15);
+			//$(".tooltip").css("top", pos.y - 30);
+			positionTooltip();
+		});
  	     	google.maps.event.addListener(gmap.getMap(), 'dblclick', function(event) {
  	     		 	gmap.getDraggableMarker().setPosition(event.latLng);
 		     	gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
-
+	
  	     	});
  	     	
  	     	google.maps.event.addListener(gmap.getMap(), 'dragstart', function() {
  	     		 	//gmap.getDraggableMarker().setPosition(event.latLng);
 		     	//gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
-		     	$("#draggableTooltip").tooltip('hide');
+		     //	$("#draggableTooltip").tooltip('hide');
 
  	     	});
- 	     	google.maps.event.addListener(gmap.getMap(), 'dragend', function() {
+		google.maps.event.addListener(gmap.getMap(), 'drag', function(){
+			//console.log("hello");
+			//positionTooltip(pos);
+			//var pos = gmap.getXY(gmap.getDraggableMarker().getPosition());
+			positionTooltip();
+			/*
+			$(".tooltip").css("top", pos.y-30);
+			$(".tooltip").css("left", pos.x+15);
+			
+			console.log(pos.x);
+			console.log(window.innerWidth-tooltipWidth -15);
+			if(pos.x>(window.innerWidth - tooltipWidth-45) || pos.x<0 || pos.y<0 || pos.y>window.innerHeight){
+				$('#draggableTooltip').tooltip('hide');
+			}*/
+		});
+ 	     	google.maps.event.addListener(gmap.getMap(), 'idle', function() {
  	     		 	//gmap.getDraggableMarker().setPosition(event.latLng);
 		     	//gmap.getDraggableMarker().setAnimation(google.maps.Animation.BOUNCE);
 		     	//$("#draggableTooltip").tooltip('hide');
 		     	//showToolTip();
+			positionTooltip();
+
+			//console.log("drag finished");
 
  	     	});
  	     	//Map click event
@@ -198,16 +224,29 @@ app.controller('StudyAreaController', function($scope, api,gmap, auth,$location,
 	$scope.setRatingMode = function(bool){
 		setRatingMode(bool);
 	}
+	function positionTooltip(){
+		//console.log(pos);
+		var pos = gmap.getXY(gmap.getDraggableMarker().getPosition());
+		
+		$(".tooltip").css("top",pos.y-40);
+		$(".tooltip").css("left",pos.x+15);
+		
+		
+		if(pos.x<0 || pos.y< 40 || pos.x>(window.innerWidth-$('.tooltip').width()-45) || pos.y>window.innerHeight){
+			$("#draggableTooltip").tooltip("hide");
+		}
+	}
 	function showToolTip(){
 		if($scope.ratingModeEnabled){
 			var pos = gmap.getXY(gmap.getDraggableMarker().getPosition());
-			$("#draggableTooltip").css("top", pos.y-30);
+			$("#draggableTooltip").css("top", pos.y-40);
 			$("#draggableTooltip").css("left", pos.x+15);
 			$("#draggableTooltip").tooltip('show');
-
+			
+			tooltipWidth = $('.tooltip').width();
 			$timeout(function(){
 				$("#draggableTooltip").tooltip('hide');
-			}, 3000)
+			}, 4000)
 
 		}
 	}
