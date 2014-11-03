@@ -1,5 +1,8 @@
 placemap_tothdev
 ================
+DEMO (Feel free to add markers)
+http://tothdev.com/projects/placemap/main.html#/
+
 
 ####File Structure
 
